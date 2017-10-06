@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./db')
+const db = require('./models/db')
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
