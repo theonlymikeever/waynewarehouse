@@ -25,4 +25,11 @@ const User = db.define('user', {
 	}
 });
 
+User.update = (userId, body) => {
+	User.findById(userId)
+	.then(user => {
+		// user = Obj.assign({})
+	})
+}
+
 module.exports = User;

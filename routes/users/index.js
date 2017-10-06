@@ -2,22 +2,29 @@ const router = require('express').Router();
 const User = require('../../models/User');
 
 router.get('/', (req, res, next) => {
-    User.findAll(
-        { include: [{ all: true }] },
-        { attributes: ['id', 'email'] }
-    )
+    User.findAll({ include: [{ all: true }] })
         .then(users => {
             res.send(users);
-        })
-})
+        });
+});
 
 router.get('/:userId', (req, res, next) => {
-    User.findById(req.params.userId * 1,
-        { include: [{ all: true }] },
-        { attributes: ['id', 'email'] })
+    User.findById(req.params.userId,
+        { include: [{ all: true }] })
         .then(user => {
             res.send(user);
         })
+})
+
+router.post('/', (req, res, next) => {
+    User.create(req.body)
+        .then(user => {
+            res.send(user)
+        })
+});
+
+router.put('/:userId', (req, res, next) => {
+    
 })
 
 module.exports = router;
