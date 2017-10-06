@@ -17,19 +17,19 @@ const getUsers = (users) => {
 export const fetchUsers = () => {
     return (dispatch) => {
         axios.get('/api/users')
-        .then(res => res.data)
-        .then(users => {
-            dispatch(getUsers(users));
-        })
+            .then(res => res.data)
+            .then(users => {
+                dispatch(getUsers(users));
+            }).catch(console.log)
     }
 }
 
 //reducer
 export default function (state = [], action) {
-    console.log(action);
     switch (action.type) {
         case GET_USERS:
-            return Object.assign({}, state, action.users);
+            return Object.assign({}, state, { users: action.users });
+            
         default:
             return state;
     }

@@ -12,9 +12,24 @@ const getUser = (user) => {
     };
 }
 
-export default function (state = {}, action) {
-    switch (action.type){
-        case GET_USERS:
+//thunks
+export const fetchUser = (userId) => {
+    return (dispatch) => {
+        axios.get(`/api/users/${userId}`)
+            .then(res => res.data)
+            .then(user => {
+                dispatch(getUser(user));
+            }).catch(console.log)
+    }
+}
 
+
+//reducer
+export default function (state = {}, action) {
+    switch (action.type) {
+        case GET_USER:
+            return Object.assign({}, state, { user: action.user });
+        default:
+            return state;
     }
 }
