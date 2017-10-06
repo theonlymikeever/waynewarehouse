@@ -5,19 +5,23 @@ const User = db.define('user', {
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false,
-	}, 
-	password:{
+	},
+	password: {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
 	isAdmin: {
 		type: Sequelize.BOOLEAN,
 		defaultValue: false
-	}, 
+	},
 	email: {
 		type: Sequelize.STRING,
 		isEmail: true,
-		allowNull: false
+		allowNull: false,
+		unique: true
+	},
+	address: {
+		type: Sequelize.STRING
 	}
 });
 
