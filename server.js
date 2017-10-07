@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./models/db')
+const { sync, seed } = require('./models/db')
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
@@ -17,6 +17,13 @@ app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')
 
 app.use('/api/users', require('./routes/users'));
 
-db.seed();
+// db.seed();
+//Sync & seed promise chain. On resolve we pop server
+sync()
+  .then( () => {
+    return seed();
+  })
+  .then( () => {
+    app.listen(port, () => console.log(chalk.blue(`Listening intently on port ${port}`)));
+  });
 
-app.listen(port, () => console.log(chalk.blue(`Listening intently on port ${port}`)));
