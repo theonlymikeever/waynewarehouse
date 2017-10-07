@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import Login from './login';
 
 export default class NavBar extends Component{
 	constructor(){
@@ -7,21 +8,12 @@ export default class NavBar extends Component{
 	}
 
 	render(){
-		const user = 'test';
+		const user = {};
 		return (
       <nav className="navbar navbar-default">
         <div className="container">
           <div className="navbar-header">
-            <button
-              type="button"
-              className="navbar-toggle collapsed"
-              data-toggle="collapse"
-              data-target=".navbar-collapse">
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-            </button>
-            <Link className="navbar-brand" to="/"><img src="/images/logo.png" /></Link>
+            <Link className="navbar-brand" to="/"><span>H<img src="/images/batman_logo_2574.gif" height="12" width="16" />me</span></Link>
           </div>
           <div className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
@@ -32,8 +24,8 @@ export default class NavBar extends Component{
                 <NavLink to="/products" activeClassName="active">Products</NavLink>
               </li>
             </ul>
-            { this.renderLogout(user) }
-            { this.renderLoginSignup(user) }
+              { this.renderLogout(user) }
+              { this.renderLoginSignup(user) }
 
           </div>
         </div>
@@ -46,12 +38,12 @@ renderLoginSignup(user) {
       return null;
     }
     return (
-      <ul className="nav navbar-nav navbar-right">
+      <ul className="nav navbar-nav">
         <li>
-         <NavLink to="/signup" activeClassName="active">signup</NavLink>
+         <NavLink to="/signup" activeClassName="active">Signup</NavLink>
         </li>
         <li>
-          <NavLink to="/login" activeClassName="active">login</NavLink>
+          <NavLink to="/login" activeClassName="active">Login</NavLink>
         </li>
       </ul>
     );
@@ -62,12 +54,12 @@ renderLoginSignup(user) {
       return null;
     }
     return (
-      <ul className="nav navbar-nav navbar-right">
+      <ul className="nav navbar-nav navbar-right" >
         <li>
         <button
           className="navbar-btn btn btn-default"
           onClick={this.props.logout}>
-          logout
+          Logout
         </button>
         </li>
       </ul>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './Home';
+import Login from './Login';
 import NavBar from './NavBar';
 
 export default class Main extends Component {
@@ -12,7 +13,8 @@ export default class Main extends Component {
 				<main>
 					<NavBar />
 					<Switch>
-						<Route  path='/' component={ Home } />
+						<Route exact path='/' component={ Home } />
+						<Route path='/login' component={ Login } />
 					</Switch>
 				</main>
 			</div>
