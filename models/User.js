@@ -22,6 +22,10 @@ const User = db.define('user', {
 	},
 	address: {
 		type: Sequelize.STRING
+	},
+	photo: {
+		type: Sequelize.STRING,
+		defaultValue: 'https://success.salesforce.com/resource/1505433600000/sharedlayout/img/new-user-image-default.png'
 	}
 });
 

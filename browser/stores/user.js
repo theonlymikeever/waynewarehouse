@@ -28,7 +28,7 @@ export const fetchUser = (userId) => {
 export default function (state = {}, action) {
     switch (action.type) {
         case GET_USER:
-            return Object.assign({}, state, { user: action.user });
+            return Object.assign({}, state, action.user );
         default:
             return state;
     }
