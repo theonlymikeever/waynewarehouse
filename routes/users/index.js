@@ -23,6 +23,7 @@ router.post('/', (req, res, next) => {
         }).catch(next);
 });
 
+//edit user
 router.put('/:userId', (req, res, next) => {
     
 })

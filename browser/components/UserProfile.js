@@ -17,21 +17,11 @@ class UserProfile extends Component {
         if (userId !== nextUserId) this.props.fetchUser(nextUserId);
     }
 
-
     render() {
         const { user, users } = this.props;
         console.log(this.props);
         return (
             <div>
-                <ul>
-                    {
-                        users && users.map(user => {
-                            return (
-                                <li key={user.id}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
-                            )
-                        })
-                    }
-                </ul>
                 <h1>Name: {user.name} <span>
                     <img src={user.photo} />
                 </span></h1>

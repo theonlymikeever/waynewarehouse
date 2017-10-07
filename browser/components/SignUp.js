@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { postUser } from '../stores/user';
 
 class SignUp extends Component {
     constructor() {
@@ -8,10 +9,10 @@ class SignUp extends Component {
             name: '',
             email: '',
             password: '',
-            address: '',
-            photo: ''
+            address: ''
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(ev) {
@@ -21,40 +22,43 @@ class SignUp extends Component {
         console.log(this.state);
     }
 
+    handleSubmit(ev) {
+       ev.preventDefault();
+       console.log(this.state);
+       this.props.postUser(this.state, this.props.history);
+    }
+
     render() {
-        const { handleChange } = this;
-        const { name, email, password, address,photo } = this.state;
+        const { handleChange, handleSubmit } = this;
+        const { name, email, password, address } = this.state;
         return (
-            <div className = 'container'>
+            <div className='container'>
                 <h1>Sign up!</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor='name'>Name</label>
-                    <input className = 'form-control' type='text' name='name' onChange={handleChange} value={name} />
+                    <input className='form-control' type='text' name='name' onChange={handleChange} value={name} />
                     <label htmlFor='email'>Email</label>
-                    <input className = 'form-control' type='text' name='email' onChange={handleChange} value={email} />
+                    <input className='form-control' type='text' name='email' onChange={handleChange} value={email} />
                     <label htmlFor='password'>Password</label>
-                    <input className = 'form-control' type='text' name='password' onChange={handleChange} value={password} />
+                    <input className='form-control' type='text' name='password' onChange={handleChange} value={password} />
                     <label htmlFor='address'>Address</label>
-                    <input className = 'form-control' type='text' name='address' onChange={handleChange} value={address} />
+                    <input className='form-control' type='upload' name='address' onChange={handleChange} value={address} />
                     <label htmlFor='photo'>Upload Photo</label>
-                    <input className = 'form-control' type='text' name='photo' onChange={handleChange} value={photo} />
+                    <input className='form-control' type='text' name='photo' />
+                    <button type = 'submit' className='btn btn-default'>Sign Up</button>
                 </form>
             </div>
         )
     }
 }
 
-const mapStateToProps = () => {
-    return {
-
-    };
-}
-
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        postUser: (user, history) =>{
+            dispatch(postUser(user, history));
+        }
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
