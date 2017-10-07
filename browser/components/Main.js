@@ -20,13 +20,11 @@ class Main extends Component {
 	render() {
 		return (
 			<div className='container'>
-				<main>
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route exact path='/users/:userId' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
 					</Switch>
-				</main>
 			</div>
 		)
 	}
