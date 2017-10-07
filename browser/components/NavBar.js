@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import Login from './login';
+import Login from './Login';
 
 export default class NavBar extends Component{
 	constructor(){
