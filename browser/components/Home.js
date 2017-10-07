@@ -6,7 +6,7 @@ export default class Home extends Component {
 		return(
 			<div>
 				<div className='container'>
-					<h1>Hi!</h1>
+					<h1>The Wayne Warehouse</h1>
 				</div>
 			</div>
 		)
