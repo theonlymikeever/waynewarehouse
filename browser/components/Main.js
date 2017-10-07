@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './Home';
+import NavBar from './NavBar';
 
 export default class Main extends Component {
 	render(){
 		return(
 			<div className='container'>
 				<main>
+					<NavBar />
 					<Switch>
-						<Route exact path='/' component={ Home } />
+						<Route  path='/' component={ Home } />
 					</Switch>
 				</main>
 			</div>
