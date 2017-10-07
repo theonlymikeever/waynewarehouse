@@ -7,10 +7,7 @@ import { fetchUsers } from '../stores/users';
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
-
-
 import Home from './Home';
-
 class Main extends Component {
 
 	componentDidMount() {
@@ -20,11 +17,12 @@ class Main extends Component {
 	render() {
 		return (
 			<div className='container'>
-					<Switch>
-						<Route exact path='/' component={Home} />
-						<Route exact path='/users/:userId' component={UserProfile} />
-						<Route exact path='/signup' component={SignUp} />
-					</Switch>
+				<Switch>
+					<Route exact path='/' component={Home} />
+					<Route exact path='/users/:userId' component={UserProfile} />
+					<Route exact path='/signup' component={SignUp} />
+				</Switch>
+
 			</div>
 		)
 	}
