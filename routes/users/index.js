@@ -20,7 +20,9 @@ router.post('/', (req, res, next) => {
     User.create(req.body)
         .then(user => {
             res.send(user)
-        }).catch(next);
+        }).catch(err => {
+            console.log(err.error);
+        });
 });
 
 //edit user

@@ -19,7 +19,6 @@ class SignUp extends Component {
         this.setState({
             [ev.target.name]: ev.target.value
         })
-        console.log(this.state);
     }
 
     handleSubmit(ev) {
