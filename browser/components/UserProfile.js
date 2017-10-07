@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUser } from '../stores/user';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 class UserProfile extends Component {
@@ -11,18 +11,19 @@ class UserProfile extends Component {
         this.props.fetchUser(userId);
     }
 
-    componentWillReceiveProps(nextProps) {
-        const userId = this.props.match.params.userId;
-        const nextUserId = nextProps.match.params.userId;
-        console.log(nextUserId);
-        if (userId !== nextUserId)  this.props.fetchUser(userId);
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     const userId = this.props.match.params.userId;
+    //     const nextUserId = nextProps.match.params.userId;
+    //     console.log(nextUserId);
+    //     if (userId !== nextUserId)  this.props.fetchUser(userId);
+    // }
 
-    
+
     render() {
-        console.log(this.props);
+        const { user } = this.props;
+        console.log(user);
         return (
-            <h1>Users</h1>
+            <h1>{user.name}</h1>
         )
     }
 }
