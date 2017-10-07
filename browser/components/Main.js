@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import UserProfile from './UserProfile';
+
 import { fetchUsers } from '../stores/users';
+
+import UserProfile from './UserProfile';
+import SignUp from './SignUp';
 
 
 import Home from './Home';
@@ -21,6 +24,7 @@ class Main extends Component {
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route exact path='/users/:userId' component={UserProfile} />
+						<Route exact path='/signup' component={SignUp} />
 					</Switch>
 				</main>
 			</div>
