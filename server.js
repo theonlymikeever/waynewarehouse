@@ -16,6 +16,7 @@ app.use('/', express.static(path.join(__dirname, 'browser')));
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/orders', require('./routes/orders'));
 
 // db.seed();
 //Sync & seed promise chain. On resolve we pop server
