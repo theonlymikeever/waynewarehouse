@@ -9,42 +9,52 @@ class SignUp extends Component {
             name: '',
             email: '',
             password: '',
-            address: ''
+            address: '',
+            required: false //check if button should be disabled
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(ev) {
+        const { name, email, password } = this.state;
+
         this.setState({
             [ev.target.name]: ev.target.value
         })
+
+        if (name.length > 0 && password.length > 0 && email.length > 0) this.setState({ required: true });
+
     }
 
     handleSubmit(ev) {
-       ev.preventDefault();
-       console.log(this.state);
-       this.props.postUser(this.state, this.props.history);
+        ev.preventDefault();
+        console.log(this.state);
+        this.props.postUser(this.state, this.props.history);
     }
 
     render() {
         const { handleChange, handleSubmit } = this;
-        const { name, email, password, address } = this.state;
+        const { name, email, password, address, required } = this.state;
         return (
             <div className='container'>
                 <h1>Sign up!</h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='name'>Name</label>
+                    <label className='text-danger' htmlFor='name'>Name</label>
                     <input className='form-control' type='text' name='name' onChange={handleChange} value={name} />
-                    <label htmlFor='email'>Email</label>
+                    <label className='text-danger' htmlFor='email'>Email</label>
                     <input className='form-control' type='text' name='email' onChange={handleChange} value={email} />
-                    <label htmlFor='password'>Password</label>
+                    <label className='text-danger' htmlFor='password'>Password</label>
                     <input className='form-control' type='text' name='password' onChange={handleChange} value={password} />
                     <label htmlFor='address'>Address</label>
                     <input className='form-control' type='upload' name='address' onChange={handleChange} value={address} />
                     <label htmlFor='photo'>Upload Photo</label>
                     <input className='form-control' type='text' name='photo' />
-                    <button type = 'submit' className='btn btn-default'>Sign Up</button>
+                    <br />
+                    <p className='text-danger'><small>Required entries in red</small></p>
+                    <br />
+                    
+                    <button type='submit' className='btn btn-default' disabled = {required ? false : true }>Sign Up</button>
                 </form>
             </div>
         )
@@ -54,7 +64,7 @@ class SignUp extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        postUser: (user, history) =>{
+        postUser: (user, history) => {
             dispatch(postUser(user, history));
         }
     };
