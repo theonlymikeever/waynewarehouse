@@ -14,7 +14,6 @@ router.get('/:productId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  console.log('posting!', req.body)
   Product.create(req.body)
     .then(product => res.send(product))
     .catch(next);
@@ -22,12 +21,16 @@ router.post('/', (req, res, next) => {
 
 router.put('/:productId', (req, res, next) => {
   Product.findById(req.params.productId)
-    .then()
+    .then( product => {
+      return product.update(req.body)
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);
 });
 
 router.delete('/:productId', (req, res, next) => {
-  Product.destroy(req.params.productId)
-    .then(() => res.sendStatus(201))
+  Product.destroy({where: { id: req.params.productId }})
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 
