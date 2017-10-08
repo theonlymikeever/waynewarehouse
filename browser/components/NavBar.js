@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Login from './Login';
+import logoutActionCreator from '../stores/user';
 
-export default class NavBar extends Component{
-	constructor(){
-		super();
+class NavBar extends Component{
+	constructor(props){
+		super(props);
+    this.renderLoginSignup = this.renderLoginSignup.bind(this);
+    this.renderLogout =  this.renderLogout.bind(this);
 	}
 
 	render(){
-		const user = {};
+		const { user } = this.props;
 		return (
       <nav className="navbar navbar-default">
         <div className="container">
@@ -50,21 +54,44 @@ renderLoginSignup(user) {
   }
 
   renderLogout(user) {
+    const textStyle = { color: 'blue'}
     if (!user.id){
       return null;
     }
     return (
-      <ul className="nav navbar-nav navbar-right" >
-        <li>
-        <button
-          className="navbar-btn btn btn-default"
-          onClick={this.props.logout}>
-          Logout
-        </button>
-        </li>
-      </ul>
+      <div>
+        <ul className="nav navbar-nav" >
+          <li>
+            <button
+              className="navbar-btn btn btn-default"
+              onClick={this.props.logout}>
+              Logout
+            </button>
+          </li>
+   
+        </ul>
+        <h5 className='pull-right'>Welcome:&nbsp; 
+          <span style={textStyle}>{user.name}&nbsp;</span>
+        </h5>
+      </div> 
     );
   }
 }		
 
+/* -----------------    CONTAINER     ------------------ */
 
+const mapProps = ({user}) => {
+  return {
+    user
+  }
+};
+
+const mapDispatch = dispatch => ({
+  logout: () => {
+    dispatch(logoutActionCreator());
+
+    history.push('/');
+  }
+});
+
+export default withRouter(connect(mapProps, mapDispatch)(NavBar));
