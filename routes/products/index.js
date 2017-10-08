@@ -15,7 +15,8 @@ router.get('/:productId', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Product.create(req.body)
-    .then(product => res.send(product))
+    // .then(product => res.send(product))
+    .then(() => res.sendStatus(201))
     .catch(next);
 })
 

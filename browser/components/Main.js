@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../stores/users';
+import { fetchProducts } from '../stores/products'
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
@@ -39,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchInitialData: () => {
 			dispatch(fetchUsers());
+			dispatch(fetchProducts())
 		}
 	};
 }
