@@ -34,3 +34,4 @@ router.put('/:id', (rq, res, next) => {
     .catch(next);
 });
 
+module.exports = router;

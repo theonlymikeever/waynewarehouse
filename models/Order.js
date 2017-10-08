@@ -17,7 +17,7 @@ const Order = db.define('order', {
     type: Sequelize.FLOAT
   },
   status: {
-    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
+    type: Sequelize.STRING
   },
   date: {
     type: Sequelize.DATE,

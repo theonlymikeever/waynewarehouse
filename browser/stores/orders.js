@@ -40,7 +40,7 @@ export const deleteOrder = (orderId) => {
 
 
 // REDUCERS
-const reducer = (state=initialState, action) => {
+const reducer = (state=[], action) => {
   switch(action.type){
     case GET_ORDERS:
       return Object.assign({}, state, { orders: action.orders })

@@ -29,13 +29,16 @@ export default class NavBar extends Component{
               <li>
                 <NavLink to="/products" activeClassName="active">Products</NavLink>
               </li>
+              <li>
+                <NavLink to="/orders">Orders</NavLink>
+              </li>
             </ul>
               { this.renderLogout(user) }
               { this.renderLoginSignup(user) }
             
             <ul className="nav navbar-nav navgar-right">
               <li>
-                <NavLink to="/orders">
+                <NavLink to="/cart">
                   <span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                 </NavLink>
               </li>
