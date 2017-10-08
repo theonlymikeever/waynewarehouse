@@ -7,8 +7,6 @@ import { fetchUsers } from '../stores/users';
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
-
-
 import Home from './Home';
 import Login from './Login';
 import NavBar from './NavBar';
@@ -26,13 +24,13 @@ class Main extends Component {
 				<main>
 					<NavBar />
 					<Switch>
-						<Route exact path='/' component={ Home } />
-						<Route path='/login' component={ Login } />
+						<Route exact path='/' component={Home} />
+						<Route path='/login' component={Login} />
 						<Route exact path='/users/:userId' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
             <Route path='/orders' component={ OrderList } />
 					</Switch>
-				</main>	
+				</main>
 			</div>
 		)
 	}
