@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { loginActionCreator }from '../redux/user'
+import { loginActionCreator } from '../stores/user';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -91,5 +91,5 @@ const mapDispatch = (dispatch) => {
   }
 };
 
-export default Login;
-// export default connect(mapState, mapDispatch)(Login);
+// export default Login;
+export default connect(mapState, mapDispatch)(Login);

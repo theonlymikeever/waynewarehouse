@@ -3,6 +3,7 @@ import axios from 'axios';
 //actions
 const GET_USER = 'GET_USER';
 const ADD_USER = 'ADD_USER';
+const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 //action creators
 
@@ -13,13 +14,19 @@ const getUser = (user) => {
     };
 }
 
-
 const addUser = (user) => {
     return {
         type: ADD_USER,
         user
     };
 }
+
+const setCurrentUser = (user) => {
+    return {
+        type: SET_CURRENT_USER,
+        user
+    };
+};
 
 //thunks
 export const fetchUser = (userId) => {
@@ -43,6 +50,20 @@ export const postUser = (user, history) => {
     }
 }
 
+export const loginActionCreator = (credentials) => {
+    return (dispatch) => {
+        axios.post('/login', credentials)
+        .then(results => {
+            return results.data;
+        })
+        .then( user => {
+            dispatch( setCurrentUser(user));
+
+        })
+    }
+}
+
+
 
 //reducer
 export default function (state = {}, action) {
@@ -51,6 +72,8 @@ export default function (state = {}, action) {
             return Object.assign({}, state, action.user);
         case ADD_USER:
             return Object.assign({},state, action.user);
+        case SET_CURRENT_USER: 
+            return Object.assign({}, state, action.user);
         default:
             return state;
     }

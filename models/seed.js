@@ -2,6 +2,7 @@
 const users = [
   {name: 'Bruce Wayne', password: 'batman', email: 'batMail@gotham.com', isAdmin: true},
   {name: 'Harry Potter', password: 'wizard', email: 'LightningScar@hogwarts.com', isAdmin: false},
+    {name: 'Testie Testerson', password: '123', email: 'test@test.com', isAdmin: false}
 ];
 const products = [
   {name: 'utility Belt', price: 9999.99, image: 'https://vignette.wikia.nocookie.net/thedarkknighttrilogy/images/9/92/UtilityBelt.jpg/revision/latest?cb=20131210034132', weight: 5.10},
