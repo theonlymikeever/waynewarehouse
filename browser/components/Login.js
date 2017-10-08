@@ -79,6 +79,10 @@ class Login extends React.Component {
     const { login } = this.props;
     event.preventDefault();
     login(this.state);
+    this.setState({
+      email: '', 
+      password: ''
+    });
   }
 }
 
