@@ -8,21 +8,21 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '', 
+      email: '',
       password: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
   }
 
-  handleChange(evt){
+  handleChange(evt) {
     const obj = {};
     obj[evt.target.name] = evt.target.value
     this.setState(obj)
   }
 
   render() {
-    const message  =  'Login';
+    const message = 'Login';
     const { email, password } = this.state;
     const { handleChange } = this;
     return (
@@ -42,14 +42,14 @@ class Login extends React.Component {
               />
             </div>
             <div className="form-group">
-                <label>password</label>
-                <input value={password}
-                  onChange={handleChange}
-                  name="password"
-                  type="password"
-                  className="form-control"
-                  required
-                />
+              <label>password</label>
+              <input value={password}
+                onChange={handleChange}
+                name="password"
+                type="password"
+                className="form-control"
+                required
+              />
             </div>
             <button type="submit" className="btn btn-primary">{message}</button>
           </form>
@@ -71,17 +71,19 @@ class Login extends React.Component {
               </a>
             </p>
           </div>
-         </div> 
+        </div>
       </div>
     );
   }
 
   onLoginSubmit(event) {
     const { login } = this.props;
+    console.log(this.props.history);
     event.preventDefault();
-    login(this.state);
+    //pass in the history object you get from router
+    login(this.state, this.props.history);
     this.setState({
-      email: '', 
+      email: '',
       password: ''
     });
   }
@@ -92,7 +94,7 @@ class Login extends React.Component {
 const mapState = () => ({ message: 'Log in' });
 const mapDispatch = (dispatch) => {
   return {
-    login: (credentials) => {dispatch(loginActionCreator(credentials))}
+    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) }
   }
 };
 

@@ -5,16 +5,16 @@ import Login from './Login';
 import { logoutActionCreator } from '../stores/user';
 import history from "../history";
 
-class NavBar extends Component{
-	constructor(props){
-		super(props);
+class NavBar extends Component {
+  constructor(props) {
+    super(props);
     this.renderLoginSignup = this.renderLoginSignup.bind(this);
-    this.renderLogout =  this.renderLogout.bind(this);
-	}
+    this.renderLogout = this.renderLogout.bind(this);
+  }
 
-	render(){
-		const { user } = this.props;
-		return (
+  render() {
+    const { user } = this.props;
+    return (
       <nav className="navbar navbar-default">
         <div className="container">
           <div className="navbar-header">
@@ -29,23 +29,23 @@ class NavBar extends Component{
                 <NavLink to="/products" activeClassName="active">Products</NavLink>
               </li>
             </ul>
-              { this.renderLogout(user) }
-              { this.renderLoginSignup(user) }
+            {this.renderLogout(user)}
+            {this.renderLoginSignup(user)}
 
           </div>
         </div>
       </nav>
-		)
-	}
+    )
+  }
 
-renderLoginSignup(user) {
-    if (user.id){
+  renderLoginSignup(user) {
+    if (user.id) {
       return null;
     }
     return (
       <ul className="nav navbar-nav">
         <li>
-         <NavLink to="/signup" activeClassName="active">Signup</NavLink>
+          <NavLink to="/signup" activeClassName="active">Signup</NavLink>
         </li>
         <li>
           <NavLink to="/login" activeClassName="active">Login</NavLink>
@@ -55,8 +55,8 @@ renderLoginSignup(user) {
   }
 
   renderLogout(user) {
-    const textStyle = { color: 'blue'}
-    if (!user.id){
+    const textStyle = { color: 'blue' }
+    if (!user.id) {
       return null;
     }
     return (
@@ -69,29 +69,28 @@ renderLoginSignup(user) {
               Logout
             </button>
           </li>
-   
+
         </ul>
-        <h5 className='pull-right'>Welcome:&nbsp; 
+        <h5 className='pull-right'>Welcome:&nbsp;
           <span style={textStyle}>{user.name}&nbsp;</span>
         </h5>
-      </div> 
+      </div>
     );
   }
-}		
+}
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapProps = ({user}) => {
+const mapProps = ({ user }) => {
   return {
     user
   }
 };
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch, ownProps) => ({
   logout: () => {
-    dispatch(logoutActionCreator());
-
-    // history.push('/');
+    //pass in the history object you get from ownProps
+    dispatch(logoutActionCreator(ownProps.history));
   }
 });
 

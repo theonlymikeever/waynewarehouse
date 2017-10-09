@@ -51,34 +51,34 @@ export const fetchUser = (userId) => {
 export const postUser = (user, history) => {
     return (dispatch) => {
         axios.post('/api/users', user)
-        .then(res => res.data)
-        .then(user => {
-            dispatch(addUser(user));
-            history.push(`/users/${user.id}`);
-        })
+            .then(res => res.data)
+            .then(user => {
+                dispatch(addUser(user));
+                history.push(`/users/${user.id}`);
+            })
     }
 }
 
-export const loginActionCreator = (credentials) => {
+export const loginActionCreator = (credentials, history) => {
     return (dispatch) => {
         axios.post('/login', credentials)
-        .then(results => {
-            return results.data;
-        })
-        .then( user => {
-            dispatch( setCurrentUser(user));
-            history.push('/');
-        });
+            .then(results => {
+                return results.data;
+            })
+            .then(user => {
+                dispatch(setCurrentUser(user));
+                history.push('/');
+            });
     };
 };
 
-export const logoutActionCreator = () => {
+export const logoutActionCreator = (history) => {
     return (dispatch => {
         axios.delete('/login')
-        .then(() => {
-            dispatch(removeCurrentUser());
-            history.push('/');
-        });
+            .then(() => {
+                dispatch(removeCurrentUser());
+                history.push('/');
+            });
     });
 };
 
@@ -90,10 +90,10 @@ export default function (state = {}, action) {
         case GET_USER:
             return Object.assign({}, state, action.user);
         case ADD_USER:
-            return Object.assign({},state, action.user);
+            return Object.assign({}, state, action.user);
         case SET_CURRENT_USER:
             return Object.assign({}, state, action.user);
-        case REMOVE_CURRENT_USER: 
+        case REMOVE_CURRENT_USER:
             return Object.assign({});
         default:
             return state;
