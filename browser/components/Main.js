@@ -13,7 +13,9 @@ import NavBar from './NavBar';
 import ProductList from './ProductList'
 
 class Main extends Component {
-
+	constructor(props){
+		super(props);
+	}
 	componentDidMount() {
 		this.props.fetchInitialData();
 	}
@@ -29,12 +31,19 @@ class Main extends Component {
 						<Route path='/login' component={Login} />
 						<Route exact path='/users/:userId' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
+						<Route component={Home} />
 					</Switch>
 				</main>
 			</div>
 		)
 	}
 }
+
+const mapProps = ({user}) => {
+  return {
+    user
+  }
+};
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -45,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Main));
+export default withRouter(connect(mapProps, mapDispatchToProps)(Main));

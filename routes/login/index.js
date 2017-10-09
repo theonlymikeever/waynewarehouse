@@ -4,7 +4,6 @@ const session = require('express-session');
 
 
 router.post('/', (req, res, next) => {
-	console.log('routes/login')
 	User.findOne({
 		where: req.body
 	})
@@ -18,7 +17,14 @@ router.post('/', (req, res, next) => {
 		}
 	})
 	.catch(next);
-})
+});
 
+router.delete('/', (req, res, next) => {
+	console.log('routes/logout');
+	req.session.userId = '';
+	console.log('session: ', req.session);
+	res.sendStatus(200);
+
+})
 
 module.exports = router;
