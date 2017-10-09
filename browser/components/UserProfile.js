@@ -1,21 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUser } from '../stores/user';
-import { Link } from 'react-router-dom';
-
 
 class UserProfile extends Component {
-
-    componentDidMount() {
-        const userId = this.props.match.params.userId;
-        this.props.fetchUser(userId);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const userId = this.props.match.params.userId;
-        const nextUserId = nextProps.match.params.userId;
-        if (userId !== nextUserId) this.props.fetchUser(nextUserId);
-    }
 
     render() {
         const { user } = this.props;
@@ -46,13 +32,5 @@ const mapStateToProps = ({ user }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchUser: (userId) => {
-            dispatch(fetchUser(userId))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, null)(UserProfile);
 

@@ -29,9 +29,6 @@ class NavBar extends Component {
               <li>
                 <NavLink to="/products" activeClassName="active">Products</NavLink>
               </li>
-              <li>
-                <NavLink to="/profile" activeClassName="active">Profile</NavLink>
-              </li>
             </ul>
             {this.renderLogout(user)}
             {this.renderLoginSignup(user)}
@@ -66,6 +63,9 @@ class NavBar extends Component {
     return (
       <div>
         <ul className="nav navbar-nav" >
+          <li>
+            <NavLink to="/profile" activeClassName="active">Profile</NavLink>
+          </li>
           <li>
             <button
               className="navbar-btn btn btn-default"
