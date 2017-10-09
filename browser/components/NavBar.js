@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Login from './Login';
 import { logoutActionCreator } from '../stores/user';
 import history from "../history";
+import UserProfile from './UserProfile';
 
 class NavBar extends Component {
   constructor(props) {
@@ -27,6 +28,9 @@ class NavBar extends Component {
               </li>
               <li>
                 <NavLink to="/products" activeClassName="active">Products</NavLink>
+              </li>
+              <li>
+                <NavLink to="/profile" activeClassName="active">Profile</NavLink>
               </li>
             </ul>
             {this.renderLogout(user)}

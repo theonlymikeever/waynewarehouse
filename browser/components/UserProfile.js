@@ -18,7 +18,7 @@ class UserProfile extends Component {
     }
 
     render() {
-        const { user, users } = this.props;
+        const { user } = this.props;
         console.log(this.props);
         return (
             <div>
@@ -40,9 +40,9 @@ class UserProfile extends Component {
     }
 }
 
-const mapStateToProps = ({ users, user }) => {
+const mapStateToProps = ({ user }) => {
     return {
-        users, user
+        user
     }
 }
 

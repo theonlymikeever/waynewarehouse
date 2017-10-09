@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchUsers } from '../stores/users';
+import { fetchUser } from '../stores/user';
 import { fetchProducts } from '../stores/products'
 
 import UserProfile from './UserProfile';
@@ -29,7 +29,7 @@ class Main extends Component {
 						<Route exact path='/' component={Home} />
 						<Route exact path="/products" component={ ProductList } />
 						<Route path='/login' component={Login} />
-						<Route exact path='/users/:userId' component={UserProfile} />
+						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
 						<Route component={Home} />
 					</Switch>
@@ -48,7 +48,7 @@ const mapProps = ({user}) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchInitialData: () => {
-			dispatch(fetchUsers());
+			dispatch(fetchUser());
 			dispatch(fetchProducts())
 		}
 	};

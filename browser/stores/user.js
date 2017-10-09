@@ -38,9 +38,9 @@ const removeCurrentUser = () => {
 
 
 //thunks
-export const fetchUser = (userId) => {
+export const fetchUser = () => {
     return (dispatch) => {
-        axios.get(`/api/users/${userId}`)
+        axios.get(`/login`)
             .then(res => res.data)
             .then(user => {
                 dispatch(getUser(user));
@@ -50,7 +50,7 @@ export const fetchUser = (userId) => {
 
 export const postUser = (user, history) => {
     return (dispatch) => {
-        axios.post('/api/users', user)
+        axios.post('/api/users/signup', user)
             .then(res => res.data)
             .then(user => {
                 dispatch(addUser(user));
