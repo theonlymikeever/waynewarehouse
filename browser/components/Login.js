@@ -82,10 +82,6 @@ class Login extends React.Component {
     event.preventDefault();
     //pass in the history object you get from router
     login(this.state, this.props.history);
-    this.setState({
-      email: '',
-      password: ''
-    });
   }
 }
 
