@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './Login';
-import logoutActionCreator from '../stores/user';
+import { logoutActionCreator } from '../stores/user';
+import history from "../history";
 
 class NavBar extends Component{
 	constructor(props){
@@ -90,7 +91,7 @@ const mapDispatch = dispatch => ({
   logout: () => {
     dispatch(logoutActionCreator());
 
-    history.push('/');
+    // history.push('/');
   }
 });
 

@@ -1,9 +1,11 @@
 import axios from 'axios';
+import history from '../history';
 
 //actions
 const GET_USER = 'GET_USER';
 const ADD_USER = 'ADD_USER';
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
+const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
 
 //action creators
 
@@ -27,6 +29,13 @@ const setCurrentUser = (user) => {
         user
     };
 };
+
+const removeCurrentUser = () => {
+    return {
+        type: REMOVE_CURRENT_USER,
+    };
+};
+
 
 //thunks
 export const fetchUser = (userId) => {
@@ -58,10 +67,20 @@ export const loginActionCreator = (credentials) => {
         })
         .then( user => {
             dispatch( setCurrentUser(user));
+            history.push('/');
+        });
+    };
+};
 
-        })
-    }
-}
+export const logoutActionCreator = () => {
+    return (dispatch => {
+        axios.delete('/login')
+        .then(() => {
+            dispatch(removeCurrentUser());
+            history.push('/');
+        });
+    });
+};
 
 
 
@@ -72,8 +91,10 @@ export default function (state = {}, action) {
             return Object.assign({}, state, action.user);
         case ADD_USER:
             return Object.assign({},state, action.user);
-        case SET_CURRENT_USER: 
+        case SET_CURRENT_USER:
             return Object.assign({}, state, action.user);
+        case REMOVE_CURRENT_USER: 
+            return Object.assign({});
         default:
             return state;
     }

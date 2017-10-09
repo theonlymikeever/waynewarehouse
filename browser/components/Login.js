@@ -38,6 +38,7 @@ class Login extends React.Component {
                 type="email"
                 className="form-control"
                 required
+                autoFocus
               />
             </div>
             <div className="form-group">
