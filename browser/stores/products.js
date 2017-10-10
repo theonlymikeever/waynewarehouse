@@ -78,7 +78,7 @@ export const updateProductOnServer = (id, update) => {
 export default function (state = [], action) {
   switch (action.type){
     case GET_PRODUCTS:
-      return Object.assign([], state, action.products);
+      return action.products
     default:
       return state;
   }

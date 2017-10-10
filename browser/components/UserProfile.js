@@ -5,7 +5,7 @@ class UserProfile extends Component {
 
     render() {
         const { user } = this.props;
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div>
                 <h1>Name: {user.name} <span>

@@ -16,25 +16,23 @@ class NavBar extends Component {
   render() {
     const { user } = this.props;
     return (
-      <nav className="navbar navbar-default">
-        <div className="container">
-          <div className="navbar-header">
-            <Link className="navbar-brand" to="/"><span>H<img src="/images/batman_logo_2574.gif" height="12" width="16" />me</span></Link>
-          </div>
-          <div className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li>
-                <NavLink to="/categories" activeClassName="active">Categories</NavLink>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="/images/batman_logo_2574.gif" className="d-inline-block" height="12" width="16" />me</span></Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink to="/categories" className="nav-link" activeClassName="active">Categories</NavLink>
               </li>
-              <li>
-                <NavLink to="/products" activeClassName="active">Products</NavLink>
+              <li className="nav-item">
+                <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
               </li>
             </ul>
             {this.renderLogout(user)}
             {this.renderLoginSignup(user)}
-
           </div>
-        </div>
       </nav>
     )
   }
@@ -45,11 +43,11 @@ class NavBar extends Component {
     }
     return (
       <ul className="nav navbar-nav">
-        <li>
-          <NavLink to="/signup" activeClassName="active">Signup</NavLink>
+        <li className="nav-item">
+          <NavLink to="/signup" className="nav-link" activeClassName="active">Signup</NavLink>
         </li>
-        <li>
-          <NavLink to="/login" activeClassName="active">Login</NavLink>
+        <li className="nav-item">
+          <NavLink to="/login" className="nav-link" activeClassName="active">Login</NavLink>
         </li>
       </ul>
     );
@@ -61,24 +59,21 @@ class NavBar extends Component {
       return null;
     }
     return (
-      <div>
-        <ul className="nav navbar-nav" >
-          <li>
-            <NavLink to="/profile" activeClassName="active">Profile</NavLink>
+        <ul className="nav navbar-nav">
+          <li className="nav-item">
+            <NavLink to="/profile" className="nav-link" activeClassName="active">Profile</NavLink>
           </li>
-          <li>
+          <li className="nav-item mr-sm-2">
             <button
-              className="navbar-btn btn btn-default"
+              className="btn btn-outline-dark my-2 my-sm-0"
               onClick={this.props.logout}>
               Logout
             </button>
           </li>
-
+          <small className="p-2">Welcome:&nbsp;
+            <span style={textStyle}>{user.name}&nbsp;</span>
+          </small>
         </ul>
-        <h5 className='pull-right'>Welcome:&nbsp;
-          <span style={textStyle}>{user.name}&nbsp;</span>
-        </h5>
-      </div>
     );
   }
 }
