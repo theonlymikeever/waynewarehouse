@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class ProductList extends Component {
   constructor(){
@@ -18,12 +19,23 @@ class ProductList extends Component {
   }
 
   render(){
-    const { products } = this.state;
+    const { products } = this.props;
     return (
-      <div> {  products } </div>
+      <div>
+        {
+          products.map(product => {
+            return <li key={ product.id }>{product.name}</li>
+          })
+        }
+      </div>
     )
   }
 }
 
+const mapStatetoProps = ({ products }) => {
+  return {
+    products
+  }
+}
 
-export default ProductList;
+export default connect(mapStatetoProps)(ProductList);
