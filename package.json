@@ -22,8 +22,11 @@
     "bootstrap": "^4.0.0-beta",
     "chalk": "^2.1.0",
     "express": "^4.15.4",
+<<<<<<< HEAD
     "express-session": "^1.15.6",
     "history": "^4.7.2",
+=======
+>>>>>>> origin/order-vertical-#24
     "jquery": "^3.2.1",
     "pg": "^7.3.0",
     "popper.js": "^1.12.5",

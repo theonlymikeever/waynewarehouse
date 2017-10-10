@@ -11,6 +11,7 @@ import Home from './Home';
 import Login from './Login';
 import NavBar from './NavBar';
 import ProductList from './ProductList'
+import OrderList from './OrderList';
 
 class Main extends Component {
 	constructor(props){
