@@ -13,7 +13,6 @@ class NavBar extends Component {
     this.renderLogout = this.renderLogout.bind(this);
   }
 
-<<<<<<< HEAD
   render() {
     const { user } = this.props;
     return (
@@ -26,26 +25,6 @@ class NavBar extends Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <NavLink to="/categories" className="nav-link" activeClassName="active">Categories</NavLink>
-=======
-	render(){
-		const user = {};
-		return (
-      <nav className="navbar navbar-default">
-        <div className="container">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <Link className="navbar-brand" to="/"><span>H<img src="/images/batman_logo_2574.gif" height="12" width="16" />me</span></Link>
-          </div>
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav">
-              <li>
-                <NavLink to="/categories" activeClassName="active">Categories</NavLink>
->>>>>>> origin/order-vertical-#24
               </li>
               <li className="nav-item">
                 <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
@@ -54,22 +33,8 @@ class NavBar extends Component {
                 <NavLink to="/orders">Orders</NavLink>
               </li>
             </ul>
-<<<<<<< HEAD
             {this.renderLogout(user)}
             {this.renderLoginSignup(user)}
-=======
-              { this.renderLogout(user) }
-              { this.renderLoginSignup(user) }
-            
-            <ul className="nav navbar-nav navgar-right">
-              <li>
-                <NavLink to="/cart">
-                  <span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                </NavLink>
-              </li>
-            </ul>
-              
->>>>>>> origin/order-vertical-#24
           </div>
       </nav>
     )
