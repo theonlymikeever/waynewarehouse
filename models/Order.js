@@ -1,9 +1,11 @@
 const db = require('./conn');
 const Sequelize = db.Sequelize;
+const LineItem = require('./LineItem');
 
 const Order = db.define('order', {
   isCart: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   shippingPrice: {
     type: Sequelize.FLOAT
@@ -19,6 +21,56 @@ const Order = db.define('order', {
   }
 });
 
+
+Order.fetchCart = function(id){
+  return Order.findOne({
+    where: {
+      isCart: true,
+      userId: id
+    },
+    include: [
+      { model: LineItem, as: 'lineItems'}
+    ]
+  })
+  .then( cart => {
+    return cart
+      ? cart
+      : Order.create({ isCart: true, userId: id })
+  })
+}
+
+Order.addProduct = function(userId, productId) {
+  return Order.fetchCart(userId)
+    .then( cart => {
+      LineItem.findOne({ where: { productId, orderId: cart.id }})
+        .then( lineItem => {
+          if (!lineItem) {
+          //If lineItem doesn't exist create new one with that productId
+            return LineItem.create({ productId })
+            .then( lineitem => cart.addLineItem(lineitem))
+          }
+          //Otherwise we increase the quantity
+            lineItem.quantity++
+            return lineItem.save()
+        })
+    })
+}
+
+Order.removeProduct = function(userId, productId) {
+  return Order.fetchCart(userId)
+    .then( cart => {
+        LineItem.findOne({ where: { productId, orderId: cart.id }})
+          .then( lineItem => {
+            //The lineitem exists we decrease and check if it's the last one
+            if (lineItem){
+              lineItem.quantity--
+              return lineItem.quantity > 0
+                ? lineItem.save()
+                : lineItem.destroy()
+            }
+          })
+    })
+}
+
+
 module.exports = Order;
-
-
