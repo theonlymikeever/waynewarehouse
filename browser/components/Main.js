@@ -13,6 +13,7 @@ import NavBar from './NavBar';
 import ProductList from './ProductList';
 import ProductDetail from './ProductDetail';
 import OrderList from './OrderList';
+import CartList from './CartList';
 
 class Main extends Component {
 	constructor(props){
@@ -34,6 +35,7 @@ class Main extends Component {
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
+            <Route path='/cart' component={ CartList } />
 						<Route component={Home} />
 					</Switch>
 				</main>

@@ -26,7 +26,7 @@ function ProductList(props) {
                   {(product.isAdmin)? 
                     <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : '' }
                   </form>
-                  <Link className="btn m-2 btn-success float-left" to="#">Add to Cart</Link>
+                  <Link className="btn m-2 btn-success float-left" to="/cart">Add to Cart</Link>
                   
 
                 </div>
