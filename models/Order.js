@@ -35,24 +35,24 @@ Order.fetchCart = function(id){
   .then( cart => {
     return cart
       ? cart
-      : Order.create()
+      : Order.create({ isCart: true, userId: id })
   })
 }
 
 Order.addProduct = function(userId, productId) {
   return Order.fetchCart(userId)
     .then( cart => {
-      if (cart.lineItems) {
-        //If our cart has Lineitems
-        LineItem.findOne({ where: { productId, orderId: cart.id }})
-          .then( lineItem => {
-            //The lineitem exists thus we increase
-            lineItem.quanity++
+      LineItem.findOne({ where: { productId, orderId: cart.id }})
+        .then( lineItem => {
+          if (!lineItem) {
+          //If lineItem doesn't exist create new one with that productId
+            return LineItem.create({ productId })
+            .then( lineitem => cart.addLineItem(lineitem))
+          }
+          //Otherwise we increase the quantity
+            lineItem.quantity++
             return lineItem.save()
-          })
-      } //Otherwise create new lineitem with that productId
-      return LineItem.create({ productId })
-        .then( lineitem => cart.addLineItem(lineitem))
+        })
     })
 }
 
@@ -62,10 +62,12 @@ Order.removeProduct = function(userId, productId) {
         LineItem.findOne({ where: { productId, orderId: cart.id }})
           .then( lineItem => {
             //The lineitem exists we decrease and check if it's the last one
-            lineItem.quanity--
-            return lineItem.quanity > 0
-              ? lineItem.save()
-              : lineItem.destroy()
+            if (lineItem){
+              lineItem.quantity--
+              return lineItem.quantity > 0
+                ? lineItem.save()
+                : lineItem.destroy()
+            }
           })
     })
 }
