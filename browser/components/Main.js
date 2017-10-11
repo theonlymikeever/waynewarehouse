@@ -10,7 +10,8 @@ import SignUp from './SignUp';
 import Home from './Home';
 import Login from './Login';
 import NavBar from './NavBar';
-import ProductList from './ProductList'
+import ProductList from './ProductList';
+import ProductDetail from './ProductDetail';
 import OrderList from './OrderList';
 
 class Main extends Component {
@@ -29,6 +30,7 @@ class Main extends Component {
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route exact path="/products" component={ ProductList } />
+						<Route exact path='/products/:productId' component={ ProductDetail } />
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />

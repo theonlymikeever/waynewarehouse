@@ -10,11 +10,22 @@ const Product = db.define('product', {
         type: Sequelize.DECIMAL(12, 2),
         allowNull: false
     },
+    description: {
+        type: Sequelize.TEXT
+    },
     image: {
         type: Sequelize.STRING,
     },
     weight: Sequelize.DECIMAL(6, 2),
     contributedBy: Sequelize.STRING
+},
+{
+  getterMethods: {
+    shortDescription() {
+        return this.description.slice(0,120) + '... ';
+    }
+  }  
 });
+
 
 module.exports = Product;
