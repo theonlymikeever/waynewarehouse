@@ -5,7 +5,6 @@ import { deleteProductOnServer } from '../stores/products';
 
 function ProductList(props) {
   const { products, handleDelete } = props;
-  console.log('products:', products)
 
   return (
    <div className="card-deck mt-2">
@@ -21,7 +20,7 @@ function ProductList(props) {
 
                   <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
                   <h6 className="card-subtitle mt-2 text-muted">${ product.pricePretty }</h6>
-                  <p className="card-text">lb: { product.weight }</p>
+                  <p className="card-text">lb: { product.weight ? product.weight : 'NA' }</p>
                   <form className="form-inline btn mr-2 mb-0" onSubmit={ handleDelete }>
                   {(product.isAdmin)? 
                     <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : '' }
