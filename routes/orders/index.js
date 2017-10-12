@@ -23,13 +23,8 @@ router.delete('/:id/lineItems', (req, res, next) => {
     .catch(next);
 })
 
-// router.get('/:userId', (req, res, next) => {
-//   Order.fetchCart(req.params.userId, { include: [{ all: true }] })
-//     .then(cart => {
-//       // console.log(cart.lineItems.getProduct);
-//       res.send(cart);
-//     })
-// })
+
+
 // router.delete('/:id', (req, res, next) => {
 //   Order.destroy({ where: { id: +req.params.id }})
 //     .then(data => {
