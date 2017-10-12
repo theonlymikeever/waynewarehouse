@@ -14,15 +14,15 @@ app.use(bodyParser.json());
 
 // add session
 app.use(session({
-  secret: 'theBatCave', 
+  secret: 'theBatCave',
   resave: false,
   saveUninitialized: false
 }));
 
-app.use(function (req, res, next) {
-  console.log('session', req.session);
-  next();
-});
+// app.use(function (req, res, next) {
+//   console.log('session', req.session);
+//   next();
+// });
 
 //Static Routes
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
