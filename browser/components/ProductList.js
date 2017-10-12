@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteProductOnServer } from '../stores/products';
+import { addItem } from '../stores/cart';
+
 
 function ProductList(props) {
-  const { products, handleDelete } = props;
-  console.log('products:', products)
-
+  const { products, handleDelete, handleAdd, user } = props;
+  
   return (
    <div className="card-deck mt-2">
       {
@@ -26,9 +27,8 @@ function ProductList(props) {
                   {(product.isAdmin)? 
                     <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : '' }
                   </form>
-                  <Link className="btn m-2 btn-success float-left" to="/cart">Add to Cart</Link>
-                  
-
+                  <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
+                    onClick={ () => handleAdd(user.id, product.id) }>Add to Cart</Link>
                 </div>
               </div>
               </div>
@@ -39,9 +39,10 @@ function ProductList(props) {
   )
 }
 
-const mapStateToProps = ({ products }) => {
+const mapStateToProps = ({ products, user }) => {
   return {
-    products
+    products, 
+    user
   }
 }
 
@@ -50,6 +51,9 @@ const mapDispatchToProps = (dispatch) => {
     handleDelete: (evt) => {
       evt.preventDefault();
       dispatch(deleteProductOnServer(evt.target.delete.value))
+    },
+    handleAdd: (userId, productId) => {      
+      dispatch(addItem(userId, productId))
     }
   }
 }

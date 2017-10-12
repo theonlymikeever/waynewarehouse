@@ -35,7 +35,7 @@ class Main extends Component {
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
-            <Route path='/cart' component={ CartList } />
+            <Route path='/orders/:userId' component={ CartList } />
 						<Route component={Home} />
 					</Switch>
 				</main>
