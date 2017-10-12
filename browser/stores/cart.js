@@ -40,19 +40,19 @@ export const fetchCart = (userId) => {
 }
 
 export const addItem = (userId, productId) => {
-    return () => {
+    return (dispatch) => {
         axios.post(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                fetchCart(userId);
+                dispatch(fetchCart(userId));
             })
     }
 }
 
 export const deleteLineItem = (userId, productId) => {
-    return () => {
+    return (dispatch) => {
         axios.delete(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                fetchCart(userId);
+                dispatch(fetchCart(userId));
             })
     }
 }
