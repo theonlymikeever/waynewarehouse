@@ -17,12 +17,18 @@ router.post('/:id/lineItems', (req, res, next) => {
     .catch(next);
 })
 
-router.delete('/:id/lineItems', (req, res, next) =>{
+router.delete('/:id/lineItems', (req, res, next) => {
   Order.removeProduct(req.params.id, req.body.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
 })
 
+// router.get('/:userId', (req, res, next) => {
+//   Order.fetchCart(req.params.userId, { include: [{ all: true }] })
+//     .then(cart => {
+//       res.send(cart);
+//     })
+// })
 // router.delete('/:id', (req, res, next) => {
 //   Order.destroy({ where: { id: +req.params.id }})
 //     .then(data => {
