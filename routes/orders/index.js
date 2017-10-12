@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const Order = require('../../models/Order');
-const LineItem = require('../../models/LineItem');
+
 
 
 router.get('/', (req, res, next) => {
@@ -26,6 +26,7 @@ router.delete('/:id/lineItems', (req, res, next) => {
 // router.get('/:userId', (req, res, next) => {
 //   Order.fetchCart(req.params.userId, { include: [{ all: true }] })
 //     .then(cart => {
+//       // console.log(cart.lineItems.getProduct);
 //       res.send(cart);
 //     })
 // })
