@@ -25,6 +25,7 @@ app.use(function (req, res, next) {
 
 //Static Routes
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 app.use('/', express.static(path.join(__dirname, 'browser')));
 

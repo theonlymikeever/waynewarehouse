@@ -23,6 +23,9 @@ const Product = db.define('product', {
   getterMethods: {
     shortDescription() {
         return this.description.slice(0,120) + '... ';
+    },
+    pricePretty(){
+        return this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }  
 });
