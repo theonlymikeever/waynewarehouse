@@ -60,7 +60,7 @@ const deleteLineItem = (userId, productId) => {
 
 //Reducer
 
-const reducer = (state = {}, action) => {
+export default function (state = {}, action) {
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, state.cart);
