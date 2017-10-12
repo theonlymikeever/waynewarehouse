@@ -11,7 +11,7 @@ function ProductDetail(props) {
     return (
      <div className='container' key={ product.id }>
         <div className="row" >
-          <div className='col-sm-5 mx-auto '>
+          <div className='col-sm-5'>
             <img className="mb-2 rounded vertical-center " src={ product.image } />
           </div>
             <div className="card-body col-sm-7">

@@ -17,7 +17,7 @@ class NavBar extends Component {
     const { user } = this.props;
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="/images/batman_logo_2574.gif" className="d-inline-block" height="12" width="16" />me</span></Link>
+          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="https://d2t1xqejof9utc.cloudfront.net/screenshots/pics/f89f21c73acb8a4f2d0f772dd713c822/large.gif" className="d-inline-block" height="15" width="20" />me</span></Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
