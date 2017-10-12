@@ -8,19 +8,19 @@ const FETCH_CART = 'FETCH_CART';
 
 //Action Creators
 
-export const addToCart = () => {
+const addToCart = () => {
     return {
         type: ADD_TO_CART,
     }
 }
 
-export const removeFromCart = () => {
+const removeFromCart = () => {
     return {
         type: REMOVE_FROM_CART,
     }
 }
 
-export const getCart = (cart) => {
+const getCart = (cart) => {
     return {
         type: FETCH_CART,
         cart
@@ -29,7 +29,7 @@ export const getCart = (cart) => {
 
 //Thunks
 
-const fetchCart = (userId) => {
+export const fetchCart = (userId) => {
     return (dispatch) => {
         axios.get(`/api/orders/${userId}`)
             .then(res => res.data)
@@ -39,20 +39,20 @@ const fetchCart = (userId) => {
     }
 }
 
-const addItem = (userId, productId) => {
-    return () => {
+export const addItem = (userId, productId) => {
+    return (dispatch) => {
         axios.post(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                fetchCart(userId);
+                dispatch(fetchCart(userId));
             })
     }
 }
 
-const deleteLineItem = (userId, productId) => {
-    return () => {
+export const deleteLineItem = (userId, productId) => {
+    return (dispatch) => {
         axios.delete(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                fetchCart(userId);
+                dispatch(fetchCart(userId));
             })
     }
 }
@@ -63,7 +63,7 @@ const deleteLineItem = (userId, productId) => {
 export default function (state = {}, action) {
     switch (action.type) {
         case FETCH_CART:
-            return Object.assign({}, state, state.cart);
+            return Object.assign({}, state, action.cart);
         default:
             return state;
     }
