@@ -63,7 +63,7 @@ export const deleteLineItem = (userId, productId) => {
 export default function (state = {}, action) {
     switch (action.type) {
         case FETCH_CART:
-            return Object.assign({}, state, state.cart);
+            return Object.assign({}, state, action.cart);
         default:
             return state;
     }
