@@ -50,7 +50,7 @@ Order.addProduct = function (userId, productId) {
         .then(lineItem => {
           if (!lineItem) {
             //If lineItem doesn't exist create new one with that productId
-            return LineItem.create({ productId }, { include: [{ all: true }] })
+            return LineItem.create({ productId })
               .then(lineitem => cart.addLineItem(lineitem))
           }
           //Otherwise we increase the quantity

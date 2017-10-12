@@ -29,7 +29,7 @@ function ProductList(props) {
                   </form>
 
                   <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                    onClick={handleAdd(user.id, product.id)}>Add to Cart</Link>
+                    onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
                 </div>
               </div>
             </div>
