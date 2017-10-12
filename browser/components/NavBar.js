@@ -24,14 +24,15 @@ class NavBar extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <NavLink to="/categories" className="nav-link" activeClassName="active">Categories</NavLink>
-              </li>
-              <li className="nav-item">
                 <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
               </li>
+            {(user.id)? (
               <li>
-                <NavLink to="/orders">Orders</NavLink>
+                <NavLink className='nav-link' to="/orders">Orders</NavLink>
               </li>
+            ) : "" }
+            
+
             </ul>
             {this.renderLogout(user)}
             {this.renderLoginSignup(user)}
