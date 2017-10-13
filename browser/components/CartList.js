@@ -4,30 +4,36 @@ import { connect } from 'react-redux';
 import { deleteLineItem } from '../stores/cart';
 
 const CartList = (props) => {
-  const { products, handleDelete, user } = props;
-
+  const { products, handleDelete, user, cart } = props;
+  const lineItems = cart.lineItems || []
   return (
     <div className="container">
       <div className="row mt-3">
-        <div className="col-xs-12 col-md-8">  
+        <div className="col-xs-12 col-md-8">
           <table className="table table-hover">
             <thead>
               <tr>
-                <th>Cart</th>
+                <th>Item</th>
                 <th>Quantity</th>
-                <th>Price</th> 
-                <th></th>             
+                <th>Price</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr key='itemId'>      
-                <td><Link to="#">Item 1</Link></td>
-                <td>Quantity</td>
-                <td>Price</td>
-                <td>
-                  <button className="btn btn-sm btn-danger">Delete</button>
-                </td> 
-              </tr>
+              {
+                lineItems.length && lineItems.map(item => {
+                  return (
+                  <tr key={item.id}>
+                    <td><Link to={ `/products/${ item.product.id }` }>{ item.product.name }</Link></td>
+                    <td>{ item.quantity }</td>
+                    <td>{ item.product.price }</td>
+                    <td>
+                      <button className="btn btn-sm btn-danger" onClick={ () => handleDelete(user.id, item.product.id) }>Delete</button>
+                    </td>
+                  </tr>
+                  )
+                })
+              }
             </tbody>
           </table>
         </div>
@@ -38,17 +44,18 @@ const CartList = (props) => {
         </div>
 
       </div>
-      
-    </div>    
+
+    </div>
 
   )
 }
 
 
-const mapStateToProps = ({ products, user }) => {
+const mapStateToProps = ({ products, user, cart }) => {
   return {
-    products, 
-    user
+    products,
+    user,
+    cart
   }
 }
 
