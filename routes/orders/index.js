@@ -15,7 +15,6 @@ router.get('/', (req, res, next) => {
 router.get('/:userId', (req, res, next) => {
   Order.fetchCart(req.params.userId)
     .then(data => {
-      console.log(data)
       res.send(data)
     })
     .catch(next);
@@ -43,8 +42,9 @@ router.post('/:id/lineItems', (req, res, next) => {
 })
 
 //Remove Product
-router.delete('/:id/lineItems', (req, res, next) =>{
-  Order.removeProduct(req.params.id, req.body.productId)
+router.delete('/:id/lineItems/:productId', (req, res, next) =>{
+  console.log('in route: ')
+  Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
 })

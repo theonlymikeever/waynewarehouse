@@ -50,7 +50,6 @@ Order.addProduct = function (userId, productId) {
         .then(lineItem => {
           if (!lineItem) {
             //If lineItem doesn't exist create new one with that productId
-            console.log('creating first product')
             return LineItem.create({ productId })
               .then(lineitem => cart.addLineItem(lineitem))
           }
