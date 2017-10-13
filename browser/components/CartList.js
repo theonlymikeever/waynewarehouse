@@ -9,24 +9,24 @@ const CartList = (props) => {
   return (
     <div className="container">
       <div className="row mt-3">
-        <div className="col-xs-12 col-md-8">  
+        <div className="col-xs-12 col-md-8">
           <table className="table table-hover">
             <thead>
               <tr>
                 <th>Cart</th>
                 <th>Quantity</th>
-                <th>Price</th> 
-                <th></th>             
+                <th>Price</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr key='itemId'>      
+              <tr key='itemId'>
                 <td><Link to="#">Item 1</Link></td>
                 <td>Quantity</td>
                 <td>Price</td>
                 <td>
                   <button className="btn btn-sm btn-danger">Delete</button>
-                </td> 
+                </td>
               </tr>
             </tbody>
           </table>
@@ -38,17 +38,19 @@ const CartList = (props) => {
         </div>
 
       </div>
-      
-    </div>    
+
+    </div>
 
   )
 }
 
 
-const mapStateToProps = ({ products, user }) => {
+const mapStateToProps = ({ products, user, cart }) => {
+  console.log('cart!',cart)
   return {
-    products, 
-    user
+    products,
+    user,
+    cart
   }
 }
 
