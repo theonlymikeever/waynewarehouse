@@ -42,6 +42,7 @@ const CartList = (props) => {
           Subtotal(1 item): price
           <Link className="btn btn-primary m-2" to={`/orders/${user.id}`}>Proceed to Checkout</Link>
         </div>
+        <Link to={'/products'} className="card-link float-right">Back to Products</Link>
 
       </div>
 

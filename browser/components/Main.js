@@ -25,8 +25,8 @@ class Main extends Component {
 
 	render() {
 		return (
-			<div className='container'>
-				<main>
+			<div className=''>
+				<main className=''>
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={Home} />
