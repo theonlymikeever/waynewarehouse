@@ -43,7 +43,6 @@ export const addItem = (userId, productId) => {
     return (dispatch) => {
         axios.post(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                console.log('finished creating')
                 dispatch(fetchCart(userId));
             })
     }
