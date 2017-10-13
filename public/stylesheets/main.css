@@ -14,3 +14,7 @@
     min-width: 100%;
     min-height: 100%
 }
+body {
+    background-image: url("../images/Batman-Logo.jpg");
+/*    background: grey;
+*/}
