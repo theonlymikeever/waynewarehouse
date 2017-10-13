@@ -62,8 +62,9 @@ const mapStateToProps = ({ products, user, cart }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleDelete: (userId, productId, evt) => {
-      evt.preventDefault();
+    handleDelete: (userId, productId) => {
+      console.log('clicked delete')
+      console.log(userId, productId)
       dispatch(deleteLineItem(userId, productId))
     }
   }
