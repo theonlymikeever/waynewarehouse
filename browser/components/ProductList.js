@@ -11,7 +11,7 @@ function ProductList(props) {
       {
         products.map( product => {
           return (
-            <div className="mb-3 col-sm-4" key={ product.id }>
+            <div className="mb-3 col-sm-4 body" key={ product.id }>
               <div className="card">
                 <div className="card-body">
                   <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={ product.image } width="150"/></Link>

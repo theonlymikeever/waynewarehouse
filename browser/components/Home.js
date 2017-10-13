@@ -11,6 +11,7 @@ export default class Home extends Component {
 			<div>
 				<div className='container'>
 					<h1>The Wayne Warehouse</h1>
+					<img src="../Images/TheWareHouse.png"></img>
 				</div>
 			</div>
 		)

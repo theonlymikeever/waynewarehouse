@@ -14,3 +14,7 @@
     min-width: 100%;
     min-height: 100%
 }
+body {
+    background-image: url("../../browser/Images/black-vinyl-fabric_370x280.jpg");
+/*    background: grey;
+*/}
