@@ -11,11 +11,11 @@ class OrderList extends Component {
 
   render() {
     // const {cart} = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div className="container">
         <h1>Orders</h1>
-        
+
         <table className="table table-striped">
           <thead className="thead-inverse">
             <tr>
