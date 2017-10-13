@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
 router.get('/:userId', (req, res, next) => {
   Order.fetchCart(req.params.userId)
     .then(data => {
+      console.log(data)
       res.send(data)
     })
     .catch(next);

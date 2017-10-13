@@ -25,8 +25,8 @@ class Main extends Component {
 
 	render() {
 		return (
-			<div className='container'>
-				<main>
+			<div className=''>
+				<main className=''>
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={Home} />
@@ -35,7 +35,7 @@ class Main extends Component {
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
-            <Route path='/cart' component={ CartList } />
+            			<Route exact path='/orders/:userId/lineItems' component={ CartList } />
 						<Route component={Home} />
 					</Switch>
 				</main>

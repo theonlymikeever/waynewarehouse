@@ -46,11 +46,12 @@ Order.fetchCart = function (id) {
 Order.addProduct = function (userId, productId) {
   return Order.fetchCart(userId)
     .then(cart => {
-      LineItem.findOne({ where: { productId, orderId: cart.id } })
+      return LineItem.findOne({ where: { productId, orderId: cart.id } })
         .then(lineItem => {
           if (!lineItem) {
             //If lineItem doesn't exist create new one with that productId
-            return LineItem.create({ productId }, { include: [{ all: true }] })
+            console.log('creating first product')
+            return LineItem.create({ productId })
               .then(lineitem => cart.addLineItem(lineitem))
           }
           //Otherwise we increase the quantity

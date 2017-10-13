@@ -26,50 +26,52 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const { handleChange } = this;
     return (
-      <div className="row">
-        <div className="col-sm-6">
-          <form onSubmit={this.onLoginSubmit}>
-            <div className="form-group">
-              <label>email</label>
-              <input
-                onChange={handleChange}
-                value={email}
-                name="email"
-                type="email"
-                className="form-control"
-                required
-                autoFocus
-              />
-            </div>
-            <div className="form-group">
-              <label>password</label>
-              <input value={password}
-                onChange={handleChange}
-                name="password"
-                type="password"
-                className="form-control"
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">{message}</button>
-          </form>
-        </div>
-        <div className="col-sm-1">
-          <div className="back-line">
-            <span>OR</span>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <form onSubmit={this.onLoginSubmit}>
+              <div className="form-group">
+                <label>email</label>
+                <input
+                  onChange={handleChange}
+                  value={email}
+                  name="email"
+                  type="email"
+                  className="form-control"
+                  required
+                  autoFocus
+                />
+              </div>
+              <div className="form-group">
+                <label>password</label>
+                <input value={password}
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                  className="form-control"
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">{message}</button>
+            </form>
           </div>
-        </div>
-        <div className='col-sm-5'>
-          <div className="buffer oauth">
-            <p>
-              <a
-                target="_self"
-                href="/auth/google"
-                className="btn">
+          <div className="col-sm-1">
+            <div className="back-line">
+              <span>OR</span>
+            </div>
+          </div>
+          <div className='col-sm-5'>
+            <div className="buffer oauth">
+              <p>
+                <a
+                  target="_self"
+                  href="/auth/google"
+                  className="btn">
 
-                <span>{message} with Google</span>
-              </a>
-            </p>
+                  <span>{message} with Google</span>
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

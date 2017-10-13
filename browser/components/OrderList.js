@@ -8,11 +8,14 @@ class OrderList extends Component {
 
   // this is hard coded for now
   // if admin, show 'update' button
-  
-  render(){
-    return(
+
+  render() {
+    // const {cart} = this.props;
+    console.log(this.props);
+    return (
       <div className="container">
         <h1>Orders</h1>
+        
         <table className="table table-striped">
           <thead className="thead-inverse">
             <tr>
@@ -21,11 +24,11 @@ class OrderList extends Component {
               <th>Status</th>
               <th>Total</th>
               <th></th>
-              <th></th>      
+              <th></th>
             </tr>
           </thead>
-          <tbody>         
-            <tr>      
+          <tbody>
+            <tr>
               <th scope="row">1</th>
               <td><Link to={`/orders/1`}>10/08/2017</Link></td>
               <td>
@@ -37,35 +40,35 @@ class OrderList extends Component {
               <td>100.00</td>
               <td>
                 <button className="btn btn-sm btn-warning">Update</button>
-              </td> 
+              </td>
               <td>
                 <button className="btn btn-sm btn-danger">Delete</button>
-              </td> 
-            </tr>               
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
 
     )
-  }  
+  }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ cart }) => {
   return {
-    orders: state.orders
+    cart
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleDelete: function(orderId, event){
+    handleDelete: function (orderId, event) {
       event.preventDefault();
       dispatch(deleteOrder(orderId));
-      
+
     },
-    handleUpdate: function(event){
+    handleUpdate: function (event) {
       event.preventDefault();
-      
+
     }
   }
 }

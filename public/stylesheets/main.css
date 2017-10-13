@@ -14,7 +14,39 @@
     min-width: 100%;
     min-height: 100%
 }
-body {
-    background-image: url("../../browser/Images/black-vinyl-fabric_370x280.jpg");
-/*    background: grey;
+.home {
+    background-image: url("../images/wallpaper.jpg");
+    background-size: cover;
+}
+
+.title {
+	color: yellow;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 2%;
+}
+
+.smallTitle {
+	margin-left: 35%;
+	margin-bottom: 10%;
+	color: red;
+}
+
+.mainImage {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 2%;
+	margin-bottom: 2%
+}
+
+.productList {
+	background-image: url('../images/black-vinyl.jpg')
+}
+
+.product {
+	margin-top: 2%;
+}
+
+.detail {
+/*	background-color: gray;
 */}

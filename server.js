@@ -7,21 +7,22 @@ const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 
+
 //Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // add session
 app.use(session({
-  secret: 'theBatCave', 
+  secret: 'theBatCave',
   resave: false,
   saveUninitialized: false
 }));
 
-app.use(function (req, res, next) {
-  console.log('session', req.session);
-  next();
-});
+// app.use(function (req, res, next) {
+//   console.log('session', req.session);
+//   next();
+// });
 
 //Static Routes
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
