@@ -16,14 +16,14 @@ module.exports = {
           presets: [ 'es2015', 'react']
         }
       }
-    ],
-      plugins: [
+    ]
+  },
+  plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
         Popper: ['popper.js', 'default']
       })
-  ]
-  }
+    ]
 };
