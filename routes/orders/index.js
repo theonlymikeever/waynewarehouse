@@ -30,8 +30,8 @@ router.get('/:userId/:filter', (req, res, next) => {
       isCart: req.params.filter
     }
   })
-  .then( cart => res.send(cart))
-  .catch(next);
+    .then(cart => res.send(cart))
+    .catch(next);
 })
 
 //Add Product
@@ -42,7 +42,7 @@ router.post('/:id/lineItems', (req, res, next) => {
 })
 
 //Remove Product
-router.delete('/:id/lineItems/:productId', (req, res, next) =>{
+router.delete('/:id/lineItems/:productId', (req, res, next) => {
   console.log('in route: ')
   Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
@@ -50,19 +50,21 @@ router.delete('/:id/lineItems/:productId', (req, res, next) =>{
 })
 
 //Create & Finalize the Order
-router.put('/:userId', (req, res, next) => {
+router.put('/:cartId', (req, res, next) => {
+  console.log(req.params.cartId)
   Order.findOne({
     where: {
-      id: req.params.userId,
+      id: req.params.cartId,
       isCart: true
     }
   })
-  .then( order => {
-    order.isCart = false;
-    return order.save()
-  })
-  .then( () => res.sendStatus(200))
-  .catch(next);
+    .then(order => {
+      console.log(order);
+      order.isCart = false;
+      return order.save()
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);
 })
 
 module.exports = router;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { deleteLineItem } from '../stores/cart';
+import { deleteLineItem, checkoutCart } from '../stores/cart';
 
 const CartList = (props) => {
-  const { products, handleDelete, user, cart } = props;
+  const { products, handleDelete, handleCheckout, user, cart } = props;
   const lineItems = cart.lineItems || []
   return (
     <div className="container">
@@ -23,14 +23,14 @@ const CartList = (props) => {
               {
                 lineItems.length && lineItems.map(item => {
                   return (
-                  <tr key={item.id}>
-                    <td><Link to={ `/products/${ item.product.id }` }>{ item.product.name }</Link></td>
-                    <td>{ item.quantity }</td>
-                    <td>${ item.product.pricePretty }</td>
-                    <td>
-                      <button className="btn btn-sm btn-danger" onClick={ () => handleDelete(user.id, item.product.id) }>Delete</button>
-                    </td>
-                  </tr>
+                    <tr key={item.id}>
+                      <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
+                      <td>{item.quantity}</td>
+                      <td>{item.product.price}</td>
+                      <td>
+                        <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Delete</button>
+                      </td>
+                    </tr>
                   )
                 })
               }
@@ -40,7 +40,7 @@ const CartList = (props) => {
 
         <div className="card col-xs-12 col-md-4">
           Subtotal(1 item): price
-          <Link className="btn btn-primary m-2" to={`/orders/${user.id}`}>Proceed to Checkout</Link>
+          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary m-2" to={`/orders/${user.id}`}>Proceed to Checkout</Link>
         </div>
 
       </div>
@@ -62,9 +62,10 @@ const mapStateToProps = ({ products, user, cart }) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleDelete: (userId, productId) => {
-      console.log('clicked delete')
-      console.log(userId, productId)
       dispatch(deleteLineItem(userId, productId))
+    },
+    handleCheckout: (cartId) => {
+      dispatch(checkoutCart(cartId))
     }
   }
 }

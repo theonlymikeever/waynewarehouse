@@ -5,6 +5,7 @@ import axios from 'axios';
 const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const FETCH_CART = 'FETCH_CART';
+const CHECKOUT = 'CHECKOUT';
 
 //Action Creators
 
@@ -24,6 +25,12 @@ const getCart = (cart) => {
     return {
         type: FETCH_CART,
         cart
+    }
+}
+
+const checkOut = () => {
+    return {
+        type: CHECKOUT
     }
 }
 
@@ -50,10 +57,18 @@ export const addItem = (userId, productId) => {
 
 export const deleteLineItem = (userId, productId) => {
     return (dispatch) => {
-        axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
+        axios.delete(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                console.log('deleted will fetch')
                 dispatch(fetchCart(userId));
+            })
+    }
+}
+
+export const checkoutCart = (cartId) => {
+    return (dispatch) => {
+        axios.put(`/api/orders/${cartId}`)
+            .then(() => {
+                dispatch(checkOut());
             })
     }
 }
@@ -65,6 +80,8 @@ export default function (state = {}, action) {
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
+        case CHECKOUT:
+            return Object.assign({}, state, { cart: {} });
         default:
             return state;
     }
