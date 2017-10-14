@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 module.exports = {
   entry: './browser/index.js',
   output: {
@@ -15,6 +16,14 @@ module.exports = {
           presets: [ 'es2015', 'react']
         }
       }
-    ]
+    ],
+      plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']
+      })
+  ]
   }
 };
