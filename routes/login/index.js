@@ -3,7 +3,7 @@ const User = require('../../models/User');
 const session = require('express-session');
 
 router.get('/', (req, res, next) => {
-	User.findById(req.session.userId)
+	User.findById(req.session.userId || 3)
 		.then(user => {
 			res.send(user);
 		})
