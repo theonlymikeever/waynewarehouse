@@ -16,13 +16,13 @@ class NavBar extends Component {
   render() {
     const { user } = this.props;
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="https://d2t1xqejof9utc.cloudfront.net/screenshots/pics/f89f21c73acb8a4f2d0f772dd713c822/large.gif" className="d-inline-block" height="12" width="15" />me</span></Link>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="d-inline-block" height="12" width="15" />me</span></Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
               </li>
@@ -31,7 +31,7 @@ class NavBar extends Component {
                 <NavLink className='nav-link' to="/orders">Orders</NavLink>
               </li>
             ) : "" }
-            
+
 
             </ul>
             {this.renderLogout(user)}
@@ -58,24 +58,24 @@ class NavBar extends Component {
   }
 
   renderLogout(user) {
-    const textStyle = { color: 'blue' }
+    // const textStyle = { color: 'blue' }
     if (!user.id) {
       return null;
     }
     return (
-        <ul className="nav navbar-nav">
+        <ul className="nav navbar-nav my-2 my-lg-0">
           <li className="nav-item">
             <NavLink to="/profile" className="nav-link" activeClassName="active">Profile</NavLink>
           </li>
           <li className="nav-item mr-sm-2">
             <button
-              className="btn btn-outline-dark my-2 my-sm-0"
+              className="btn btn-outline-warning my-2 my-sm-0"
               onClick={this.props.logout}>
               Logout
             </button>
           </li>
-          <small className="p-2">Welcome:&nbsp;
-            <span style={textStyle}>{user.name}&nbsp;</span>
+          <small className="p-2 text-light">Welcome:&nbsp;
+            <span className="text-warning">{user.name}&nbsp;</span>
           </small>
         </ul>
     );
