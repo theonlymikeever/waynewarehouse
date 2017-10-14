@@ -37,9 +37,9 @@ const checkOut = (cart) => {
 
 //Thunks
 
-export const fetchCart = (userId) => {
+export const fetchCart = (userId, filter) => {
     return (dispatch) => {
-        axios.get(`/api/orders/${userId}`)
+        axios.get(`/api/orders/${userId}/`)
             .then(res => res.data)
             .then(cart => {
                 dispatch(getCart(cart))
@@ -82,7 +82,7 @@ export default function (state = {}, action) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
         case CHECKOUT:
-            return Object.assign({}, state);
+            return Object.assign({});
         default:
             return state;
     }

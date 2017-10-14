@@ -5,7 +5,7 @@ class UserProfile extends Component {
 
     render() {
         const { user } = this.props;
-        console.log(user.orders);
+        console.log(this.props);
         return (
             <div>
                 <h1>Name: {user.name} <span>
@@ -26,9 +26,10 @@ class UserProfile extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, orders }) => {
     return {
-        user
+        user,
+        orders
     }
 }
 
