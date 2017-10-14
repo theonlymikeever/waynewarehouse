@@ -14,9 +14,10 @@ import ProductList from './ProductList';
 import ProductDetail from './ProductDetail';
 import OrderList from './OrderList';
 import CartList from './CartList';
+import OrderConfirmation from './OrderConfirmation';
 
 class Main extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 	}
 	componentDidMount() {
@@ -30,12 +31,13 @@ class Main extends Component {
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={Home} />
-						<Route exact path="/products" component={ ProductList } />
-						<Route exact path='/products/:productId' component={ ProductDetail } />
+						<Route exact path="/products" component={ProductList} />
+						<Route exact path='/products/:productId' component={ProductDetail} />
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
 						<Route exact path='/signup' component={SignUp} />
-            			<Route exact path='/orders/:userId/lineItems' component={ CartList } />
+						<Route exact path='/orders/:userId/lineItems' component={CartList} />
+						<Route exact path='/orders/:userId/confirmation' component={OrderConfirmation} />
 						<Route component={Home} />
 					</Switch>
 				</main>
@@ -44,10 +46,10 @@ class Main extends Component {
 	}
 }
 
-const mapProps = ({user}) => {
-  return {
-    user
-  }
+const mapProps = ({ user }) => {
+	return {
+		user
+	}
 };
 
 const mapDispatchToProps = (dispatch) => {

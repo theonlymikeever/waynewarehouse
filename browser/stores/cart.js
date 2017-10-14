@@ -78,12 +78,11 @@ export const checkoutCart = (cartId) => {
 //Reducer
 
 export default function (state = {}, action) {
-    console.log(action);
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
         case CHECKOUT:
-            return Object.assign({});
+            return Object.assign({}, state);
         default:
             return state;
     }
