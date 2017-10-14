@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 class UserProfile extends Component {
 
     render() {
-        const { user } = this.props;
-        console.log(this.props);
+        const { user, orders } = this.props;
+        let userOrders = [];
+        if (orders.length) {
+            userOrders = orders.filter(order => order.userId == user.id);
+        }
+        console.log(userOrders)
         return (
             <div>
                 <h1>Name: {user.name} <span>
@@ -16,8 +20,10 @@ class UserProfile extends Component {
                 <h3>Orders:</h3>
                 <ul>
                     {
-                        user.orders && user.orders.map(order => {
-                            return <li key={order.id}>Order #: {order.id}</li>
+                        userOrders.length && userOrders.map(order => {
+                            return (
+                                <Link to={`/orders/${order.id}/confirmation`}><li key={order.id}>Order #: {order.id}</li></Link>
+                            )
                         })
                     }
                 </ul>
