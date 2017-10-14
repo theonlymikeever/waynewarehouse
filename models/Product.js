@@ -7,7 +7,7 @@ const Product = db.define('product', {
         allowNull: false,
     },
     price: {
-        type: Sequelize.DECIMAL(12, 2),
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     description: {
@@ -16,7 +16,7 @@ const Product = db.define('product', {
     image: {
         type: Sequelize.STRING,
     },
-    weight: Sequelize.DECIMAL(6, 2),
+    weight: Sequelize.FLOAT,
     contributedBy: Sequelize.STRING
 },
 {
@@ -25,9 +25,9 @@ const Product = db.define('product', {
         return this.description.slice(0,120) + '... ';
     },
     pricePretty(){
-        return this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return (this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     }
-  }  
+  }
 });
 
 

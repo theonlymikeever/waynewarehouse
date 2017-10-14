@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 function RightSideCart(props) {
   const { cart, user } = props;
   const lineItems = cart.lineItems || [];
+  const subtotal = lineItems.reduce((total, curr) => {
+          return total + curr.product.price * curr.quantity
+        }, 0).toFixed(2)
 
   return (
     <div className="col-sm-3 offset-sm-1 sidebar mt-3">
@@ -14,8 +17,8 @@ function RightSideCart(props) {
           lineItems.map(item => {
             return (
              <a key={ item.id } href={`/products/${ item.product.id }`} className="list-group-item">
-                { item.product.name } &nbsp;({ item.quantity })
-                <span className="badge badge-dark float-right">{ item.product.price * item.quantity }</span>
+                { item.product.name }
+                <span className="badge badge-dark float-right">{ item.quantity }</span>
              </a>
             )
           })
@@ -23,15 +26,7 @@ function RightSideCart(props) {
         </div>
       </div>
       <div className="sidebar-module mt-3">
-        <h5>Subtotal</h5>
-        <hr />
-        <p>
-          {
-            lineItems.reduce((total, curr) => {
-              console.log(typeof curr.product.price)
-              return total+= curr.product.price
-            }, 0)
-          }
+        <p><strong>Subtotal</strong><span className="float-right">$ { subtotal ? subtotal : 0.00 }</span>
         </p>
         <a className="btn btn-primary btn-block" href={ `/#/orders/${ user.id }/lineItems` }>View Cart</a>
       </div>
