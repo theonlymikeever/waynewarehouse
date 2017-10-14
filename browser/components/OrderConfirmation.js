@@ -12,18 +12,9 @@ class OrderCofirmation extends Component {
 
     render() {
         const {orders } = this.props;
-        let order = [];
-        let lineItems = [];
         const orderId = this.props.match.params.orderId
-    
-        if (orders.length > 0) {
-            order = orders.filter(order => order.id == orderId);
-        }
-
-        if (order[0] && order[0].lineItems) {
-            lineItems = order[0].lineItems;
-        }
-        console.log('order', order[0]);
+        const order = orders.length > 0 ? orders.filter(order => order.id == orderId) : [];
+        let lineItems = (order[0] && order[0].lineItems) ? order[0].lineItems : [];
         return (
             <div className="container">
                 <div className="row mt-3">
