@@ -28,9 +28,10 @@ const getCart = (cart) => {
     }
 }
 
-const checkOut = () => {
+const checkOut = (cart) => {
     return {
-        type: CHECKOUT
+        type: CHECKOUT,
+        cart
     }
 }
 
@@ -77,11 +78,12 @@ export const checkoutCart = (cartId) => {
 //Reducer
 
 export default function (state = {}, action) {
+    console.log(action);
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
         case CHECKOUT:
-            return Object.assign({}, state, { cart: {} });
+            return Object.assign({});
         default:
             return state;
     }
