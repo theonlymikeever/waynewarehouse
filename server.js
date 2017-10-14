@@ -28,6 +28,7 @@ app.use(session({
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
+app.use('/images', express.static(path.join(__dirname, 'browser/Images')));
 app.use('/', express.static(path.join(__dirname, 'browser')));
 
 //Main App Route
