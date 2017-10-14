@@ -1,4 +1,5 @@
 import React from 'react';
+import RightSideCart from './RightSideCart';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteProductOnServer } from '../stores/products';
@@ -6,10 +7,11 @@ import { addItem } from '../stores/cart';
 
 
 function ProductList(props) {
-  const { products, handleDelete, handleAdd, user } = props;
+  const { products, handleDelete, handleAdd, user, cart } = props;
 
   return (
-    <div className="card-deck mt-2">
+  <div className="row">
+    <div className={ `card-deck mt-2 ${ cart.lineItems ? 'col-sm-9' : ''}` }>
       {
         products.map(product => {
           return (
@@ -37,13 +39,19 @@ function ProductList(props) {
         })
       }
     </div>
+    {
+      cart.lineItems ? <RightSideCart /> : ''
+    }
+  </div>
   )
 }
 
-const mapStateToProps = ({ products, user }) => {
+const mapStateToProps = ({ products, user, cart }) => {
+  console.log('cart ', cart)
   return {
     products,
-    user
+    user,
+    cart
   }
 }
 
