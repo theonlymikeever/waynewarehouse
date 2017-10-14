@@ -21,7 +21,7 @@ function ProductList(props) {
                   <p className="card-text">{product.shortDescription}
 
                     <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
-                  <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
+                  <h6 className="card-subtitle mt-2 text-muted">${product.pricePretty}</h6>
                   <p className="card-text">lb: {product.weight}</p>
                   <form className="form-inline btn mr-2 mb-0" onSubmit={handleDelete}>
                     {(product.isAdmin) ?
