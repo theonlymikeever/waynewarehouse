@@ -40,7 +40,7 @@ const CartList = (props) => {
 
         <div className="card col-xs-12 col-md-4">
           Subtotal(1 item): price
-          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary m-2" to={`/orders/${user.id}`}>Proceed to Checkout</Link>
+          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary m-2" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
         </div>
 
       </div>
