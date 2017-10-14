@@ -1,15 +1,29 @@
 const router = require('express').Router()
 const Order = require('../../models/Order');
-// const LineItem = require('../../models/LineItem');
+const LineItem = require('../../models/LineItem');
+const Product = require('../../models/Product');
 
 //Get All Orders
 router.get('/', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: [
+      {
+        model: LineItem, as: 'lineItems',
+        include: [Product]
+      }
+    ]
+  })
     .then(data => {
+      console.log('orders', data)
       res.send(data)
     })
     .catch(next);
 });
+
+// router.get('/:orderId', (req, res, next) => {
+//   Order.findById(req.params.id)
+//   .then(res.send)
+// }
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
@@ -43,7 +57,7 @@ router.post('/:id/lineItems', (req, res, next) => {
 
 //Remove Product
 router.delete('/:id/lineItems/:productId', (req, res, next) => {
-  console.log('in route: ')
+
   Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
@@ -51,7 +65,7 @@ router.delete('/:id/lineItems/:productId', (req, res, next) => {
 
 //Create & Finalize the Order
 router.put('/:cartId', (req, res, next) => {
-  console.log(req.params.cartId)
+
   Order.findOne({
     where: {
       id: req.params.cartId,
@@ -59,7 +73,7 @@ router.put('/:cartId', (req, res, next) => {
     }
   })
     .then(order => {
-      console.log(order);
+
       order.isCart = false;
       return order.save()
     })
