@@ -5,7 +5,10 @@ import { deleteLineItem, checkoutCart } from '../stores/cart';
 
 const CartList = (props) => {
   const { products, handleDelete, handleCheckout, user, cart } = props;
-  const lineItems = cart.lineItems || []
+  let lineItems = [];
+  if (cart.userId === user.id){
+    lineItems = cart.lineItems;
+  }
   return (
     <div className="container">
       <div className="row mt-3">
