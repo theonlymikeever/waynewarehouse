@@ -58,7 +58,7 @@ export const addItem = (userId, productId) => {
 
 export const deleteLineItem = (userId, productId) => {
     return (dispatch) => {
-        axios.delete(`/api/orders/${userId}/lineItems`, { productId })
+        axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
             .then(() => {
                 dispatch(fetchCart(userId));
             })

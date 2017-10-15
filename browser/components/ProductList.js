@@ -47,7 +47,7 @@ function ProductList(props) {
 }
 
 const mapStateToProps = ({ products, user, cart }) => {
-  console.log('cart ', cart)
+
   return {
     products,
     user,

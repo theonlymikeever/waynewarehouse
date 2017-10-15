@@ -15,6 +15,14 @@ class NavBar extends Component {
 
   render() {
     const { user, cart } = this.props;
+    let cartItems;
+    if (cart && cart.lineItems){
+      cartItems = cart.lineItems.reduce((memo, item) => {
+        return memo + item.quantity;
+      }, 0)
+    }
+    console.log(cartItems)
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="d-inline-block" height="12" width="15" />me</span></Link>
@@ -32,7 +40,7 @@ class NavBar extends Component {
               </li>
             ) : ""}
             <li>
-              <NavLink className='nav-link' to={`/orders/${cart.id}/lineItems`}><span>Cart <small>{cart && cart.lineItems && '(' + cart.lineItems.length + ')'}</small></span></NavLink>
+              <NavLink className='nav-link' to={`/orders/${cart.id}/lineItems`}><span>Cart <small>{cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
             </li>
 
 

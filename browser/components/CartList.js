@@ -23,14 +23,14 @@ const CartList = (props) => {
               {
                 lineItems.length && lineItems.map(item => {
                   return (
-                    <tr key={item.id}>
-                      <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
-                      <td>{item.quantity}</td>
-                      <td>{item.product.price}</td>
-                      <td>
-                        <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Delete</button>
-                      </td>
-                    </tr>
+                  <tr key={item.id}>
+                    <td><Link to={ `/products/${ item.product.id }` }>{ item.product.name }</Link></td>
+                    <td>{ item.quantity }</td>
+                    <td>${ item.product.pricePretty }</td>
+                    <td>
+                      <button className="btn btn-sm btn-danger" onClick={ () => handleDelete(user.id, item.product.id) }>Delete</button>
+                    </td>
+                  </tr>
                   )
                 })
               }
