@@ -1,56 +1,57 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { deleteLineItem, checkoutCart } from '../stores/cart';
+import { deleteLineItem, checkoutCart, fetchCart } from '../stores/cart';
 
-const CartList = (props) => {
-  const { products, handleDelete, handleCheckout, user, cart } = props;
-  let lineItems = [];
-  if (cart.userId === user.id){
-    lineItems = cart.lineItems;
-  }
-  return (
-    <div className="container">
-      <div className="row mt-3">
-        <div className="col-xs-12 col-md-8">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                lineItems.length && lineItems.map(item => {
-                  return (
-                  <tr key={item.id}>
-                    <td><Link to={ `/products/${ item.product.id }` }>{ item.product.name }</Link></td>
-                    <td>{ item.quantity }</td>
-                    <td>${ item.product.pricePretty }</td>
-                    <td>
-                      <button className="btn btn-sm btn-danger" onClick={ () => handleDelete(user.id, item.product.id) }>Delete</button>
-                    </td>
-                  </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-        </div>
+class CartList extends Component {
 
-        <div className="card col-xs-12 col-md-4">
-          Subtotal(1 item): price
+  render() {
+    const { products, handleDelete, handleCheckout, user, cart } = this.props;
+    const lineItems = cart.lineItems || []
+    
+    return (
+      <div className="container">
+        <div className="row mt-3">
+          <div className="col-xs-12 col-md-8">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  lineItems.length && lineItems.map(item => {
+                    return (
+                      <tr key={item.id}>
+                        <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
+                        <td>{item.quantity}</td>
+                        <td>{item.product.price}</td>
+                        <td>
+                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Delete</button>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div className="card col-xs-12 col-md-4">
+            Subtotal(1 item): price
           <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary m-2" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+          </div>
+
         </div>
 
       </div>
 
-    </div>
-
-  )
+    )
+  }
 }
 
 
@@ -69,6 +70,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     handleCheckout: (cartId) => {
       dispatch(checkoutCart(cartId))
+    },
+    fetchCart: (userId,filter) => {
+      dispatch(fetchCart(userId,filter))
     }
   }
 }

@@ -38,12 +38,17 @@ const checkOut = (cart) => {
 //Thunks
 
 export const fetchCart = (userId, filter) => {
+    
     return (dispatch) => {
-        axios.get(`/api/orders/${userId}/`)
-            .then(res => res.data)
-            .then(cart => {
-                dispatch(getCart(cart))
-            })
+        filter === true ?
+            axios.get(`/api/orders/filter/${userId}/${filter ? filter : ''}`)
+            :
+            axios.get(`/api/orders/${userId}`)
+
+                .then(res => res.data)
+                .then(cart => {
+                    dispatch(getCart(cart))
+                })
     }
 }
 
@@ -51,7 +56,7 @@ export const addItem = (userId, productId) => {
     return (dispatch) => {
         axios.post(`/api/orders/${userId}/lineItems`, { productId })
             .then(() => {
-                dispatch(fetchCart(userId));
+                dispatch(fetchCart(userId, false));
             })
     }
 }
@@ -60,7 +65,7 @@ export const deleteLineItem = (userId, productId) => {
     return (dispatch) => {
         axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
             .then(() => {
-                dispatch(fetchCart(userId));
+                dispatch(fetchCart(userId, false));
             })
     }
 }

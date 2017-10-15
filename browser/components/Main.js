@@ -4,6 +4,7 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser } from '../stores/user';
 import { fetchProducts } from '../stores/products'
+import { fetchCart } from '../stores/cart'
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
@@ -25,6 +26,7 @@ class Main extends Component {
 	}
 
 	render() {
+		this.props.getCart(this.props.user.id);
 		return (
 			<div className='container'>
 				<main>
@@ -57,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
 		fetchInitialData: () => {
 			dispatch(fetchUser());
 			dispatch(fetchProducts())
+		},
+		getCart: (userId) => {
+			dispatch(fetchCart(userId));
 		}
 	};
 }

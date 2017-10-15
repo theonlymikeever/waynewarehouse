@@ -27,8 +27,10 @@ router.get('/', (req, res, next) => {
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
+  console.log('dsafdsa');
   Order.fetchCart(req.params.userId)
     .then(data => {
+      console.log(data.userId);
       res.send(data)
     })
     .catch(next);
@@ -37,14 +39,18 @@ router.get('/:userId', (req, res, next) => {
 //Get Cart based on the status
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
-router.get('/:userId/:filter', (req, res, next) => {
+router.get('/filter/:userId/:filter', (req, res, next) => {
+  console.log('entered', req.params.filter);
   Order.findOne({
     where: {
       userId: req.params.userId,
       isCart: req.params.filter
     }
   })
-    .then(cart => res.send(cart))
+    .then(cart => {
+      console.log(cart.userId);
+      res.send(cart)}
+    )
     .catch(next);
 })
 

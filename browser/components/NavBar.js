@@ -40,7 +40,7 @@ class NavBar extends Component {
               </li>
             ) : ""}
             <li>
-              <NavLink className='nav-link' to={`/orders/${cart.id}/lineItems`}><span>Cart <small>{cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
+              <NavLink className='nav-link' to={`/orders/${user.id}/lineItems`}><span>Cart <small>{user.id && cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
             </li>
 
 
