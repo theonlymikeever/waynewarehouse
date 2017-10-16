@@ -37,7 +37,7 @@ router.get('/:userId', (req, res, next) => {
 //Get Cart based on the status
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
-router.get('/filter/:userId/:filter', (req, res, next) => {
+router.get('/:userId/:filter', (req, res, next) => {
   Order.findOne({
     where: {
       userId: req.params.userId,

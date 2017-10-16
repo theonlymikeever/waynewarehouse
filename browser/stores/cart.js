@@ -40,8 +40,9 @@ const checkOut = (cart) => {
 export const fetchCart = (userId, filter) => {
     
     return (dispatch) => {
+        //prevents building additional cart after checkout
         filter === true ?
-            axios.get(`/api/orders/filter/${userId}/${filter ? filter : ''}`)
+            axios.get(`/api/orders/${userId}/${filter ? filter : ''}`)
             :
             axios.get(`/api/orders/${userId}`)
 
