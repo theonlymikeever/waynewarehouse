@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchOrders } from '../stores/orders';
 
 class UserProfile extends Component {
+    
+    componentDidMount() {
+        //not the most efficient way, but the orders.isCart kept returning true.  Not sure why, so i refetched the data.
+        this.props.getOrders();
+    }
 
     render() {
         const { user, orders } = this.props;
@@ -10,7 +16,7 @@ class UserProfile extends Component {
         if (orders.length) {
             userOrders = orders.filter(order => order.userId == user.id);
         }
-        
+        console.log(userOrders[0])
         return (
             <div>
                 <h1>Name: {user.name} <span>
@@ -23,7 +29,7 @@ class UserProfile extends Component {
                     {
                         userOrders.length && userOrders.map(order => {
                             return (
-                                <Link to={`/orders/${order.id}/confirmation`}><li key={order.id}>Order #: {order.id}</li></Link>
+                                order.isCart === true ? null : <Link key = {order.id} to={`/orders/${order.id}/confirmation`}><li key={order.id}>Order #: {order.id}</li></Link>
                             )
                         })
                     }
@@ -40,5 +46,13 @@ const mapStateToProps = ({ user, orders }) => {
     }
 }
 
-export default connect(mapStateToProps, null)(UserProfile);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getOrders: () => {
+            dispatch(fetchOrders());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
 

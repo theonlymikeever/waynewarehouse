@@ -25,12 +25,11 @@ class Main extends Component {
 		this.props.fetchInitialData();
 	}
 
+	componentWillReceiveProps(nextProps) {
+			this.props.getCart(nextProps.user.id);
+	}
+
 	render() {
-		//this.props.user is not defined in componentDidMount.  Not sure where else to put this
-		if (this.props.user.id){
-			this.props.getCart(this.props.user.id);
-		}
-		
 		return (
 			<div className='container'>
 				<main>
