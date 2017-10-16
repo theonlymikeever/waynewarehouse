@@ -21,7 +21,7 @@ class NavBar extends Component {
         return memo + item.quantity;
       }, 0)
     }
-    console.log(cartItems)
+
 
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

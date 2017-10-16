@@ -10,7 +10,7 @@ class UserProfile extends Component {
         if (orders.length) {
             userOrders = orders.filter(order => order.userId == user.id);
         }
-        console.log(userOrders)
+        
         return (
             <div>
                 <h1>Name: {user.name} <span>

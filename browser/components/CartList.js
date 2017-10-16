@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { deleteLineItem, checkoutCart, fetchCart } from '../stores/cart';
+import { deleteLineItem, checkoutCart } from '../stores/cart';
 
 class CartList extends Component {
 
   render() {
-    const { products, handleDelete, handleCheckout, user, cart } = this.props;
+    const { handleDelete, handleCheckout, user, cart } = this.props;
     const lineItems = cart.lineItems || []
-    
+
     return (
       <div className="container">
         <div className="row mt-3">
@@ -63,21 +63,15 @@ const mapStateToProps = ({ products, user, cart }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleDelete: (userId, productId) => {
       dispatch(deleteLineItem(userId, productId))
     },
     handleCheckout: (cartId) => {
       dispatch(checkoutCart(cartId))
-    },
-    fetchCart: (userId,filter) => {
-      dispatch(fetchCart(userId,filter))
     }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartList);
-
-
-

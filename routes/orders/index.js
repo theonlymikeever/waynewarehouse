@@ -14,7 +14,6 @@ router.get('/', (req, res, next) => {
     ]
   })
     .then(data => {
-      console.log('orders', data)
       res.send(data)
     })
     .catch(next);
@@ -27,10 +26,9 @@ router.get('/', (req, res, next) => {
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
-  console.log('dsafdsa');
   Order.fetchCart(req.params.userId)
     .then(data => {
-      console.log(data.userId);
+
       res.send(data)
     })
     .catch(next);
@@ -40,7 +38,6 @@ router.get('/:userId', (req, res, next) => {
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
 router.get('/filter/:userId/:filter', (req, res, next) => {
-  console.log('entered', req.params.filter);
   Order.findOne({
     where: {
       userId: req.params.userId,

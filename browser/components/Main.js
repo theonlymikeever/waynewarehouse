@@ -26,6 +26,7 @@ class Main extends Component {
 	}
 
 	render() {
+		//this.props.user is not defined in componentDidMount.  Not sure where else to put this
 		this.props.getCart(this.props.user.id);
 		return (
 			<div className='container'>
