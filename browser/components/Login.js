@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginActionCreator } from '../stores/user';
+import { loginActionCreator, googleLoginActionCreator } from '../stores/user';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -30,6 +30,7 @@ class Login extends React.Component {
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    this.setState({email: profile.getEmail(), googleId: profile.getId()})
   }
 
   componentDidMount() {
@@ -37,18 +38,18 @@ class Login extends React.Component {
   }
 
   renderButton() {
-    console.log('Button rendered?')
-      function onSuccess(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); 
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-      }
-      function onFailure(error) {
-        console.log(error);
-      }
+    const { history, googleLogin } = this.props;
+    function onSuccess(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      const googleId = profile.getId();
+      const name = profile.getName();
+      const email = profile.getEmail();
+      const credentials = { email, googleId, name }
+      googleLogin(credentials, history)
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
     gapi.signin2.render('my-signin2', {
         'scope': 'profile email',
         'width': 240,
@@ -100,17 +101,7 @@ class Login extends React.Component {
         </div>
         <div className='col-sm-5'>
           <div className="buffer oauth">
-            
-              <a
-                target="_self"
-                href="/login/google"
-                className="btn">
-
-
-              </a>
-               <div id="my-signin2"></div>
-
-            
+            <div id="my-signin2"></div>
           </div>
         </div>
       </div>
@@ -124,6 +115,8 @@ class Login extends React.Component {
     console.log(this.props.history);
     event.preventDefault();
     //pass in the history object you get from router
+    console.log('this.state:', this.state)
+    console.log('this.props.history:', this.props.history)
     login(this.state, this.props.history);
   }
 }
@@ -133,7 +126,8 @@ class Login extends React.Component {
 const mapState = () => ({ message: 'Log in' });
 const mapDispatch = (dispatch) => {
   return {
-    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) }
+    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) },
+    googleLogin: (credentials, history) => {dispatch(googleLoginActionCreator(credentials, history))} 
   }
 };
 
