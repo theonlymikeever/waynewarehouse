@@ -14,23 +14,12 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
     this.renderButton = this.renderButton.bind(this);
-    // this.onSignIn =  this.onSignIn.bind(this);
   }
 
   handleChange(evt) {
     const obj = {};
     obj[evt.target.name] = evt.target.value
     this.setState(obj)
-  }
-
-    onSignIn(googleUser) {
-    console.log('here')
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    this.setState({email: profile.getEmail(), googleId: profile.getId()})
   }
 
   componentDidMount() {
@@ -111,13 +100,11 @@ class Login extends React.Component {
 
 
   onLoginSubmit(event) {
-    const { login } = this.props;
+    const { login, history } = this.props;
     console.log(this.props.history);
     event.preventDefault();
     //pass in the history object you get from router
-    console.log('this.state:', this.state)
-    console.log('this.props.history:', this.props.history)
-    login(this.state, this.props.history);
+    login(this.state, history);
   }
 }
 
