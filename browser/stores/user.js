@@ -56,6 +56,18 @@ export const loginActionCreator = (credentials, history) => {
     };
 };
 
+export const googleLoginActionCreator = (credentials, history) => {
+    return (dispatch) => {
+        console.log('googleLoginActionCreator thunk')
+        axios.post('/login/google', credentials )
+            .then(results => results.data)
+            .then(user => {
+                dispatch(setCurrentUser(user));
+                history.push('/');
+            })
+    };
+};
+
 export const logoutActionCreator = (history) => {
     return (dispatch => {
         axios.delete('/login')

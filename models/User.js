@@ -10,11 +10,7 @@ const User = db.define('user', {
 		}
 	},
 	password: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			notEmpty: true
-		}
+		type: Sequelize.STRING
 	},
 	isAdmin: {
 		type: Sequelize.BOOLEAN,
@@ -34,6 +30,9 @@ const User = db.define('user', {
 	photo: {
 		type: Sequelize.STRING,
 		defaultValue: 'https://success.salesforce.com/resource/1505433600000/sharedlayout/img/new-user-image-default.png'
+	},
+	googleId:{
+		type: Sequelize.STRING
 	}
 });
 

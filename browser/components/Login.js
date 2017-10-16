@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginActionCreator } from '../stores/user';
+import { loginActionCreator, googleLoginActionCreator } from '../stores/user';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -13,6 +13,7 @@ class Login extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   handleChange(evt) {
@@ -20,6 +21,34 @@ class Login extends React.Component {
     obj[evt.target.name] = evt.target.value
     this.setState(obj)
   }
+
+  componentDidMount() {
+    this.renderButton();
+  }
+
+  renderButton() {
+    const { history, googleLogin } = this.props;
+    function onSuccess(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      const googleId = profile.getId();
+      const name = profile.getName();
+      const email = profile.getEmail();
+      const credentials = { email, googleId, name }
+      googleLogin(credentials, history)
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
 
   render() {
     const message = 'Login';
@@ -61,27 +90,21 @@ class Login extends React.Component {
         </div>
         <div className='col-sm-5'>
           <div className="buffer oauth">
-            <p>
-              <a
-                target="_self"
-                href="/auth/google"
-                className="btn">
-
-                <span>{message} with Google</span>
-              </a>
-            </p>
+            <div id="my-signin2"></div>
           </div>
         </div>
       </div>
     );
   }
 
+
+
   onLoginSubmit(event) {
-    const { login } = this.props;
+    const { login, history } = this.props;
     console.log(this.props.history);
     event.preventDefault();
     //pass in the history object you get from router
-    login(this.state, this.props.history);
+    login(this.state, history);
   }
 }
 
@@ -90,7 +113,8 @@ class Login extends React.Component {
 const mapState = () => ({ message: 'Log in' });
 const mapDispatch = (dispatch) => {
   return {
-    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) }
+    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) },
+    googleLogin: (credentials, history) => {dispatch(googleLoginActionCreator(credentials, history))} 
   }
 };
 
