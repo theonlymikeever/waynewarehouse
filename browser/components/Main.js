@@ -22,11 +22,16 @@ class Main extends Component {
 		super(props);
 	}
 	componentDidMount() {
+		
 		this.props.fetchInitialData();
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('next',nextProps);
+		if (nextProps.user.id){
 			this.props.getCart(nextProps.user.id);
+		}
+			
 	}
 
 	render() {

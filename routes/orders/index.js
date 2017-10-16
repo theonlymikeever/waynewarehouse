@@ -26,9 +26,9 @@ router.get('/', (req, res, next) => {
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
+  if (!req.params.userId) return;
   Order.fetchCart(req.params.userId)
     .then(data => {
-
       res.send(data)
     })
     .catch(next);
@@ -38,6 +38,7 @@ router.get('/:userId', (req, res, next) => {
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
 router.get('/:userId/:filter', (req, res, next) => {
+  if (!req.params.userId) return;
   Order.findOne({
     where: {
       userId: req.params.userId,

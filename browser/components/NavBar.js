@@ -16,7 +16,7 @@ class NavBar extends Component {
   render() {
     const { user, cart } = this.props;
     let cartItems;
-    if (cart && cart.lineItems){
+    if (cart && cart.lineItems) {
       cartItems = cart.lineItems.reduce((memo, item) => {
         return memo + item.quantity;
       }, 0)
@@ -40,7 +40,10 @@ class NavBar extends Component {
               </li>
             ) : ""}
             <li>
-              <NavLink className='nav-link' to={`/orders/${user.id}/lineItems`}><span>Cart <small>{user.id && cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
+              {user.id && cartItems > 0 ?
+                <NavLink className='nav-link' to={`/orders/${user.id}/lineItems`}><span>Cart <small>{user.id && cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
+                :
+                null}
             </li>
 
 
