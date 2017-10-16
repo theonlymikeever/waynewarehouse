@@ -31,6 +31,8 @@ router.delete('/', (req, res, next) => {
 	// console.log('session: ', req.session);
 	res.sendStatus(200);
 
-})
+});
+
+router.use('/google', require('./google'));
 
 module.exports = router;

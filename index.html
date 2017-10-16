@@ -1,6 +1,7 @@
 <html>
   <head>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="391665016504-uhipib5jlme25jqhiqhv1i0ic4sfu5df.apps.googleusercontent.com">
   	 <title>TheWayneWareHouse</title>
     <script type="text/javascript" src="/vendor/popper.js/dist/popper.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
@@ -10,6 +11,28 @@
   </head>
   <body>
     <div id='root'></div>
+      <div id="my-signin2"></div>
+<!--   <script>
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+  </script> -->
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src='/dist/bundle.js'></script>
   </body>
 </html>
