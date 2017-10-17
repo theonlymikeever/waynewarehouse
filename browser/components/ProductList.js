@@ -40,7 +40,7 @@ function ProductList(props) {
         }
       </div>
       {
-        cart.lineItems ? <RightSideCart /> : ''
+        cart.lineItems && cart.lineItems.length > 0 ? <RightSideCart /> : ''
       }
     </div>
   )
