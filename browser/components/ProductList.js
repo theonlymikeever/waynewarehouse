@@ -11,7 +11,7 @@ function ProductList(props) {
 
   return (
     <div className="row">
-      <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
+      <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length ? 'col-sm-9' : ''}`}>
         {
           products.map(product => {
             return (
@@ -40,7 +40,7 @@ function ProductList(props) {
         }
       </div>
       {
-        cart.lineItems && cart.lineItems.length > 0 ? <RightSideCart /> : ''
+        cart.lineItems && cart.lineItems.length  ? <RightSideCart /> : ''
       }
     </div>
   )
