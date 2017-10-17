@@ -1,18 +1,32 @@
 const router = require('express').Router()
 const Order = require('../../models/Order');
-// const LineItem = require('../../models/LineItem');
+const LineItem = require('../../models/LineItem');
+const Product = require('../../models/Product');
 
 //Get All Orders
 router.get('/', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: [
+      {
+        model: LineItem, as: 'lineItems',
+        include: [Product]
+      }
+    ]
+  })
     .then(data => {
       res.send(data)
     })
     .catch(next);
 });
 
+// router.get('/:orderId', (req, res, next) => {
+//   Order.findById(req.params.id)
+//   .then(res.send)
+// }
+
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
+  if (!req.params.userId) return;
   Order.fetchCart(req.params.userId)
     .then(data => {
       res.send(data)
@@ -24,14 +38,18 @@ router.get('/:userId', (req, res, next) => {
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
 router.get('/:userId/:filter', (req, res, next) => {
+  if (!req.params.userId) return;
   Order.findOne({
     where: {
       userId: req.params.userId,
       isCart: req.params.filter
     }
   })
-  .then( cart => res.send(cart))
-  .catch(next);
+    .then(cart => {
+      console.log(cart.userId);
+      res.send(cart)}
+    )
+    .catch(next);
 })
 
 //Add Product
@@ -42,27 +60,29 @@ router.post('/:id/lineItems', (req, res, next) => {
 })
 
 //Remove Product
-router.delete('/:id/lineItems/:productId', (req, res, next) =>{
-  console.log('in route: ')
+router.delete('/:id/lineItems/:productId', (req, res, next) => {
+
   Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
 })
 
 //Create & Finalize the Order
-router.put('/:userId', (req, res, next) => {
+router.put('/:cartId', (req, res, next) => {
+
   Order.findOne({
     where: {
-      id: req.params.userId,
+      id: req.params.cartId,
       isCart: true
     }
   })
-  .then( order => {
-    order.isCart = false;
-    return order.save()
-  })
-  .then( () => res.sendStatus(200))
-  .catch(next);
+    .then(order => {
+
+      order.isCart = false;
+      return order.save()
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);
 })
 
 module.exports = router;
