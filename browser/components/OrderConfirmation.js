@@ -15,7 +15,7 @@ class OrderCofirmation extends Component {
         const orderId = this.props.match.params.orderId
         const order = orders.length > 0 ? orders.filter(order => order.id == orderId) : [];
         let lineItems = (order[0] && order[0].lineItems) ? order[0].lineItems : [];
-        
+
         return (
             <div className="container">
                 <div className="row mt-3">
@@ -37,7 +37,7 @@ class OrderCofirmation extends Component {
                                             <tr key={item.id}>
                                                 <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
                                                 <td>{item.quantity}</td>
-                                                <td>{item.product.price}</td>
+                                                <td>{`$${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</td>
                                             </tr>
                                         )
                                     })

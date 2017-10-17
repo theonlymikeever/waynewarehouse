@@ -17,15 +17,15 @@ LineItem.hook('afterCreate', (lineItem) => {
 })
 
 LineItem.hook('afterSave', (lineItem) => {
-   lineItem.setPrice(lineItem)
+  lineItem.setPrice(lineItem)
 })
 
 LineItem.prototype.setPrice = function (lineItem) {
-    return Product.findOne({where: { id: lineItem.productId }})
-    .then(product => {
-      lineItem.price = product.price * lineItem.quantity
-      return lineItem.save()
-    })
+  return Product.findOne({where: { id: lineItem.productId }})
+  .then(product => {
+    lineItem.price = product.price * lineItem.quantity
+    return lineItem.save()
+  })
 }
 
 module.exports = LineItem;

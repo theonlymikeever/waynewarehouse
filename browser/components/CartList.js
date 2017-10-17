@@ -8,6 +8,9 @@ class CartList extends Component {
   render() {
     const { handleDelete, handleCheckout, user, cart } = this.props;
     const lineItems = cart.lineItems || []
+    const subtotal = lineItems.reduce((total, curr) => {
+          return total + curr.price
+        }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
     return (
       <div className="container">
@@ -22,16 +25,16 @@ class CartList extends Component {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 {
-                  lineItems.length && lineItems.map(item => {
+                  lineItems.map(item => {
                     return (
                       <tr key={item.id}>
                         <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
                         <td>{item.quantity}</td>
-                        <td>{item.product.price}</td>
+                        <td>{`$${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</td>
                         <td>
-                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Delete</button>
+                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Remove</button>
                         </td>
                       </tr>
                     )
@@ -41,9 +44,9 @@ class CartList extends Component {
             </table>
           </div>
 
-          <div className="card col-xs-12 col-md-4">
-            Subtotal(1 item): price
-          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary m-2" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+          <div className="card col-xs-12 col-md-4 p-3">
+            <p><strong>Subtotal</strong><span className="float-right">$ { subtotal ? subtotal : 0.00 }</span></p>
+          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
           </div>
 
         </div>
