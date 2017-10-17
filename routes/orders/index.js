@@ -34,12 +34,32 @@ router.get('/:userId/:filter', (req, res, next) => {
   .catch(next);
 })
 
+// // get product as a guest
+// router.get('/guest/:filter', (req, res, next) => {
+//   Order.findOne({
+//     where: {
+//       userId: 0,
+//       isCart: req.params.filter
+//     }
+//   })
+//   .then( cart => res.send(cart))
+//   .catch(next);
+// })
+
 //Add Product
 router.post('/:id/lineItems', (req, res, next) => {
   Order.addProduct(req.params.id, req.body.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
 })
+
+// //Add Product As a Guest
+// router.post('/guest/lineItems', (req, res, next) => {
+//   Order.addProduct(0, req.body.productId)
+//     .then(() => res.sendStatus(200))
+//     .catch(next);
+// })
+
 
 //Remove Product
 router.delete('/:id/lineItems/:productId', (req, res, next) =>{
