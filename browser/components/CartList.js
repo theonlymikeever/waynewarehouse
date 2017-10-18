@@ -1,53 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { deleteLineItem } from '../stores/cart';
+import { deleteLineItem, checkoutCart } from '../stores/cart';
 
-const CartList = (props) => {
-  const { products, handleDelete, user, cart } = props;
-  const lineItems = cart.lineItems || []
-  return (
-    <div className="container">
-      <div className="row mt-3">
-        <div className="col-xs-12 col-md-8">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                lineItems.length && lineItems.map(item => {
-                  return (
-                  <tr key={item.id}>
-                    <td><Link to={ `/products/${ item.product.id }` }>{ item.product.name }</Link></td>
-                    <td>{ item.quantity }</td>
-                    <td>${ item.product.pricePretty }</td>
-                    <td>
-                      <button className="btn btn-sm btn-danger" onClick={ () => handleDelete(user.id, item.product.id) }>Delete</button>
-                    </td>
-                  </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-        </div>
+class CartList extends Component {
 
-        <div className="card col-xs-12 col-md-4">
-          Subtotal(1 item): price
-          <Link className="btn btn-primary m-2" to={`/orders/${user.id}`}>Proceed to Checkout</Link>
+  render() {
+    const { handleDelete, handleCheckout, user, cart } = this.props;
+    const lineItems = cart.lineItems || []
+    const subtotal = lineItems.reduce((total, curr) => {
+          return total + curr.price
+        }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+    return (
+      <div className="container">
+        <div className="row mt-3">
+          <div className="col-xs-12 col-md-8">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody >
+                {
+                  lineItems.map(item => {
+                    return (
+                      <tr key={item.id}>
+                        <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
+                        <td>{item.quantity}</td>
+                        <td>{`$${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</td>
+                        <td>
+                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Remove</button>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div className="card col-xs-12 col-md-4 p-3">
+            <p><strong>Subtotal</strong><span className="float-right">$ { subtotal ? subtotal : 0.00 }</span></p>
+          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+          </div>
+
         </div>
 
       </div>
 
-    </div>
-
-  )
+    )
+  }
 }
 
 
@@ -59,17 +66,15 @@ const mapStateToProps = ({ products, user, cart }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleDelete: (userId, productId) => {
-      console.log('clicked delete')
-      console.log(userId, productId)
       dispatch(deleteLineItem(userId, productId))
+    },
+    handleCheckout: (cartId) => {
+      dispatch(checkoutCart(cartId))
     }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartList);
-
-
-

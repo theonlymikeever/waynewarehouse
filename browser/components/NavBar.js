@@ -14,29 +14,43 @@ class NavBar extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, cart } = this.props;
+    let cartItems;
+    if (cart && cart.lineItems) {
+      cartItems = cart.lineItems.reduce((memo, item) => {
+        return memo + item.quantity;
+      }, 0)
+    }
+
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="d-inline-block" height="12" width="15" />me</span></Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
-              </li>
-            {(user.id)? (
+        <Link className="navbar-brand" to="/"><span className="d-inline-block">H<img src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="d-inline-block" height="12" width="15" />me</span></Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
+            </li>
+            {(user.id) ? (
               <li>
                 <NavLink className='nav-link' to="/orders">Orders</NavLink>
               </li>
-            ) : "" }
+            ) : ""}
+            <li>
+              {user.id && cartItems > 0 ?
+                <NavLink className='nav-link' to={`/orders/${user.id}/lineItems`}><span>Cart <small>{user.id && cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
+                :
+                null}
+            </li>
 
 
-            </ul>
-            {this.renderLogout(user)}
-            {this.renderLoginSignup(user)}
-          </div>
+          </ul>
+          {this.renderLogout(user)}
+          {this.renderLoginSignup(user)}
+        </div>
       </nav>
     )
   }
@@ -63,30 +77,30 @@ class NavBar extends Component {
       return null;
     }
     return (
-        <ul className="nav navbar-nav my-2 my-lg-0">
-          <li className="nav-item">
-            <NavLink to="/profile" className="nav-link" activeClassName="active">Profile</NavLink>
-          </li>
-          <li className="nav-item mr-sm-2">
-            <button
-              className="btn btn-outline-warning my-2 my-sm-0"
-              onClick={this.props.logout}>
-              Logout
+      <ul className="nav navbar-nav my-2 my-lg-0">
+        <li className="nav-item">
+          <NavLink to="/profile" className="nav-link" activeClassName="active">Profile</NavLink>
+        </li>
+        <li className="nav-item mr-sm-2">
+          <button
+            className="btn btn-outline-warning my-2 my-sm-0"
+            onClick={this.props.logout}>
+            Logout
             </button>
-          </li>
-          <small className="p-2 text-light">Welcome:&nbsp;
+        </li>
+        <small className="p-2 text-light">Welcome:&nbsp;
             <span className="text-warning">{user.name}&nbsp;</span>
-          </small>
-        </ul>
+        </small>
+      </ul>
     );
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapProps = ({ user }) => {
+const mapProps = ({ user, cart }) => {
   return {
-    user
+    user, cart
   }
 };
 

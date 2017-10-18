@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 // haven't tested this code yet!
 
@@ -39,13 +40,13 @@ export const deleteOrder = (orderId) => {
 
 
 // REDUCERS
-const reducer = (state=[], action) => {
-  switch(action.type){
+const reducer = (state = [], action) => {
+  switch (action.type) {
     case GET_ORDERS:
-      return Object.assign({}, state, { orders: action.orders })
+      return action.orders;
 
     case DELETE_ORDER:
-      const orders = state.orders.filter(function(order){
+      const orders = state.orders.filter(function (order) {
         return order.id !== action.orderId;
       })
       return Object.assign({}, state, { orders: orders })

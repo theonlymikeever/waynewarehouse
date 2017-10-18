@@ -10,8 +10,7 @@ class OrderList extends Component {
   // if admin, show 'update' button
 
   render() {
-    // const {cart} = this.props;
-    // console.log(this.props);
+   
     return (
       <div className="container">
         <h1>Orders</h1>
