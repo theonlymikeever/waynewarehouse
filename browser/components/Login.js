@@ -28,26 +28,26 @@ class Login extends React.Component {
 
   renderButton() {
     const { history, googleLogin } = this.props;
-    function onSuccess(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      const googleId = profile.getId();
-      const name = profile.getName();
-      const email = profile.getEmail();
-      const credentials = { email, googleId, name }
-      googleLogin(credentials, history)
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-    gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
+    // function onSuccess(googleUser) {
+    //   var profile = googleUser.getBasicProfile();
+    //   const googleId = profile.getId();
+    //   const name = profile.getName();
+    //   const email = profile.getEmail();
+    //   const credentials = { email, googleId, name }
+    //   googleLogin(credentials, history)
+    // }
+    // function onFailure(error) {
+    //   console.log(error);
+    // }
+    // gapi.signin2.render('my-signin2', {
+    //     'scope': 'profile email',
+    //     'width': 240,
+    //     'height': 50,
+    //     'longtitle': true,
+    //     'theme': 'dark',
+    //     'onsuccess': onSuccess,
+    //     'onfailure': onFailure
+    //   });
     }
 
   render() {
