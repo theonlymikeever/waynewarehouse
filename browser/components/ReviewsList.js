@@ -7,10 +7,9 @@ function ReviewList(props) {
   <div>
   {
     reviews && reviews.map(review => {
-      console.log(review)
       return (
          <div className="card bg-light mb-3" >
-          <div className="card-header">{ review.name }name
+          <div className="card-header"><span className="mr-2">{ review.user.name }</span>
             {
               Array.apply(0, Array(review.stars)).map((x, i) => {
                 return <img key={i} src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="pl-1 d-inline-block" width="30" />
@@ -18,8 +17,8 @@ function ReviewList(props) {
             }
           </div>
           <div className="card-body">
-            <h4 className="card-title">Light card title</h4>
-            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h4 className="card-title">{ review.title }</h4>
+            <p className="card-text">{ review.content }</p>
           </div>
         </div>
       )
