@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Product = require('../../models/Product');
+const Review = require('../../models/Review')
 
 router.get('/', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({include: [Review]})
     .then(products => res.send(products))
     .catch(next);
 });

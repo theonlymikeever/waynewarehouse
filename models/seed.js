@@ -17,21 +17,27 @@ const categories = [
   {name: 'Pirate paraphernalia'}
 ];
 
+const reviews = [
+  { stars: 4, content: "I love this mask ... It looks great as it is & fits well on my large head . Although it does kind of rub or touches the skin rough in certain places . I got soft foam tape & installed it around the inside spots & that made it fit even better . This mask does change your voice a bit also .. Not A Voice Changing Device ! But because of how it's built , it has a cool effect on your voice with the plastic built out from the mouth on the inside of the mask .... Great mask , I mean I wear a '7 3/4' fitted hat & it fits me great .. I loved Tom Hardy,s Bane & when I found this mask , I knew who I was gonna be for Halloween !!!!", userId: 3, productId: 5},
+  { stars: 1, content: "In reviewing the sizing I thought this mask would fit. However I believe if the seller used the same sizing standards that are used for hats it would let prospective buyers get a better idea of how the mask fit. The rubber was not the best material and one side snapped as we tried to put the mask on my roommate. The look of the mask was designed nicely and that is why I'm giving it two stars. Not sure I'll purchase a mask from them again. For $50 it was a little over priced for it to break before we could wear it.", userId: 2, productId: 5},
+  { stars: 5, content: "This mask is very cool. there is only one problem. the edges of the mask are very sharp, especially on the eye holes. not enough to cut you, but it hurts and leaves a mark. if you just take a razor blade and trim those spots, it is perfect. It is also very easy to impersonate his voice behind the mask. just talk with a thick British/Australian voice, and the mask will do the rest.", userId: 1, productId: 5},
+]
+
 //Export
-module.exports = (Product, Category, User) => {
+module.exports = (Product, Category, User, Review) => {
   //We'll need to add the other models to the parameters
   //as we open this up
   let magicalItem, crimeFighting;
     return Promise.all(
       users.map((user) => User.create(user))
     )
-  .then(([bruce, harry]) => {
+  .then(() => {
     return Promise.all(
       categories.map((category) => Category.create(category))
     )})
   .then(([_magicalItem, _crimeFighting]) => {
-    magicalItem=_magicalItem;
-    crimeFighting=_crimeFighting;
+    magicalItem = _magicalItem;
+    crimeFighting = _crimeFighting;
     return Promise.all(
       products.map((product) => Product.create(product))
     )})
@@ -40,6 +46,10 @@ module.exports = (Product, Category, User) => {
       belt.setCategory(crimeFighting),
       cloak.setCategory(magicalItem)
     ])
+  .then(() => {
+    return Promise.all(
+     reviews.map(review => Review.create(review)))
+  })
   .then(() => console.log('DB is synced and seeded'));
   });
 };
