@@ -7,6 +7,21 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
+router.put('/updateList', (req, res, next) => {
+  console.log(req.body)
+  return Product.findAll({
+    where: {
+      categoryId: {
+        $in: req.body
+      }
+    }
+  })
+  .then(products => {
+    console.log(products);
+    res.send(products);
+  }).catch(next);
+})
+
 router.get('/:productId', (req, res, next) => {
   Product.findById(req.params.productId)
     .then(product => res.send(product))
@@ -22,7 +37,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:productId', (req, res, next) => {
   Product.findById(req.params.productId)
-    .then( product => {
+    .then(product => {
       return product.update(req.body)
     })
     .then(() => res.sendStatus(200))
@@ -30,7 +45,7 @@ router.put('/:productId', (req, res, next) => {
 });
 
 router.delete('/:productId', (req, res, next) => {
-  Product.destroy({where: { id: req.params.productId }})
+  Product.destroy({ where: { id: req.params.productId } })
     .then(() => res.sendStatus(200))
     .catch(next);
 });
