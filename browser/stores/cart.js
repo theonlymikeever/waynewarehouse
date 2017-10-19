@@ -7,7 +7,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const FETCH_CART = 'FETCH_CART';
 const CHECKOUT = 'CHECKOUT';
 
-//Action Creators
+//Action Creators 
 
 const addToCart = () => {
     return {
