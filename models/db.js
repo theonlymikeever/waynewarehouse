@@ -29,7 +29,7 @@ const sync = () => db.sync({ force: true });
 //Defined seed as a returned function calling the seed.js
 //file and passing in our models as arguments.
 //seed.js returns a promise which we're using in server
-const seed = () => require('./seed')(Product, Category, User)
+const seed = () => require('./seed')(Product, Category, User, Review)
 
 module.exports = {
 	sync,

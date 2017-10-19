@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { addItem } from '../stores/cart';
+import ReviewsList from './ReviewsList';
 
 function ProductDetail(props) {
   const { products, user, handleAdd } = props;
   const productId = props.match.params.productId * 1;
   const product = products.length > 0 ? products.filter(prod => prod.id === productId)[0] : {};
+
     return (
      <div className='container' key={ product.id }>
         <div className="row" >
@@ -24,17 +26,21 @@ function ProductDetail(props) {
                   <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
                     onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
                   <Link to={'/products'} className="card-link float-right">Back</Link>
-
+            </div>
+            <div className="container mt-3">
+              <hr />
+              <h3>Reviews</h3>
+              <ReviewsList reviews={product.reviews} />
             </div>
           </div>
       </div>
     )
-};
+}
 
 const mapStateToProps = ({ products, user }) => {
   return {
     products,
-    user
+    user,
   }
 }
 
