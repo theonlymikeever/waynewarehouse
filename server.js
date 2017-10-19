@@ -37,6 +37,7 @@ app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')
 //Api Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/products', require('./routes/products'));
+app.use('/api/categories', require('./routes/categories'));
 
 app.use('/login', require('./routes/login'));
 
