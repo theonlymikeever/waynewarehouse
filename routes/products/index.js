@@ -9,17 +9,11 @@ router.get('/', (req, res, next) => {
 
 router.put('/updateList', (req, res, next) => {
   console.log(req.body)
-  return Product.findAll({
-    where: {
-      categoryId: {
-        $in: req.body
-      }
-    }
-  })
-  .then(products => {
-    console.log(products);
-    res.send(products);
-  }).catch(next);
+  Product.changeProducts(req.body)
+    .then(products => {
+      console.log(products);
+      res.send(products);
+    }).catch(next);
 })
 
 router.get('/:productId', (req, res, next) => {

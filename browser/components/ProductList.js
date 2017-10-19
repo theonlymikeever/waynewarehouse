@@ -16,18 +16,30 @@ class ProductList extends Component {
   }
 
   changeProducts(categoryId) {
+
+    if (this.state.categories.indexOf(categoryId) > -1) {
+      let categories = this.state.categories;
+      categories = categories.filter(cat => {
+        return cat !== categoryId;
+      })
+      this.setState({categories});
+      console.log('filterd', categories)
+      this.props.updateProductList(categories);
+      return;
+    }
+
     Promise.all([this.setState({ categories: [...this.state.categories, categoryId] })])
-    .then(() => {
-      this.props.updateProductList(this.state.categories);
-    })
-    
+      .then(() => {
+        this.props.updateProductList(this.state.categories);
+      })
+
   }
 
   render() {
     const { products, handleDelete, handleAdd, user, cart, categories } = this.props;
     const { changeProducts } = this;
-    console.log('categories',this.state);
-    
+
+
     return (
       <div className="row">
         <ul>

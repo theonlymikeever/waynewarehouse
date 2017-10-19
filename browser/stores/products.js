@@ -47,10 +47,10 @@ const getProducts = (products) => {
 
 export const updateProducts = (catArr) => {
   return (dispatch) => {
-    console.log('cat', catArr);
     axios.put(`/api/products/updateList`, catArr)
       .then(res => res.data)
       .then(newProducts => {
+        
         dispatch(getProducts(newProducts));
       })
   }
