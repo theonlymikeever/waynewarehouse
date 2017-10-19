@@ -35,12 +35,15 @@ class Admin extends React.Component{
     !this.state.name ? this.setState({ 
       alert: "Please enter product name", 
       alertStyle: "alert alert-danger mt-3" 
-    }) :
+    }) : 
+    !this.state.price ? this.setState({ 
+      alert: "Please enter product price", 
+      alertStyle: "alert alert-danger mt-3" 
+    }) : 
     this.setState({ 
       alert: "New product has been added!", 
       alertStyle: "alert alert-success mt-3" 
     })
-
 
   }
 
@@ -92,7 +95,7 @@ class Admin extends React.Component{
                     className="form-control" placeholder="Weight"/>
                 </div>
                 <div className="form-group">
-                  <input name="image" type="text" ref="weight"
+                  <input name="image" type="text" ref="image"
                     value={ image } onChange={ this.handleChange }
                     className="form-control" placeholder="Image URL"/>
                 </div>
