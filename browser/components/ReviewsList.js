@@ -16,7 +16,7 @@ function ReviewList(props) {
               })
             }
             {
-              (review.stars !== 5) && Array.apply(0, Array(5-review.stars)).map((x, i) => {
+              (review.stars !== 5) && Array.apply(0, Array(5 - review.stars)).map((x, i) => {
                 return <img key={i} src="http://www.pngall.com/wp-content/uploads/2016/03/Batman-Logo-PNG.png" className="pl-1 d-inline-block grayscale" width="30" />
               })
             }
