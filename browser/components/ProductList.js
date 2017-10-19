@@ -48,6 +48,7 @@ function ProductList(props) {
 
 const mapStateToProps = ({ products, user, cart }) => {
   console.log('cart ', cart)
+  if (!user.id) user.id = 0;
   return {
     products,
     user,

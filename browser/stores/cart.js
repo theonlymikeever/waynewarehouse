@@ -6,6 +6,7 @@ const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const FETCH_CART = 'FETCH_CART';
 const CHECKOUT = 'CHECKOUT';
+const ADD_TO_GUEST_CART = 'ADD_TO_GUEST_CART';
 
 //Action Creators
 
@@ -35,6 +36,13 @@ const checkOut = (cart) => {
     }
 }
 
+const addToGuestCart = (productId) => {
+    return {
+        type: ADD_TO_GUEST_CART,
+        productId
+    }
+}
+
 //Thunks
 
 export const fetchCart = (userId, filter) => {
@@ -55,10 +63,16 @@ export const fetchCart = (userId, filter) => {
 
 export const addItem = (userId, productId) => {
     return (dispatch) => {
-        axios.post(`/api/orders/${userId}/lineItems`, { productId })
-            .then(() => {
-                dispatch(fetchCart(userId, false));
-            })
+        if (userId !== 0){
+            axios.post(`/api/orders/${userId}/lineItems`, { productId })
+                .then(() => {
+                    dispatch(fetchCart(userId, false));
+                })
+        } else {
+            console.log("build guest cart")
+            dispatch(addToGuestCart(productId))
+        }
+
     }
 }
 
@@ -83,12 +97,14 @@ export const checkoutCart = (cartId) => {
 
 //Reducer
 
-export default function (state = {}, action) {
+export default function (state = {lineItems: []}, action) {
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
         case CHECKOUT:
             return Object.assign({});
+        case ADD_TO_GUEST_CART:
+            return Object.assign({id: 0, userId: 0}, state, {lineItems: state.lineItems.push(action.productId) })
         default:
             return state;
     }
