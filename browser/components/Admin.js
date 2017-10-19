@@ -10,12 +10,13 @@ class Admin extends React.Component{
       description: "",
       price: "", 
       weight: "",
-      image: "http://via.placeholder.com/250x250"
+      image: "",
+      alert: "",
+      alertStyle: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.onDrop = this.onDrop.bind(this);
   }
 
   handleChange(event) {
@@ -23,13 +24,27 @@ class Admin extends React.Component{
     key === "name" ? this.setState({ name: val }) :
     key === "description" ? this.setState({ description: val }) :
     key === "price" ? this.setState({ price: val }) : 
-    this.setState({ weight: val }) 
+    key === "weight" ? this.setState({ weight: val }) :
+    this.setState({ image: val })
   }
  
   handleSubmit(event, dispatch) {
     event.preventDefault();
-    this.props.handleAdd(this.state);
-    console.log("new product added:", this.state)
+    this.props.handleAdd(this.state); 
+
+    !this.state.name ? this.setState({ 
+      alert: "Please enter product name", 
+      alertStyle: "alert alert-danger mt-3" 
+    }) : 
+    !this.state.price ? this.setState({ 
+      alert: "Please enter product price", 
+      alertStyle: "alert alert-danger mt-3" 
+    }) : 
+    this.setState({ 
+      alert: "New product has been added!", 
+      alertStyle: "alert alert-success mt-3" 
+    })
+
   }
 
   handleClick(){
@@ -39,13 +54,10 @@ class Admin extends React.Component{
     this.refs.weight.value = "";
   }
 
-  onDrop(image) {
-    this.setState({ image });
-  }
-
 
   render(){
-    const { name, description, price, weight, image } = this.state;
+    const { name, description, price, weight, image, alert, alertStyle } = this.state;
+    const imageSize = { width: "100%", height: "auto" }
 
     return (
       <div className="container">
@@ -56,7 +68,9 @@ class Admin extends React.Component{
             <div className="row">
             
               <div className="col-md-4">
-                <img src={ image }></img>              
+                <img src={ image ? image : "http://via.placeholder.com/250x250" } 
+                  style={ imageSize }>
+                </img>              
               </div>
 
               <div className="col-md-8">
@@ -81,6 +95,11 @@ class Admin extends React.Component{
                     className="form-control" placeholder="Weight"/>
                 </div>
                 <div className="form-group">
+                  <input name="image" type="text" ref="image"
+                    value={ image } onChange={ this.handleChange }
+                    className="form-control" placeholder="Image URL"/>
+                </div>
+                <div className="form-group">
                   <button type="submit" className="btn btn-primary" 
                     onClick={ this.handleClick }>Add new product
                   </button>
@@ -89,6 +108,7 @@ class Admin extends React.Component{
             </div>
           </form>
         </div>
+        { alert ? <div className={ alertStyle }>{ alert }</div> : "" }        
       </div>
     )
   }  

@@ -14,7 +14,7 @@ const Product = db.define('product', {
         type: Sequelize.TEXT
     },
     image: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT
     },
     weight: Sequelize.FLOAT,
     contributedBy: Sequelize.STRING

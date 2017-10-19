@@ -24,7 +24,6 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.renderButton();
-    console.log('****************login User:', user)
   }
 
   renderButton() {
