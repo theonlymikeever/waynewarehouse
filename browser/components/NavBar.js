@@ -20,7 +20,7 @@ class NavBar extends Component {
       cartItems = cart.lineItems.reduce((memo, item) => {
         return memo + item.quantity;
       }, 0)
-    }
+  }
 
 
     return (
@@ -70,6 +70,8 @@ class NavBar extends Component {
       </ul>
     );
   }
+
+
 
   renderLogout(user) {
     // const textStyle = { color: 'blue' }
