@@ -1,5 +1,7 @@
 const db = require('./conn');
 const Sequelize = db.Sequelize;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const User = db.define('user', {
 	name: {
@@ -31,16 +33,29 @@ const User = db.define('user', {
 		type: Sequelize.STRING,
 		defaultValue: 'https://success.salesforce.com/resource/1505433600000/sharedlayout/img/new-user-image-default.png'
 	},
-	googleId:{
+	googleId: {
 		type: Sequelize.STRING
 	}
 });
 
-// User.update = (userId, body) => {
-// 	User.findById(userId)
-// 	.then(user => {
-// 		// user = Obj.assign({})
-// 	})
-// }
+User.prototype.correctPassword = function(password) {
+	return bcrypt.compare(password, this.password)
+	.then(function(res) {
+		console.log(res)
+		return res;
+	});
+}
+
+const encrypt = (user) => {
+	if (user.changed('password')) {
+		bcrypt.hash(user.password, saltRounds)
+			.then(function (hash) {
+				user.password = hash;
+				user.save();
+			})
+	}
+}
+
+User.beforeCreate(encrypt);
 
 module.exports = User;
