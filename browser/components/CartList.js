@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteLineItem, checkoutCart } from '../stores/cart';
 
@@ -42,6 +42,7 @@ class CartList extends Component {
                 }
               </tbody>
             </table>
+            <NavLink to="/products" className="nav-link" activeClassName="active">&lt; Back to Shopping</NavLink>
           </div>
 
           <div className="card col-xs-12 col-md-4 p-3">

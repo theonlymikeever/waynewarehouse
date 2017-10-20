@@ -31,7 +31,7 @@ function ProductList(props) {
                   </form>
 
                   <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                    onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                    onClick={() => handleAdd(user.id, product.id, cart)}>Add to Cart</Link>
                 </div>
               </div>
             </div>
@@ -62,8 +62,8 @@ const mapDispatchToProps = (dispatch) => {
       evt.preventDefault();
       dispatch(deleteProductOnServer(evt.target.delete.value))
     },
-    handleAdd: (userId, productId) => {
-      dispatch(addItem(userId, productId))
+    handleAdd: (userId, productId, cart) => {
+      dispatch(addItem(userId, productId, cart))
     }
   }
 }

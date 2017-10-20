@@ -36,10 +36,10 @@ const checkOut = (cart) => {
     }
 }
 
-const addToGuestCart = (productId) => {
+const addToGuestCart = (lineItem) => {
     return {
         type: ADD_TO_GUEST_CART,
-        productId
+        lineItem
     }
 }
 
@@ -61,16 +61,28 @@ export const fetchCart = (userId, filter) => {
     }
 }
 
-export const addItem = (userId, productId) => {
+export const addItem = (userId, productId, cart) => {
     return (dispatch) => {
         if (userId !== 0){
             axios.post(`/api/orders/${userId}/lineItems`, { productId })
                 .then(() => {
                     dispatch(fetchCart(userId, false));
-                })
+                });
         } else {
-            console.log("build guest cart")
-            dispatch(addToGuestCart(productId))
+            axios.get(`/api/products/${productId}`)
+            .then((results) => results.data)
+            .then(product => {
+                const id = cart.lineItems.length;
+                const guestLineItem = {
+                    id: id,
+                    orderId: 0,
+                    price: product.price,
+                    product: product,
+                    productId: product.id,
+                    quantity: 1
+                }
+                dispatch(addToGuestCart(guestLineItem));
+            })
         }
 
     }
@@ -78,10 +90,15 @@ export const addItem = (userId, productId) => {
 
 export const deleteLineItem = (userId, productId) => {
     return (dispatch) => {
-        axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
-            .then(() => {
-                dispatch(fetchCart(userId, false));
-            })
+        if (userId !== 0) {
+            axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
+                .then(() => {
+                    dispatch(fetchCart(userId, false));
+                })            
+        } else {
+            console.log("delete from guest Cart")
+        }
+
     }
 }
 
@@ -97,14 +114,26 @@ export const checkoutCart = (cartId) => {
 
 //Reducer
 
-export default function (state = {lineItems: []}, action) {
+const initialState = {
+    id: 0, 
+    userId: 0, 
+    lineItems: [], 
+    isCart: true,
+    shippingPrice: null,
+    tax: null,
+    total: null, 
+    weight: null    
+}
+
+export default function (state = initialState, action) {
     switch (action.type) {
         case FETCH_CART:
             return Object.assign({}, state, action.cart);
         case CHECKOUT:
             return Object.assign({});
         case ADD_TO_GUEST_CART:
-            return Object.assign({id: 0, userId: 0}, state, {lineItems: state.lineItems.push(action.productId) })
+            const lineItems = state.lineItems;
+            return Object.assign({}, state, {lineItems: [...state.lineItems, action.lineItem]})
         default:
             return state;
     }
