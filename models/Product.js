@@ -32,6 +32,7 @@ const Product = db.define('product', {
 
 Product.changeProducts = function (catArr) {
     return Product.findAll({
+        order: [['id']],
         where: {
             categoryId: {
                 $in: catArr

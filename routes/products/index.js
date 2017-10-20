@@ -11,7 +11,6 @@ router.put('/updateList', (req, res, next) => {
   console.log(req.body)
   Product.changeProducts(req.body)
     .then(products => {
-      console.log(products);
       res.send(products);
     }).catch(next);
 })
