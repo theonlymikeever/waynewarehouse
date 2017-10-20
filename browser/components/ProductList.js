@@ -51,19 +51,22 @@ class ProductList extends Component {
     const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
     return (
+
       <div className="row">
-        <form >
-          <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' />
-        </form>
-        <ul>
-          {
-            categories.map(category => {
-              return (
-                <button key={category.id} onClick={() => changeProducts(category.id)} className='btn btn-info'><li>{category.name}</li></button>
-              );
-            })
-          }
-        </ul>
+        <nav className="navbar navbar-light bg-faded">
+          <form >
+            <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' />
+          </form>
+          <ul>
+            {
+              categories.map(category => {
+                return (
+                  <button key={category.id} onClick={() => changeProducts(category.id)} className='btn btn-primary'><li>{category.name}</li></button>
+                );
+              })
+            }
+          </ul>
+        </nav>
         <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
           {
             products.map(product => {
