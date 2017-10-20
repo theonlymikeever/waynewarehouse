@@ -12,9 +12,9 @@ router.get('/', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
     User.signUp(req.body)
-        .then(([user, address]) => {
+        .then(user => {
             req.session.userId = user.id;
-            address.setUser(user);
+            console.log('sadfdsa',user);
             res.send(user)
         }).catch(err => {
             console.log(err.error);

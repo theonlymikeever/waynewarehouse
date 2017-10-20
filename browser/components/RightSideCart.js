@@ -7,7 +7,7 @@ function RightSideCart(props) {
   const subtotal = lineItems.reduce((total, curr) => {
           return total + curr.price
         }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
+  
   return (
     <div className="col-sm-3 offset-sm-1 sidebar mt-3">
       <div className="sidebar-module sidebar-module-inset">

@@ -8,7 +8,7 @@ import { addItem } from '../stores/cart';
 
 function ProductList(props) {
   const { products, handleDelete, handleAdd, user, cart } = props;
-
+  console.log(cart.lineItems);
   return (
     <div className="row">
       <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length ? 'col-sm-9' : ''}`}>
