@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RightSideCart from './RightSideCart';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { deleteProductOnServer, updateProducts } from '../stores/products';
+import { deleteProductOnServer, updateProducts, fetchProducts } from '../stores/products';
 import { addItem } from '../stores/cart';
 
 
@@ -19,24 +19,21 @@ class ProductList extends Component {
 
   handleChange(ev) {
     this.setState({ search: ev.target.value })
-    // console.log(this.state);
-
   }
 
-
   changeProducts(categoryId) {
-
+    if (categoryId === 'all'){
+      return this.props.getAll();
+    }
     if (this.state.categories.indexOf(categoryId) > -1) {
-      let categories = this.state.categories;
-      categories = categories.filter(cat => {
+      const categories = this.state.categories.filter(cat => {
         return cat !== categoryId;
       })
       this.setState({ categories });
-      console.log('filterd', categories)
-      this.props.updateProductList(categories);
-      return;
+      return this.props.updateProductList(categories);
     }
 
+    //necessary to allow above setstate to finish
     Promise.all([this.setState({ categories: [...this.state.categories, categoryId] })])
       .then(() => {
         this.props.updateProductList(this.state.categories);
@@ -47,26 +44,33 @@ class ProductList extends Component {
   render() {
     const { handleDelete, handleAdd, user, cart, categories } = this.props;
     const { changeProducts, handleChange } = this;
-    console.log(this.state.search);
     const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
     return (
 
       <div className="row">
-        <nav className="navbar navbar-light bg-faded">
-          <form >
-            <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' />
-          </form>
-          <ul>
-            {
-              categories.map(category => {
-                return (
-                  <button key={category.id} onClick={() => changeProducts(category.id)} className='btn btn-primary'><li>{category.name}</li></button>
-                );
-              })
-            }
-          </ul>
+        <nav className="navbar navbar-expand-lg navbar-light bg-faded">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="category">
+          <br/>
+            <form>
+              <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
+            </form>
+            <ul className="navbar-nav mr-auto">
+              <strong><li className='nav-link' key={'all'} onClick={() => changeProducts('all')}>All Categories</li></strong>
+              {
+                categories.map(category => {
+                  return (
+                    <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
+                  );
+                })
+              }
+            </ul>
+          </div>
         </nav>
+        
         <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
           {
             products.map(product => {
@@ -98,7 +102,7 @@ class ProductList extends Component {
         {
           cart.lineItems ? <RightSideCart /> : ''
         }
-      </div >
+      </div>
     )
   }
 }
@@ -123,9 +127,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateProductList: (catArr) => {
       dispatch(updateProducts(catArr));
+    },
+    getAll: () => {
+      dispatch(fetchProducts());
     }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+
 
