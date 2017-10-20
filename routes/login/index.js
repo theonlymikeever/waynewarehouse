@@ -1,10 +1,14 @@
 const router = require('express').Router();
 const User = require('../../models/User');
+const Address = require('../../models/User');
 const session = require('express-session');
 
 router.get('/', (req, res, next) => {
-	User.findById(req.session.userId)
+	User.findById(req.session.userId, {
+		include: [{ all: true }]
+	})
 		.then(user => {
+			console.log(user);
 			res.send(user);
 		})
 })

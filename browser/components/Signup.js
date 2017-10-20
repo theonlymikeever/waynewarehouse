@@ -18,6 +18,7 @@ class SignUp extends Component {
 
     handleChange(ev) {
         const { name, email, password } = this.state;
+
         this.setState({
             [ev.target.name]: ev.target.value
         })
@@ -28,7 +29,7 @@ class SignUp extends Component {
 
     handleSubmit(ev) {
         ev.preventDefault();
-        
+        console.log(this.state);
         this.props.postUser(this.state, this.props.history);
     }
 

@@ -16,7 +16,7 @@ class UserProfile extends Component {
         if (orders.length) {
             userOrders = orders.filter(order => order.userId == user.id);
         }
-        console.log(userOrders[0])
+        // console.log(user)
         return (
             <div>
                 <h1>Name: {user.name} <span>
