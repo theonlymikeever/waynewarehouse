@@ -8,8 +8,8 @@ class Admin extends React.Component{
     this.state = {
       name: "",
       description: "",
-      price: "", 
-      weight: "",
+      price: null, 
+      weight: null,
       image: "",
       alert: "",
       alertStyle: ""
