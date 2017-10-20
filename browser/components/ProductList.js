@@ -14,7 +14,15 @@ class ProductList extends Component {
       search: ''
     }
     this.changeProducts = this.changeProducts.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange(ev) {
+    this.setState({ search: ev.target.value })
+    // console.log(this.state);
+
+  }
+
 
   changeProducts(categoryId) {
 
@@ -37,55 +45,56 @@ class ProductList extends Component {
   }
 
   render() {
-    const { products, handleDelete, handleAdd, user, cart, categories } = this.props;
-    const { changeProducts, handleSubmit, handleChange } = this;
-
+    const { handleDelete, handleAdd, user, cart, categories } = this.props;
+    const { changeProducts, handleChange } = this;
+    console.log(this.state.search);
+    const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
     return (
       <div className="row">
-        <form onSubmit = {handleSubmit}>
-          <input name = 'search' type='text' className='form-control' />
+        <form >
+          <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' />
         </form>
-      <ul>
-        {
-          categories.map(category => {
-            return (
-              <button key={category.id} onClick={() => changeProducts(category.id)} className='btn btn-info'><li>{category.name}</li></button>
-            );
-          })
-        }
-      </ul>
-      <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
-        {
-          products.map(product => {
-            return (
-              <div className="mb-3 col-sm-4" key={product.id}>
-                <div className="card">
-                  <div className="card-body">
-                    <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={product.image} width="150" /></Link>
-                    <Link to={`/products/${product.id}`} ><h4 className="card-title">{product.name}</h4></Link>
-                    <p className="card-text">{product.shortDescription}
+        <ul>
+          {
+            categories.map(category => {
+              return (
+                <button key={category.id} onClick={() => changeProducts(category.id)} className='btn btn-info'><li>{category.name}</li></button>
+              );
+            })
+          }
+        </ul>
+        <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
+          {
+            products.map(product => {
+              return (
+                <div className="mb-3 col-sm-4" key={product.id}>
+                  <div className="card">
+                    <div className="card-body">
+                      <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={product.image} width="150" /></Link>
+                      <Link to={`/products/${product.id}`} ><h4 className="card-title">{product.name}</h4></Link>
+                      <p className="card-text">{product.shortDescription}
 
-                      <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
-                    <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
-                    <p className="card-text">lb: {product.weight}</p>
-                    <form className="form-inline btn mr-2 mb-0" onSubmit={handleDelete}>
-                      {(user.isAdmin) ?
-                        <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
-                    </form>
+                        <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
+                      <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
+                      <p className="card-text">lb: {product.weight}</p>
+                      <form className="form-inline btn mr-2 mb-0" onSubmit={handleDelete}>
+                        {(user.isAdmin) ?
+                          <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
+                      </form>
 
-                    <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                      onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                      <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
+                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })
-        }
-      </div>
+              )
+            })
+          }
+        </div>
         {
-      cart.lineItems ? <RightSideCart /> : ''
-    }
+          cart.lineItems ? <RightSideCart /> : ''
+        }
       </div >
     )
   }
