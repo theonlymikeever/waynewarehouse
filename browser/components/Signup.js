@@ -18,7 +18,6 @@ class SignUp extends Component {
 
     handleChange(ev) {
         const { name, email, password } = this.state;
-
         this.setState({
             [ev.target.name]: ev.target.value
         })
