@@ -5,7 +5,7 @@ import { addItem } from '../stores/cart';
 import ReviewsList from './ReviewsList';
 
 function ProductDetail(props) {
-  const { products, user, handleAdd } = props;
+  const { products, user, cart, handleAdd } = props;
   const productId = props.match.params.productId * 1;
   const product = products.length > 0 ? products.filter(prod => prod.id === productId)[0] : {};
 
@@ -24,7 +24,7 @@ function ProductDetail(props) {
               <h6 className="card-subtitle mt-2 text-muted">${ product.pricePretty }</h6>
               <br></br>
                   <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                    onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                    onClick={() => handleAdd(user.id, product.id, cart)}>Add to Cart</Link>
                   <Link to={'/products'} className="card-link float-right">Back</Link>
             </div>
             <div className="container mt-3">
@@ -37,17 +37,18 @@ function ProductDetail(props) {
     )
 }
 
-const mapStateToProps = ({ products, user }) => {
+const mapStateToProps = ({ products, user, cart }) => {
   return {
     products,
     user,
+    cart
   }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
   return {
-    handleAdd: (userId, productId) => {
-      dispatch(addItem(userId, productId))
+    handleAdd: (userId, productId, cart) => {
+      dispatch(addItem(userId, productId, cart))
     }
   }
 }

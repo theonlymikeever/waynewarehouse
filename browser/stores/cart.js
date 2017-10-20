@@ -7,6 +7,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const FETCH_CART = 'FETCH_CART';
 const CHECKOUT = 'CHECKOUT';
 const ADD_TO_GUEST_CART = 'ADD_TO_GUEST_CART';
+const REMOVE_FROM_GUEST_CART = 'REMOVE_FROM_GUEST_CART';
 
 //Action Creators
 
@@ -40,6 +41,13 @@ const addToGuestCart = (lineItem) => {
     return {
         type: ADD_TO_GUEST_CART,
         lineItem
+    }
+}
+
+const removeFromGuestCart = (index) => {
+    return {
+        type: REMOVE_FROM_GUEST_CART,
+        index
     }
 }
 
@@ -88,7 +96,7 @@ export const addItem = (userId, productId, cart) => {
     }
 }
 
-export const deleteLineItem = (userId, productId) => {
+export const deleteLineItem = (userId, productId, index) => {
     return (dispatch) => {
         if (userId !== 0) {
             axios.delete(`/api/orders/${userId}/lineItems/${productId}`)
@@ -96,7 +104,8 @@ export const deleteLineItem = (userId, productId) => {
                     dispatch(fetchCart(userId, false));
                 })            
         } else {
-            console.log("delete from guest Cart")
+            console.log("delete from guest Cart: index:", index)
+            dispatch(removeFromGuestCart(index));
         }
 
     }
@@ -132,8 +141,11 @@ export default function (state = initialState, action) {
         case CHECKOUT:
             return Object.assign({});
         case ADD_TO_GUEST_CART:
-            const lineItems = state.lineItems;
-            return Object.assign({}, state, {lineItems: [...state.lineItems, action.lineItem]})
+            return Object.assign({}, state, {lineItems: [...state.lineItems, action.lineItem]});
+        case REMOVE_FROM_GUEST_CART:
+            const nuLineItems = state.lineItems.filter((item, index) => index !== action.index);
+            return Object.assign({}, state, {lineItems: nuLineItems})
+
         default:
             return state;
     }

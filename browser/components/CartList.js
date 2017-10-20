@@ -27,14 +27,14 @@ class CartList extends Component {
               </thead>
               <tbody >
                 {
-                  lineItems.map(item => {
+                  lineItems.map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
                         <td>{item.quantity}</td>
                         <td>{`$${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</td>
                         <td>
-                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Remove</button>
+                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id, index)}>Remove</button>
                         </td>
                       </tr>
                     )
@@ -69,8 +69,8 @@ const mapStateToProps = ({ products, user, cart }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleDelete: (userId, productId) => {
-      dispatch(deleteLineItem(userId, productId))
+    handleDelete: (userId, productId, index) => {
+      dispatch(deleteLineItem(userId, productId, index))
     },
     handleCheckout: (cartId) => {
       dispatch(checkoutCart(cartId))
