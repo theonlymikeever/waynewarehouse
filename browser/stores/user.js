@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import {addItem, resetCart, fetchCart} from './cart';
 
 //actions
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
@@ -43,7 +44,7 @@ export const postUser = (user, history) => {
     }
 }
 
-export const loginActionCreator = (credentials, history) => {
+export const loginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
@@ -51,18 +52,38 @@ export const loginActionCreator = (credentials, history) => {
             })
             .then(user => {
                 dispatch(setCurrentUser(user));
-                history.push('/');
+                //pull lineItems from "guestCart"
+                const lineItems = cart.lineItems;
+                dispatch(resetCart());
+                dispatch(fetchCart(user.id*1))
+                .then(( cart ) => {
+                    console.log('users store, ** Fetched cart:', cart)
+                    console.log("lineItem = ", lineItems)
+                    if (lineItems.length > 0){
+                        console.log('lineItems.length > 0!!!!')
+                        return lineItems.forEach((lineItem, index ) => {
+                            // console.log("index, user.id, lineItem.productId: ",index, user.id, lineItem.productId)
+                          return dispatch(addItem(user.id, lineItem.productId));
+                        });
+                    }
+                    history.push('/');
+                })
             });
     };
 };
 
-export const googleLoginActionCreator = (credentials, history) => {
+export const googleLoginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
         console.log('googleLoginActionCreator thunk')
         axios.post('/login/google', credentials )
             .then(results => results.data)
             .then(user => {
                 dispatch(setCurrentUser(user));
+                const lineItems = cart.lineItems;
+                console.log('users store, cart:', cart)
+                if (lineItems.length > 0){
+                    lineItems.forEach(lineItem => dispatch(addItem(user.id, lineItem.productId)));
+                }
                 history.push('/');
             })
     };
@@ -73,6 +94,7 @@ export const logoutActionCreator = (history) => {
         axios.delete('/login')
             .then(() => {
                 dispatch(removeCurrentUser());
+                dispatch(resetCart());
                 history.push('/');
             });
     });

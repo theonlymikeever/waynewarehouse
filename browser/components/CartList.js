@@ -47,7 +47,8 @@ class CartList extends Component {
 
           <div className="card col-xs-12 col-md-4 p-3">
             <p><strong>Subtotal</strong><span className="float-right">$ { subtotal ? subtotal : 0.00 }</span></p>
-          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+          <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary mt-2 btn-block" to={user.id !== 0?
+              `/orders/${cart.id}/confirmation`: '/login' }>Proceed to Checkout</Link>
           </div>
 
         </div>

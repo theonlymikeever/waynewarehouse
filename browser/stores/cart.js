@@ -8,6 +8,7 @@ const FETCH_CART = 'FETCH_CART';
 const CHECKOUT = 'CHECKOUT';
 const ADD_TO_GUEST_CART = 'ADD_TO_GUEST_CART';
 const REMOVE_FROM_GUEST_CART = 'REMOVE_FROM_GUEST_CART';
+const RESET_CART = 'RESET_CART';
 
 //Action Creators
 
@@ -51,36 +52,40 @@ const removeFromGuestCart = (index) => {
     }
 }
 
-//Thunks
-
-export const fetchCart = (userId, filter) => {
-    
-    return (dispatch) => {
-        //prevents building additional cart after checkout
-        filter === true ?
-            axios.get(`/api/orders/${userId}/${filter ? filter : ''}`)
-            :
-            axios.get(`/api/orders/${userId}`)
-
-                .then(res => res.data)
-                .then(cart => {
-                    dispatch(getCart(cart))
-                })
+export const resetCart = () => {
+    console.log('reset Cart******')
+    return {
+        type: RESET_CART
     }
 }
 
+//Thunks
+
+export const fetchCart = (userId) => {
+    
+    return (dispatch) => {
+            axios.get(`/api/orders/${userId}`)
+                .then(res => res.data)
+                .then(cart => {
+                    return dispatch(getCart(cart))
+                })
+    }
+}
+// cart param is optional.  Only used by guestCart.
 export const addItem = (userId, productId, cart) => {
     return (dispatch) => {
         if (userId !== 0){
+            console.log('addItem:', userId, productId)
             axios.post(`/api/orders/${userId}/lineItems`, { productId })
                 .then(() => {
-                    dispatch(fetchCart(userId, false));
+                      return dispatch(fetchCart(userId*1));  
                 });
         } else {
+            // for non-logged in user (guestCart)
             axios.get(`/api/products/${productId}`)
             .then((results) => results.data)
             .then(product => {
-                const id = cart.lineItems.length;
+                const id = cart.lineItems.length || 0;
                 const guestLineItem = {
                     id: id,
                     orderId: 0,
@@ -144,7 +149,9 @@ export default function (state = initialState, action) {
             return Object.assign({}, state, {lineItems: [...state.lineItems, action.lineItem]});
         case REMOVE_FROM_GUEST_CART:
             const nuLineItems = state.lineItems.filter((item, index) => index !== action.index);
-            return Object.assign({}, state, {lineItems: nuLineItems})
+            return Object.assign({}, state, {lineItems: nuLineItems});
+        case RESET_CART:
+            return Object.assign({}, initialState)
 
         default:
             return state;

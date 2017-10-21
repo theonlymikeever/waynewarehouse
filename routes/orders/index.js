@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Order = require('../../models/Order');
+const User = require('../../models/User');
 const LineItem = require('../../models/LineItem');
 const Product = require('../../models/Product');
 
@@ -26,8 +27,7 @@ router.get('/', (req, res, next) => {
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
-  if (!req.params.userId) return;
-  Order.fetchCart(req.params.userId)
+    Order.fetchCart(req.params.userId*1)
     .then(data => {
       res.send(data)
     })
@@ -37,25 +37,29 @@ router.get('/:userId', (req, res, next) => {
 //Get Cart based on the status
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
-router.get('/:userId/:filter', (req, res, next) => {
-  if (!req.params.userId) return;
-  Order.findOne({
-    where: {
-      userId: req.params.userId,
-      isCart: req.params.filter
-    }
-  })
-    .then(cart => {
-      console.log(cart.userId);
-      res.send(cart)}
-    )
-    .catch(next);
-})
+// router.get('/:userId/:filter', (req, res, next) => {
+//   if (!req.params.userId) return;
+//   Order.findOne({
+//     where: {
+//       userId: req.params.userId,
+//       isCart: req.params.filter
+//     }
+//   })
+//     .then(cart => {
+//       console.log(cart.userId);
+//       res.send(cart)}
+//     )
+//     .catch(next);
+// })
 
 //Add Product
 router.post('/:id/lineItems', (req, res, next) => {
-  Order.addProduct(req.params.id, req.body.productId)
-    .then(() => res.sendStatus(200))
+    const userId = req.params.id;
+    Order.addProduct(userId, req.body.productId) 
+    .then((results) => {
+      console.log('orders route add product results:', results)
+      res.sendStatus(200)
+      }) 
     .catch(next);
 })
 

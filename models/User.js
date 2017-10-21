@@ -33,7 +33,8 @@ const User = db.define('user', {
 	},
 	googleId:{
 		type: Sequelize.STRING
-	}
+	},
+	cartId: Sequelize.INTEGER
 });
 
 // User.update = (userId, body) => {
