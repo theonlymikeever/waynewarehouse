@@ -62,7 +62,7 @@ class ProductList extends Component {
               {
                 categories.map(category => {
                   return (
-                    <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
+                    <strong key={category.id} ><li className='nav-link' onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
                   );
                 })
               }
