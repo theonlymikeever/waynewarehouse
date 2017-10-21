@@ -33,6 +33,7 @@ app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')
 app.use('/login', require('./routes/login'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/products', require('./routes/products'));
+app.use('/login', require('./routes/login'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/categories', require('./routes/categories'));

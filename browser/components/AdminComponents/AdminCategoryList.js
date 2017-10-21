@@ -23,7 +23,7 @@ const AdminCategoryList = (props) => {
                   <td>{ category.name }</td>
                   <td>
                     <button className="btn btn-sm btn-danger" name="delete"
-                      onClick={ (event) => props.handleDelete(category.id, event) }>Delete
+                      onClick={ (e) => props.handleDelete(category.id, e) }>Delete
                     </button>
                   </td>
                 </tr>

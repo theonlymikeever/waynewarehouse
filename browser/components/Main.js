@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchUser } from '../stores/user';
 import { fetchProducts } from '../stores/products'
 import { fetchCart } from '../stores/cart'
+import { fetchCategories } from '../stores/categories'
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
@@ -28,7 +29,6 @@ class Main extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('next',nextProps);
 		if (nextProps.user.id){
 			this.props.getCart(nextProps.user.id);
 		}
@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
 		fetchInitialData: () => {
 			dispatch(fetchUser());
 			dispatch(fetchProducts())
+			dispatch(fetchCategories());
 		},
 		getCart: (userId) => {
 			dispatch(fetchCart(userId));

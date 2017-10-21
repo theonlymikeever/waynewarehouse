@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Actions
-const GET_CATEGORIES = "GET_CATEGORIES";
+const GET_CATEGORIES = 'GET_CATEGORIES';
 
 // Action Creators
 const getCategories = (categories) => {
@@ -44,11 +44,12 @@ export const deleteCategoryOnServer = (catId) => {
 }
 
 // Reducer
-export default function (state=[], action){
-  switch(action.type){
-    case GET_CATEGORIES:
-      return action.categories
-    default: 
-      return state;
-  }
+export default function (state = [], action) {
+    switch (action.type) {
+        case GET_CATEGORIES:
+            return Object.assign([], state, action.categories);
+
+        default:
+            return state;
+    }
 }
