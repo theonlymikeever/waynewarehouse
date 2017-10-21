@@ -22,7 +22,7 @@ router.post('/signup', (req, res, next) => {
 
 router.put('/:userId', (req, res, next) => {
     const detail = req.body;
-    User.findById(req.params.userId)
+    User.findById(req.params.userId, { include: [{ all: true }] })
         .then(user => {
             if (detail.address) {
                 Address.create({
@@ -36,6 +36,7 @@ router.put('/:userId', (req, res, next) => {
             //     user[property] = detail[property];
             // }
             // return user.save();
+
             res.send(user);
         })
 })

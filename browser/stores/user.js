@@ -51,7 +51,7 @@ export const updateUser = (user) => {
             .then(res => res.data)
             .then(user => {
                 console.log('user', user);
-                dispatch(setCurrentUser(user));
+                dispatch(fetchUser(user));
             })
     }
 }

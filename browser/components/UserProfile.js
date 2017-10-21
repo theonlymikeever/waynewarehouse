@@ -24,9 +24,9 @@ class UserProfile extends Component {
                 </span></h1>
                 <h3>Email: {user.email}</h3>
                 <h3>Address:
-                    <select>
+                    <select className = 'form-control'>
                         {
-                            user.addresses.map(address => {
+                            user.addresses && user.addresses.length && user.addresses.map(address => {
                                 return (
                                     <option key={address.id}>{address.address}</option>
                                 );
