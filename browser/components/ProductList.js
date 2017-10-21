@@ -49,29 +49,29 @@ class ProductList extends Component {
     return (
 
       <div className="row">
-        <nav className="navbar navbar-expand-lg navbar-light bg-faded">
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="category">
-          <br/>
-            <form>
-              <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
-            </form>
-            <ul className="navbar-nav mr-auto">
-              <strong><li className='nav-link' key={'all'} onClick={() => changeProducts('all')}>All Categories</li></strong>
-              {
-                categories.map(category => {
-                  return (
-                    <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
-                  );
-                })
-              }
-            </ul>
-          </div>
-        </nav>
+      <nav className="navbar navbar-expand-lg navbar-light bg-faded">
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon" />
+      </button>
+      <div className="collapse navbar-collapse" id="category">
+      <br/>
+        <form>
+          <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
+        </form>
+        <ul className="navbar-nav mr-auto">
+          <strong><li className='nav-link' key={'all'} onClick={() => changeProducts('all')}>All Categories</li></strong>
+          {
+            categories.map(category => {
+              return (
+                <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </nav>
         
-        <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
+        <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length > 0? 'col-sm-9' : ''}`}>
           {
             products.map(product => {
               return (
@@ -100,7 +100,7 @@ class ProductList extends Component {
           }
         </div>
         {
-          cart.lineItems ? <RightSideCart /> : ''
+          cart.lineItems && cart.lineItems.length > 0 ? <RightSideCart /> : ''
         }
       </div>
     )
