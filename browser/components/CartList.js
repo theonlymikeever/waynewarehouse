@@ -4,14 +4,29 @@ import { connect } from 'react-redux';
 import { deleteLineItem, checkoutCart } from '../stores/cart';
 
 class CartList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      address: ''
+    };
+
+    this.changeAddress = this.changeAddress.bind(this);
+  }
+
+  changeAddress(ev) {
+    this.setState({ address: ev.target.value })
+    
+  }
+
 
   render() {
     const { handleDelete, handleCheckout, user, cart } = this.props;
+    const {changeAddress} = this;
     const lineItems = cart.lineItems || []
     const subtotal = lineItems.reduce((total, curr) => {
       return total + curr.price
     }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
+    console.log(this.state);
     return (
       <div className="container">
         <div className="row mt-3">
@@ -40,21 +55,23 @@ class CartList extends Component {
                     )
                   })
                 }
+                <tr>
+                  <td>Address: </td>
+                  <td>
+                    <select className='form-control' onChange={changeAddress}>
+                      <option>Address</option>
+                      {
+                        user.addresses && user.addresses.map(address => {
+                          return (
+                            <option key={address.id} value={address.id}>{address.address}</option>
+                          );
+                        })
+                      }
+                    </select>
+                  </td>
+                </tr>
               </tbody>
-              <tr>
-              <td>Address: </td>
-                <td>
-                  <select className = 'form-control'>
-                    {
-                      user.addresses && user.addresses.map(address => {
-                        return (
-                          <option key={address.id}>{address.address}</option>
-                        );
-                      })
-                    }
-                  </select>
-                </td>
-              </tr>
+
             </table>
           </div>
 
