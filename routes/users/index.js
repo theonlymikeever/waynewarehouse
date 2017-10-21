@@ -14,7 +14,6 @@ router.post('/signup', (req, res, next) => {
     User.signUp(req.body)
         .then(user => {
             req.session.userId = user.id;
-            console.log('sadfdsa',user);
             res.send(user)
         }).catch(err => {
             console.log(err.error);
