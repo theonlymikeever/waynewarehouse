@@ -30,17 +30,23 @@ class ReviewForm extends Component {
   handleSubmit(evt){
     evt.preventDefault();
     this.props.handleAdd(this.state)
-    console.log('submitted: ', this.state)
+    this.setState({
+      stars: null,
+      title: '',
+      content: '',
+      userId: this.props.user.id,
+      productId: this.props.productId
+    })
   }
 
   render(){
     const { handleChange, handleSubmit } = this;
-    const { title, content } = this.state;
+    const { title, content, stars } = this.state;
 
   return (
-      <form className="form-group" onSubmit={ (evt) => handleSubmit(evt) }>
+      <form className="form-group mt-3" onSubmit={ (evt) => handleSubmit(evt) }>
         <div className="form-group">
-          <label className="col-sm-2 col-form-label ml-0">Number of Bats:</label>
+          <label className="col-sm-2 col-form-label pl-0">Number of Bats:</label>
           <div className="form-check form-check-inline">
             <label className="form-check-label">
               <input onChange={ handleChange } className="form-check-input" type="radio" name="stars" value={1} /> 1
@@ -63,7 +69,7 @@ class ReviewForm extends Component {
           </div>
           <div className="form-check form-check-inline">
             <label className="form-check-label">
-              <input onChange={ handleChange } className="form-check-input" type="radio" name="stars" value={5} checked={true} /> 5
+              <input onChange={ handleChange } className="form-check-input" type="radio" name="stars" value={5} /> 5
             </label>
           </div>
         </div>

@@ -33,7 +33,7 @@ function ProductDetail(props) {
             <hr />
             {
               reviewsList ?
-              <div className="mb-2">
+              <div className="mb-3">
                 <h3>Reviews</h3>
                 <ReviewsList reviews={reviewsList} productId={productId}/>
                 <hr />
