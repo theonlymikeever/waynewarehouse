@@ -20,5 +20,13 @@ router.post('/signup', (req, res, next) => {
         });
 });
 
+router.put('/:userId', (req, res, next) => {
+    const detail = req.body.user;
+    User.findById(req.params.userId)
+        .then(user => {
+            console.log(detail);
+        })
+})
+
 
 module.exports = router;
