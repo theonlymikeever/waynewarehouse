@@ -50,7 +50,6 @@ export const updateProducts = (catArr) => {
     axios.put(`/api/products/updateList`, catArr)
       .then(res => res.data)
       .then(newProducts => {
-        
         dispatch(getProducts(newProducts));
       })
   }

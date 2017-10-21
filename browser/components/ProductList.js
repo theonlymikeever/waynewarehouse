@@ -22,7 +22,7 @@ class ProductList extends Component {
   }
 
   changeProducts(categoryId) {
-    if (categoryId === 'all'){
+    if (categoryId === 'all') {
       return this.props.getAll();
     }
     if (this.state.categories.indexOf(categoryId) > -1) {
@@ -47,14 +47,13 @@ class ProductList extends Component {
     const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
     return (
-
       <div className="row">
         <nav className="navbar navbar-expand-lg navbar-light bg-faded">
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="category">
-          <br/>
+            <br />
             <form>
               <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
             </form>
@@ -63,35 +62,34 @@ class ProductList extends Component {
               {
                 categories.map(category => {
                   return (
-                    <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
+                    <strong key={category.id} ><li className='nav-link' onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
                   );
                 })
               }
             </ul>
           </div>
         </nav>
-        
-        <div className={`card-deck mt-2 ${cart.lineItems ? 'col-sm-9' : ''}`}>
+        <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length ? 'col-sm-9' : ''}`}>
           {
             products.map(product => {
               return (
                 <div className="mb-3 col-sm-4" key={product.id}>
                   <div className="card">
                     <div className="card-body">
-                      <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={product.image} width="100%" /></Link>
+                      <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={product.image} width="150" /></Link>
                       <Link to={`/products/${product.id}`} ><h4 className="card-title">{product.name}</h4></Link>
                       <p className="card-text">{product.shortDescription}
 
                         <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
                       <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
                       <p className="card-text">lb: {product.weight}</p>
-                      <form className="form-inline btn mr-2 mb-0" onSubmit={handleDelete}>
+                      <form className="form-inline btn mr-2 mb-0" onSubmit={ handleDelete }>
                         {(user.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
                       </form>
 
-                      <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                      <button className="btn m-2 btn-success float-left"
+                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</button>
                     </div>
                   </div>
                 </div>
@@ -100,7 +98,7 @@ class ProductList extends Component {
           }
         </div>
         {
-          cart.lineItems ? <RightSideCart /> : ''
+          cart.lineItems && cart.lineItems.length ? <RightSideCart /> : ''
         }
       </div>
     )
