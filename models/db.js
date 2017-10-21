@@ -9,6 +9,7 @@ const User = require('./User');
 
 //Associations:
 Product.belongsTo(Category);
+Category.hasMany(Product);
 
 LineItem.belongsTo(Product);
 LineItem.belongsTo(Order);
