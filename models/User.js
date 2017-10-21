@@ -43,17 +43,22 @@ const User = db.define('user', {
 
 User.signUp = (details) => {
 	const address = details.address;
-	const body = {}
-	for (let entry in details) {
-		if (entry !== 'address') {
-			body[entry] = details[entry];
+	if (address) {
+		const body = {}
+		for (let entry in details) {
+			if (entry !== 'address') {
+				body[entry] = details[entry];
+			}
 		}
+		return Promise.all([User.create(body), Address.create({ address: address })])
+			.then(([user, address]) => {
+				address.setUser(user);
+				return User.findById(user.id, { include: [{ all: true }] })
+			})
+	} else {
+		return User.create(details)
+	
 	}
-	return Promise.all([User.create(body), Address.create({ address: address })])
-		.then(([user, address]) => {
-			address.setUser(user);
-			return User.findById(user.id, { include: [{ all: true }] })
-		})
 }
 
 module.exports = User;

@@ -2,31 +2,44 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteLineItem, checkoutCart } from '../stores/cart';
+import { updateUser } from '../stores/user';
 
 class CartList extends Component {
   constructor() {
     super();
     this.state = {
-      address: ''
+      address: '',
+      addressValue: ''
     };
 
     this.changeAddress = this.changeAddress.bind(this);
+    this.addAddress = this.addAddress.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   changeAddress(ev) {
     this.setState({ address: ev.target.value })
+  }
+
+  handleChange(ev) {
+    this.setState({ addressValue: ev.target.value });
+  }
+
+  addAddress(ev) {
+    ev.preventDefault();
+    this.props.updateUser({ id: this.props.user.id, address: this.state.addressValue })
 
   }
 
 
   render() {
     const { handleDelete, handleCheckout, user, cart } = this.props;
-    const { changeAddress } = this;
+    const { changeAddress, addAddress, handleChange } = this;
     const lineItems = cart.lineItems || []
     const subtotal = lineItems.reduce((total, curr) => {
       return total + curr.price
     }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    console.log(this.state);
+
     return (
       <div className="container">
         <div className="row mt-3">
@@ -70,8 +83,9 @@ class CartList extends Component {
                         }
                       </select>
                       :
-                      <form>
-                        <input type='text' placeholder='Enter shipping address' className='form-control' />
+                      <form onSubmit={addAddress}>
+                        <input type='text' value={this.state.addressValue} onChange={handleChange} placeholder='Enter shipping address' className='form-control' />
+                        <button className='btn btn-default'>Add Address</button>
                       </form>
                     }
                   </td>
@@ -110,6 +124,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleCheckout: (cartId, address) => {
       dispatch(checkoutCart(cartId, address))
+    },
+    updateUser: (user) => {
+      dispatch(updateUser(user));
     }
   }
 }

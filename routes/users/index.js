@@ -21,10 +21,22 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.put('/:userId', (req, res, next) => {
-    const detail = req.body.user;
+    const detail = req.body;
     User.findById(req.params.userId)
         .then(user => {
-            console.log(detail);
+            if (detail.address) {
+                Address.create({
+                    address: detail.address,
+                    userId: user.id
+                })
+            }
+
+            // console.log('detail', detail.address);
+            // for (let property in detail) {
+            //     user[property] = detail[property];
+            // }
+            // return user.save();
+            res.send(user);
         })
 })
 

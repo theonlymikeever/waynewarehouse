@@ -15,12 +15,6 @@ const setCurrentUser = (user) => {
     };
 };
 
-const update = () => {
-    return {
-        type: UPDATE_USER
-    };
-};
-
 const removeCurrentUser = () => {
     return {
         type: REMOVE_CURRENT_USER,
@@ -51,9 +45,12 @@ export const postUser = (user, history) => {
 }
 
 export const updateUser = (user) => {
+    console.log('update', user);
     return (dispatch) => {
         axios.put(`/api/users/${user.id}`, user)
+            .then(res => res.data)
             .then(user => {
+                console.log('user', user);
                 dispatch(setCurrentUser(user));
             })
     }
