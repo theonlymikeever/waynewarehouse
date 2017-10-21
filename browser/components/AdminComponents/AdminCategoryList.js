@@ -4,7 +4,7 @@ import { deleteCategoryOnServer } from '../../stores/categories';
 
 
 const AdminCategoryList = (props) => {
-  const { categories } = props;
+  const { categories, handleDelete } = props;
 
   return(
     <div>
@@ -23,7 +23,7 @@ const AdminCategoryList = (props) => {
                   <td>{ category.name }</td>
                   <td>
                     <button className="btn btn-sm btn-danger" name="delete"
-                      onClick={ (e) => props.handleDelete(category.id, e) }>Delete
+                      onClick={ (evt) => handleDelete(category.id, evt) }>Delete
                     </button>
                   </td>
                 </tr>
