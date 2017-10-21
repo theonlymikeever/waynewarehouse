@@ -20,7 +20,7 @@ class NavBar extends Component {
       cartItems = cart.lineItems.reduce((memo, item) => {
         return memo + item.quantity;
       }, 0)
-    }
+  }
 
 
     return (
@@ -71,6 +71,8 @@ class NavBar extends Component {
     );
   }
 
+
+
   renderLogout(user) {
     // const textStyle = { color: 'blue' }
     if (!user.id) {
@@ -81,6 +83,13 @@ class NavBar extends Component {
         <li className="nav-item">
           <NavLink to="/profile" className="nav-link" activeClassName="active">Profile</NavLink>
         </li>
+        { 
+          user.isAdmin ? 
+            <li className="nav-item">
+              <NavLink to="/admin" className="nav-link" activeClassName="active">Admin</NavLink>
+            </li> : ''
+        }
+        
         <li className="nav-item mr-sm-2">
           <button
             className="btn btn-outline-warning my-2 my-sm-0"
