@@ -10,7 +10,6 @@ function ProductDetail(props) {
   const productId = props.match.params.productId * 1;
   const product = products.length > 0 ? products.filter(prod => prod.id === productId)[0] : {};
   const reviewsList = reviews.length > 0 ? reviews.filter(rev => rev.productId === productId) : [];
-  console.log('list',reviewsList)
 
     return (
      <div className='container' key={ product.id }>
@@ -36,13 +35,13 @@ function ProductDetail(props) {
               reviewsList ?
               <div className="mb-2">
                 <h3>Reviews</h3>
-                <ReviewsList reviews={reviewsList} />
+                <ReviewsList reviews={reviewsList} productId={productId}/>
                 <hr />
               </div>
               : ''
             }
             <h3>Write a Review</h3>
-            <ReviewForm />
+            <ReviewForm productId={productId} />
             </div>
           </div>
       </div>

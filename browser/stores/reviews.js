@@ -14,10 +14,30 @@ const getReviews = (reviews) => {
 //Thunks
 export const fetchReviews = () => {
   return (dispatch) => {
-    axios.get(`/api/reviews/products`)
+    axios.get(`/api/reviews`)
       .then( res => res.data )
       .then( reviews => {
         dispatch(getReviews(reviews))
+      })
+      .catch(console.log)
+  }
+}
+
+export const addReviewOnServer = (review) => {
+  return (dispatch) => {
+    axios.post(`/api/reviews/`, review)
+      .then( () => {
+        dispatch(fetchReviews()) //to update the store
+      })
+      .catch(console.log)
+  }
+}
+
+export const deleteReviewOnServer = (id) => {
+  return (dispatch) => {
+    axios.delete(`/api/reviews/${id}`)
+      .then( () => {
+        dispatch(fetchReviews()) // to update the store
       })
       .catch(console.log)
   }

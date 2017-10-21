@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//need review store
+import { addReviewOnServer } from '../stores/reviews'
 
 class ReviewForm extends Component {
   constructor(props){
@@ -9,7 +9,8 @@ class ReviewForm extends Component {
       stars: null,
       title: '',
       content: '',
-      userId: props.user.id
+      userId: props.user.id,
+      productId: props.productId
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,6 +29,7 @@ class ReviewForm extends Component {
 
   handleSubmit(evt){
     evt.preventDefault();
+    this.props.handleAdd(this.state)
     console.log('submitted: ', this.state)
   }
 
@@ -82,9 +84,9 @@ const mapStateToProps = ({ user }) => {
 const mapDispatchToProps = (dispach) => {
   return {
     handleAdd: (review) => {
-      dispach() //add to server
+      dispach(addReviewOnServer(review)) //add to server
     }
   }
 }
 
-export default connect(mapStateToProps)(ReviewForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);

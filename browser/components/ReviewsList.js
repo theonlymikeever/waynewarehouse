@@ -7,7 +7,6 @@ function ReviewList(props) {
   <div>
   {
     reviews.length > 0 && reviews.map(review => {
-      console.log(review)
       return (
          <div key={review.id} className="card bg-light mb-3" >
           <div className="card-header"><span className="mr-2">{ review.user.name }</span>
