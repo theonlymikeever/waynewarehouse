@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const Review = require('../../models/Review');
+const User = require('../../models/User');
 
-//Get all reviews for Product - mostly for testing
-router.get('/product/:productId', (req, res, next) => {
-  Review.findAll({ where: { productId: req.params.productId }})
+//Get all reviews for Products
+router.get('/', (req, res, next) => {
+  Review.findAll({include: [{
+      model: User, attributes: ['name']}
+    ]})
     .then(reviews => res.send(reviews))
     .catch(next);
 });
@@ -16,7 +19,7 @@ router.get('/:reviewId', (req, res, next) => {
 });
 
 //Write Reviews
-router.post('/product/:productId', (req, res, next) => {
+router.post('/', (req, res, next) => {
   //obj coming in as body should have the userId
   Review.create(req.body)
     .then(() => res.sendStatus(201))
