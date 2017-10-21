@@ -15,13 +15,13 @@ class CartList extends Component {
 
   changeAddress(ev) {
     this.setState({ address: ev.target.value })
-    
+
   }
 
 
   render() {
     const { handleDelete, handleCheckout, user, cart } = this.props;
-    const {changeAddress} = this;
+    const { changeAddress } = this;
     const lineItems = cart.lineItems || []
     const subtotal = lineItems.reduce((total, curr) => {
       return total + curr.price
@@ -58,16 +58,22 @@ class CartList extends Component {
                 <tr>
                   <td>Address: </td>
                   <td>
-                    <select className='form-control' onChange={changeAddress}>
-                      <option>Address</option>
-                      {
-                        user.addresses && user.addresses.map(address => {
-                          return (
-                            <option key={address.id} value={address.id}>{address.address}</option>
-                          );
-                        })
-                      }
-                    </select>
+                    {user.addresses ?
+                      <select className='form-control' onChange={changeAddress}>
+                        <option>Address</option>
+                        {
+                          user.addresses && user.addresses.map(address => {
+                            return (
+                              <option key={address.id} value={address.address}>{address.address}</option>
+                            );
+                          })
+                        }
+                      </select>
+                      :
+                      <form>
+                        <input type='text' placeholder='Enter shipping address' className='form-control' />
+                      </form>
+                    }
                   </td>
                 </tr>
               </tbody>
@@ -77,7 +83,7 @@ class CartList extends Component {
 
           <div className="card col-xs-12 col-md-4 p-3">
             <p><strong>Subtotal</strong><span className="float-right">$ {subtotal ? subtotal : 0.00}</span></p>
-            <Link onClick={() => handleCheckout(cart.id)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+            <Link onClick={() => handleCheckout(cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
           </div>
 
         </div>
@@ -102,8 +108,8 @@ const mapDispatchToProps = (dispatch) => {
     handleDelete: (userId, productId) => {
       dispatch(deleteLineItem(userId, productId))
     },
-    handleCheckout: (cartId) => {
-      dispatch(checkoutCart(cartId))
+    handleCheckout: (cartId, address) => {
+      dispatch(checkoutCart(cartId, address))
     }
   }
 }

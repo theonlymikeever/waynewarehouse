@@ -4,7 +4,8 @@ import axios from 'axios';
 
 // ACTION TYPES
 const GET_ORDERS = 'GET_ORDERS',
-  DELETE_ORDER = 'DELETE_ORDER';
+  DELETE_ORDER = 'DELETE_ORDER',
+  GET_ORDER = 'GET_ORDER';
 
 
 // ACTION CREATORS
@@ -16,6 +17,9 @@ const deleteOrderById = (orderId) => {
   return { type: DELETE_ORDER, orderId }
 }
 
+const getOrder = (order) => {
+  return { type: GET_ORDER, order }
+}
 
 // THUNK CREATORS
 export const fetchOrders = (orders) => {
@@ -28,6 +32,17 @@ export const fetchOrders = (orders) => {
   }
 }
 
+export const fetchOrder = (id) => {
+  console.log('fetch', id)
+  return function thunk(dispatch) {
+    return axios.get(`/api/orders/${id}`)
+      .then(res => res.data)
+      .then(order => {
+        dispatch(getOrder(order));
+      })
+  }
+}
+
 export const deleteOrder = (orderId) => {
   return function thunk(dispatch) {
     return axios.delete(`/api/orders/${orderId}`)
@@ -36,6 +51,7 @@ export const deleteOrder = (orderId) => {
         dispatch(deleteOrderById(orderId));
       })
   }
+
 }
 
 
@@ -49,8 +65,10 @@ const reducer = (state = [], action) => {
       const orders = state.orders.filter(function (order) {
         return order.id !== action.orderId;
       })
-      return Object.assign({}, state, { orders: orders })
+      return Object.assign({}, state, { orders: orders });
 
+    case GET_ORDER:
+      return action.order;
     default:
       return state;
   }

@@ -34,6 +34,21 @@ router.get('/:userId', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/:orderId', (req, res, next) => {
+  console.log(req.params.orderId)
+  Order.findById(req.params.orderId * 1, {
+    include: [
+      {
+        model: LineItem, as: 'lineItems',
+        include: [Product]
+      }
+    ]
+  })
+    .then(order => {
+      res.send(order);
+    }).catch(next)
+});
+
 //Get Cart based on the status
 //for future implementation where we have
 // 'SHIPPED', 'CART', 'PROCESSED'
@@ -47,7 +62,8 @@ router.get('/:userId/:filter', (req, res, next) => {
   })
     .then(cart => {
       console.log(cart.userId);
-      res.send(cart)}
+      res.send(cart)
+    }
     )
     .catch(next);
 })
@@ -69,7 +85,7 @@ router.delete('/:id/lineItems/:productId', (req, res, next) => {
 
 //Create & Finalize the Order
 router.put('/:cartId', (req, res, next) => {
-
+  console.log(req.body);
   Order.findOne({
     where: {
       id: req.params.cartId,
@@ -77,7 +93,7 @@ router.put('/:cartId', (req, res, next) => {
     }
   })
     .then(order => {
-
+      order.address = req.body.address;
       order.isCart = false;
       return order.save()
     })
