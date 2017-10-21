@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addCategoryOnServer } from '../../stores/categories';
+import { addCategoryOnServer, fetchCategories } from '../../stores/categories';
 import AdminCategoryList from './AdminCategoryList';
 
 class AdminCategoryForm extends React.Component{
@@ -22,24 +22,20 @@ class AdminCategoryForm extends React.Component{
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.handleAdd(this.state);
-
-    !this.state.name ? this.setState({
-      alert: "Please enter category name",
-      alertStyle: "alert alert-danger mt-3"
-    }) :
-    this.setState({
-      alert: "New category has been added!",
-      alertStyle: "alert alert-success mt-3"
-    })
+    this.props.handleAdd(this.state);    
   }
 
   handleClick(){
     this.refs.name.value = "";
   }
 
+  componentDidMount(){
+    this.props.getCategories(this.props.categories);
+  }
+
   render(){
     const { name, alert, alertStyle } = this.state;
+    const { categories } = this.props;
 
     return (  
       <div>
@@ -60,10 +56,16 @@ class AdminCategoryForm extends React.Component{
         </div>
         { alert ? <div className={ alertStyle }>{ alert }</div> : "" }
 
-        <AdminCategoryList />
+        <AdminCategoryList categories={ categories } />
         
       </div>   
     )
+  }
+}
+
+const mapStateToProps = ({ categories }) => {
+  return {
+    categories
   }
 }
 
@@ -71,9 +73,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleAdd: (category, event) => {
       dispatch(addCategoryOnServer(category));
+    }, 
+    getCategories: () => {
+      dispatch(fetchCategories())
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(AdminCategoryForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCategoryForm);
 

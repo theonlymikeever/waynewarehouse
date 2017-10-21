@@ -4,7 +4,7 @@ import { deleteCategoryOnServer } from '../../stores/categories';
 
 
 const AdminCategoryList = (props) => {
-  const { categories, handleDelete } = props;
+  const { categories } = props;
 
   return(
     <div>
@@ -23,7 +23,7 @@ const AdminCategoryList = (props) => {
                   <td>{ category.name }</td>
                   <td>
                     <button className="btn btn-sm btn-danger" name="delete"
-                      onSubmit={ handleDelete }>Delete
+                      onClick={ (event) => props.handleDelete(category.id, event) }>Delete
                     </button>
                   </td>
                 </tr>
@@ -38,7 +38,6 @@ const AdminCategoryList = (props) => {
 }
 
 const mapStateToProps = ({ categories }) => {
-  console.log("categories", categories) // []???
   return {
     categories
   }
@@ -46,9 +45,9 @@ const mapStateToProps = ({ categories }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleDelete: (evt) => {
+    handleDelete: (categoryId, evt) => {
       evt.preventDefault();
-      dispatch(deleteCategoryOnServer(evt.target.delete.value))
+      dispatch(deleteCategoryOnServer(categoryId))
     }
   }
 }

@@ -17,8 +17,10 @@ router.post('/', (req, res, next) => {
 })
 
 router.delete('/:categoryId', (req, res, next) => {
-  Category.destroy({ where: { id: req.params.categoryId }})
-    .then(() => sendStatus(200))
+  Category.destroy({ where: { id: +req.params.categoryId }})
+    .then(() => {
+      res.sendStatus(204)
+    })
     .catch(next);
 })
 
