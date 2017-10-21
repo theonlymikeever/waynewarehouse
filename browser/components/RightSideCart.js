@@ -9,7 +9,7 @@ function RightSideCart(props) {
         }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   return (
-    <div className="col-sm-3 offset-sm-1 sidebar mt-3">
+    <div className="col-sm-3 sidebar mt-3">
       <div className="sidebar-module sidebar-module-inset">
         <h5>Cart</h5>
         <div className="list-group">

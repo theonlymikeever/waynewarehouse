@@ -22,7 +22,7 @@ class ProductList extends Component {
   }
 
   changeProducts(categoryId) {
-    if (categoryId === 'all'){
+    if (categoryId === 'all') {
       return this.props.getAll();
     }
     if (this.state.categories.indexOf(categoryId) > -1) {
@@ -47,31 +47,29 @@ class ProductList extends Component {
     const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
     return (
-
       <div className="row">
-      <nav className="navbar navbar-expand-lg navbar-light bg-faded">
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon" />
-      </button>
-      <div className="collapse navbar-collapse" id="category">
-      <br/>
-        <form>
-          <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
-        </form>
-        <ul className="navbar-nav mr-auto">
-          <strong><li className='nav-link' key={'all'} onClick={() => changeProducts('all')}>All Categories</li></strong>
-          {
-            categories.map(category => {
-              return (
-                <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
-              );
-            })
-          }
-        </ul>
-      </div>
-    </nav>
-        
-        <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length > 0? 'col-sm-9' : ''}`}>
+        <nav className="navbar navbar-expand-lg navbar-light bg-faded">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#category" aria-controls="category" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="category">
+            <br />
+            <form>
+              <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
+            </form>
+            <ul className="navbar-nav mr-auto">
+              <strong><li className='nav-link' key={'all'} onClick={() => changeProducts('all')}>All Categories</li></strong>
+              {
+                categories.map(category => {
+                  return (
+                    <strong><li className='nav-link' key={category.id} onClick={() => changeProducts(category.id)}>{category.name}</li></strong>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        </nav>
+        <div className={`card-deck mt-2 ${cart.lineItems && cart.lineItems.length ? 'col-sm-9' : ''}`}>
           {
             products.map(product => {
               return (
@@ -86,12 +84,12 @@ class ProductList extends Component {
                       <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
                       <p className="card-text">lb: {product.weight}</p>
                       <form className="form-inline btn mr-2 mb-0" onSubmit={handleDelete}>
-                        {(user.isAdmin) ?
+                        {(product.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
                       </form>
 
-                      <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                      <button className="btn m-2 btn-success float-left"
+                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</button>
                     </div>
                   </div>
                 </div>
@@ -100,7 +98,7 @@ class ProductList extends Component {
           }
         </div>
         {
-          cart.lineItems && cart.lineItems.length > 0 ? <RightSideCart /> : ''
+          cart.lineItems && cart.lineItems.length ? <RightSideCart /> : ''
         }
       </div>
     )
