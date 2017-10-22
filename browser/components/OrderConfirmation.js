@@ -8,6 +8,7 @@ class OrderCofirmation extends Component {
 
     componentDidMount() {
         this.props.getOrders();
+        this.props.getOrders();
     }
 
     render() {
