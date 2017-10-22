@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { fetchOrders } from '../stores/orders';
 import { updateUser } from '../stores/user';
 import CollapseOrderList from './CollapseOrderList';
+import UploadPic from './UploadPic';
 
 class UserProfile extends Component {
     constructor() {
@@ -85,11 +86,7 @@ class UserProfile extends Component {
                                 </div>
                             </div>
                             <div className='card-body'>
-                                <label>Upload an image</label>
-                                <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-                                    <input onChange={this.handleFile} type="file" />
-                                    <button>Submit</button>
-                                </form>
+                                <UploadPic />
                             </div>
                         </div>
                         {userOrders && userOrders.length ?
