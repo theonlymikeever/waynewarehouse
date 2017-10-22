@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchOrders } from '../stores/orders';
-import CollapseOrderlist from './CollapseOrderlist';
+import CollapseOrderList from './CollapseOrderList';
 
 class UserProfile extends Component {
 
@@ -50,7 +50,7 @@ class UserProfile extends Component {
                             </div>
                         </div>
                         {userOrders && userOrders.length ?
-                            <CollapseOrderlist userOrders={userOrders} /> : null}
+                            <CollapseOrderList userOrders={userOrders} /> : null}
                     </div>
                 </div>
             </div>

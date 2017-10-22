@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { fetchOrders } from '../stores/orders';
 
-export default function UserProfile(props) {
+export default function CollapseOrderList(props) {
 
     const { userOrders } = props;
     return (
