@@ -14,12 +14,16 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	User.findOne({
-		where: req.body
+		where: {
+			email: req.body.email
+		}
 	}, { include: [{ all: true }] })
 		.then(user => {
-			
+
 			if (!user) {
-				res.sendStatus(401)
+				res.status(401).send('User not found')
+			} else if (!user.correctPassword(req.body.password)) {
+				res.status(401).send('Incorrect password')
 			} else {
 				req.session.userId = user.id;
 				res.status(200).send(user);
@@ -31,7 +35,7 @@ router.post('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
 	console.log('routes/logout');
 	req.session.userId = '';
-	// console.log('session: ', req.session);
+	console.log('session: ', req.session);
 	res.sendStatus(200);
 
 });

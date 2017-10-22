@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser } from '../stores/user';
-import { fetchProducts } from '../stores/products'
-import { fetchCart } from '../stores/cart'
+import { fetchProducts } from '../stores/products';
+import { fetchCart } from '../stores/cart';
+import { fetchCategories } from '../stores/categories'
+import { fetchReviews } from '../stores/reviews';
 
 import UserProfile from './UserProfile';
 import SignUp from './SignUp';
@@ -16,22 +18,22 @@ import ProductDetail from './ProductDetail';
 import OrderList from './OrderList';
 import CartList from './CartList';
 import OrderConfirmation from './OrderConfirmation';
+import Admin from './Admin';
 
 class Main extends Component {
 	constructor(props) {
 		super(props);
 	}
 	componentDidMount() {
-		
+
 		this.props.fetchInitialData();
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('next',nextProps);
 		if (nextProps.user.id){
 			this.props.getCart(nextProps.user.id);
 		}
-			
+
 	}
 
 	render() {
@@ -48,6 +50,7 @@ class Main extends Component {
 						<Route exact path='/signup' component={SignUp} />
 						<Route exact path='/orders/:userId/lineItems' component={CartList} />
 						<Route exact path='/orders/:orderId/confirmation' component={OrderConfirmation} />
+            <Route path='/admin' component={Admin} />            
 						<Route component={Home} />
 					</Switch>
 				</main>
@@ -67,6 +70,8 @@ const mapDispatchToProps = (dispatch) => {
 		fetchInitialData: () => {
 			dispatch(fetchUser());
 			dispatch(fetchProducts())
+			dispatch(fetchCategories());
+			dispatch(fetchReviews())
 		},
 		getCart: (userId) => {
 			dispatch(fetchCart(userId));

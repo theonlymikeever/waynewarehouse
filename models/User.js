@@ -1,6 +1,8 @@
 const db = require('./conn');
 const Sequelize = db.Sequelize;
 const Address = require('./Address');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const User = db.define('user', {
 	name: {
@@ -34,12 +36,25 @@ const User = db.define('user', {
 	}
 });
 
-// User.update = (userId, body) => {
-// 	User.findById(userId)
-// 	.then(user => {
-// 		// user = Obj.assign({})
-// 	})
-// }
+User.prototype.correctPassword = function(password) {
+	return bcrypt.compare(password, this.password)
+	.then(function(res) {
+		console.log(res)
+		return res;
+	});
+}
+
+const encrypt = (user) => {
+	if (user.changed('password')) {
+		bcrypt.hash(user.password, saltRounds)
+			.then(function (hash) {
+				user.password = hash;
+				user.save();
+			})
+	}
+}
+
+User.beforeCreate(encrypt);
 
 User.signUp = (details) => {
 	const address = details.address;

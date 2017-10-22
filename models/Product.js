@@ -14,21 +14,31 @@ const Product = db.define('product', {
         type: Sequelize.TEXT
     },
     image: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT
     },
-    weight: Sequelize.FLOAT,
-    contributedBy: Sequelize.STRING
+    weight: Sequelize.FLOAT
 },
-{
-  getterMethods: {
-    shortDescription() {
-        return this.description.slice(0,120) + '... ';
-    },
-    pricePretty(){
-        return (this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    }
-  }
-});
+    {
+        getterMethods: {
+            shortDescription() {
+                return this.description.slice(0, 120) + '... ';
+            },
+            pricePretty() {
+                return (this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            }
+        }
+    });
 
-
+Product.changeProducts = function (catArr) {
+    return Product.findAll({
+        order: [['id']],
+        where: {
+            categoryId: {
+                $in: catArr
+            }
+        }
+    }).then(products => {
+        return products.sort((a, b) => a.id - b.id)
+    })
+}
 module.exports = Product;
