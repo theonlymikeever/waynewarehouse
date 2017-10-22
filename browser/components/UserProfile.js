@@ -2,12 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchOrders } from '../stores/orders';
+import { updateUser } from '../stores/user';
 import CollapseOrderList from './CollapseOrderList';
 
 class UserProfile extends Component {
+    constructor() {
+        super();
+        this.state = {
+            data_uri: '',
+            photo: ''
+        }
 
+        this.handleFile = this.handleFile.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
     componentDidMount() {
         this.props.getOrders();
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        var promise = new Promise((resolve) => {
+            this.setState({ photo: this.state.data_uri })
+            resolve(this.state);
+        })
+        
+            promise.then(() => {
+                this.props.updateUser({ id: this.props.user.id, photo: this.state.photo });
+            })
+
+    }
+
+    handleFile(e) {
+        const reader = new FileReader();
+        const file = e.target.files[0];
+
+        reader.onload = (upload) => {
+            this.setState({
+                data_uri: upload.target.result
+            });
+        };
+        reader.readAsDataURL(file);
     }
 
     render() {
@@ -18,6 +53,7 @@ class UserProfile extends Component {
         }
 
         return (
+
             <div>
                 <br />
                 <div className="container">
@@ -28,7 +64,7 @@ class UserProfile extends Component {
                         <div className="card-body">
                             <div className='row'>
                                 <div className='col-3'>
-                                    <img src={user.photo} />
+                                    <img className='thumbnail' src={this.state.photo ? this.state.photo : user.photo} />
                                 </div>
                                 <div className='col-9'>
                                     <ul className="list-group list-group-flush">
@@ -47,6 +83,13 @@ class UserProfile extends Component {
                                         </li>
                                     </ul>
                                 </div>
+                            </div>
+                            <div className='card-body'>
+                                <label>Upload an image</label>
+                                <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+                                    <input onChange={this.handleFile} type="file" />
+                                    <button>Submit</button>
+                                </form>
                             </div>
                         </div>
                         {userOrders && userOrders.length ?
@@ -69,6 +112,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getOrders: () => {
             dispatch(fetchOrders());
+        },
+        updateUser: (user) => {
+            dispatch(updateUser(user));
         }
     }
 }

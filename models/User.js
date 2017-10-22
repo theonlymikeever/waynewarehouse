@@ -28,7 +28,7 @@ const User = db.define('user', {
 		}
 	},
 	photo: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		defaultValue: 'https://success.salesforce.com/resource/1505433600000/sharedlayout/img/new-user-image-default.png'
 	},
 	googleId: {
