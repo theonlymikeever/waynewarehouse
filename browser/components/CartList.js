@@ -83,8 +83,9 @@ class CartList extends Component {
                         }
                       </select>
                       :
-                      <form onSubmit={addAddress}>
+                      <form onSubmit={addAddress} className = 'form-control'>
                         <input type='text' value={this.state.addressValue} onChange={handleChange} placeholder='Enter shipping address' className='form-control' />
+                        <br/>
                         <button className='btn btn-default'>Add Address</button>
                       </form>
                     }
