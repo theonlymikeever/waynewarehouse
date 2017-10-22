@@ -83,9 +83,9 @@ class CartList extends Component {
                         }
                       </select>
                       :
-                      <form onSubmit={addAddress} className = 'form-control'>
+                      <form onSubmit={addAddress} className='form-control'>
                         <input type='text' value={this.state.addressValue} onChange={handleChange} placeholder='Enter shipping address' className='form-control' />
-                        <br/>
+                        <br />
                         <button className='btn btn-default'>Add Address</button>
                       </form>
                     }
@@ -98,7 +98,11 @@ class CartList extends Component {
 
           <div className="card col-xs-12 col-md-4 p-3">
             <p><strong>Subtotal</strong><span className="float-right">$ {subtotal ? subtotal : 0.00}</span></p>
-            <Link onClick={() => handleCheckout(cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+            {this.state.address.length ?
+              <Link onClick={() => handleCheckout(cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+              :
+              <h4 className='text-info'>Select address to continue</h4>
+            }
           </div>
 
         </div>
