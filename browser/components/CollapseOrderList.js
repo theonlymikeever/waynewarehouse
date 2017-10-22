@@ -15,7 +15,7 @@ export default function UserProfile(props) {
                         userOrders.map(order => {
                             return (
                                 order.isCart === true ? null :
-                                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div key = {order.id} id="accordion" role="tablist" aria-multiselectable="true">
                                         <div className="card">
                                             <div className="card-header" role="tab" id={`heading${order.id}`}>
                                                 <h5 className="mb-0">
