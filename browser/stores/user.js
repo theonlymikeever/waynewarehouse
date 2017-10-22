@@ -63,7 +63,7 @@ export const loginActionCreator = (credentials, history) => {
                 return results.data;
             })
             .then(user => {
-                dispatch(setCurrentUser(user));
+                dispatch(fetchUser(user));
                 history.push('/');
             });
     };

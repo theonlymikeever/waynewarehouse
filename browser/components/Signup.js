@@ -18,11 +18,11 @@ class SignUp extends Component {
 
     handleChange(ev) {
         const { name, email, password } = this.state;
-        
+
         this.setState({
             [ev.target.name]: ev.target.value
         })
-        console.log(this.state)
+
         if (name.length > 0 && password.length > 0 && email.length > 0) this.setState({ required: true });
 
     }

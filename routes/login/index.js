@@ -8,7 +8,6 @@ router.get('/', (req, res, next) => {
 		include: [{ all: true }]
 	})
 		.then(user => {
-			console.log(user);
 			res.send(user);
 		})
 })
@@ -16,13 +15,13 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 	User.findOne({
 		where: req.body
-	})
+	}, { include: [{ all: true }] })
 		.then(user => {
+			
 			if (!user) {
 				res.sendStatus(401)
 			} else {
 				req.session.userId = user.id;
-				// console.log('session: ', req.session)
 				res.status(200).send(user);
 			}
 		})

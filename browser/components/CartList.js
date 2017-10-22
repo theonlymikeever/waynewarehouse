@@ -71,7 +71,7 @@ class CartList extends Component {
                 <tr>
                   <td>Address: </td>
                   <td>
-                    {user.addresses ?
+                    {user.addresses && user.addresses.length ?
                       <select className='form-control' onChange={changeAddress}>
                         <option>Address</option>
                         {
