@@ -4,7 +4,7 @@ const Address = require('../../models/User');
 const session = require('express-session');
 
 router.get('/', (req, res, next) => {
-	User.findById(req.session.userId || 3, {
+	User.findById(req.session.userId, {
 		include: [{ all: true }]
 	})
 		.then(user => {
