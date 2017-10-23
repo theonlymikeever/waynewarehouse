@@ -19,11 +19,6 @@ router.post('/', (req, res, next) => {
 		}
 	}, { include: [{ all: true }] })
 		.then(user => {
-
-			if (!user) {
-				res.send({ err: 'User not found' })
-			}
-
 			user.correctPassword(req.body.password)
 				.then(auth => {
 					if (auth) {
@@ -33,10 +28,12 @@ router.post('/', (req, res, next) => {
 					else {
 						res.send({ err: 'Incorrect password' })
 					}
-				}).catch(next);
+				})
 
 		})
-		.catch(next);
+		.catch(err => {
+			res.send({ err: 'User not found' })
+		});
 });
 
 router.delete('/', (req, res, next) => {

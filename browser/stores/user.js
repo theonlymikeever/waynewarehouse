@@ -65,9 +65,9 @@ export const loginActionCreator = (credentials, history) => {
                 return results.data;
             })
             .then(user => {
-                console.log(user);
                 if (user.err) {
                     console.log('error', user);
+                    dispatch(setCurrentUser(user));
                     return;
                 }
 
