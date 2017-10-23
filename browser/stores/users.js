@@ -37,7 +37,8 @@ export const deleteUserOnServer = (userId) => {
 export const updateUserOnServer = (userId, userUpdate) => {
   return (dispatch) => {
     axios.put(`/api/users/${userId}`, userUpdate)
-      .then(() => {
+      .then(res => res.data)
+      .then(updatedUser => {
         dispatch(fetchUsers())
       })
       .catch(console.log)

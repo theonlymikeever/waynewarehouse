@@ -1,14 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-
+import { updateOrder } from '../../stores/orders';
 
 class AdminOrderList extends React.Component {
-
-  // this is hard coded for now
+  constructor(props){
+    super(props);
+    this.state = {
+      status: "" 
+    }
+  }
 
   render() {
-   
+    const { orders, handleUpdate } = this.props;
+    const optionVals = [{ value: "Created" }, { value: "Processing" }, { value: "Shipped" }];
+    const totalPrice = orders.map(order => {
+      return order.lineItems.reduce((res, val) => {
+        return res + val.price
+      }, 0)
+    });
+
     return (
       <div className="p-3 mt-3">
         <h2>Orders</h2>
@@ -18,31 +28,41 @@ class AdminOrderList extends React.Component {
           <thead className="thead-inverse">
             <tr>
               <th>ID</th>
-              <th>Date</th>
-              <th>Status</th>
+              <th>Order Date</th>         
               <th>Total</th>
-              <th></th>
+              <th>Address</th>
+              <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td><Link to={`/orders/1`}>10/08/2017</Link></td>
-              <td>
-                <select value="ORDER_STATUS" className="form-control">
-                  <option>Created</option>
-                  <option>Processing</option>
-                </select>
-              </td>
-              <td>100.00</td>
-              <td>
-                <button className="btn btn-sm btn-info">Update</button>
-              </td>
-              <td>
-                <button className="btn btn-sm btn-danger">Delete</button>
-              </td>
-            </tr>
+          {
+            orders && orders.map(order => {
+              return (
+                <tr key={ order.id }>
+                  <th scope="row">{ order.id }</th>
+                  <td>{ String(new Date(order.createdAt)) }</td>
+                  <td>{ totalPrice }</td>
+                  <td>{ order.address }</td>
+                  <td>
+                    <select defaultValue={ order.status ? order.status : "" } className="form-control">
+                    {
+                      optionVals.map(option => {
+                        return (
+                          <option key={ option.value }>{ option.value }</option>
+                        )
+                      })
+                    }
+                    </select>
+                  </td>                  
+                  <td>
+                    <button className="btn btn-sm btn-info">Update</button>
+                  </td>
+                </tr>
+              )
+            })
+          }
+            
           </tbody>
         </table>
       </div>
@@ -51,21 +71,17 @@ class AdminOrderList extends React.Component {
   }
 }
 
-const mapStateToProps = ({ cart }) => {
+const mapStateToProps = ({ orders }) => {
   return {
-    cart
+    orders
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleDelete: function (orderId, event) {
+    handleUpdate: function (orderId, event) {
       event.preventDefault();
-      dispatch(deleteOrder(orderId));
-
-    },
-    handleUpdate: function (event) {
-      event.preventDefault();
+      dispatch(updateOrder(orderId))
 
     }
   }

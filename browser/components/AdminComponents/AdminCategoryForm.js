@@ -39,7 +39,7 @@ class AdminCategoryForm extends React.Component{
       <div>
         <div className="card p-3 mt-3">
           <h2>Add a new category</h2>
-          <form onSubmit={ this.handleSubmit }>
+          <form onSubmit={ this.handleSubmit }> 
             <div className="form-group">
               <input name="name" type="text" ref="name" 
               value={ name } onChange={ this.handleChange }

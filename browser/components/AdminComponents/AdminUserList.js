@@ -7,7 +7,7 @@ class AdminUserList extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isAdmin: false
+      isAdmin: ""
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,14 +19,14 @@ class AdminUserList extends React.Component {
   componentDidMount(){
     this.props.getUsers(this.props.users);
   }
-  
+
   render(){
     const { users, handleDelete, handleUpdate } = this.props;
-    const optionVals = [{ value: true }, { value: false }];
+    const optionVals = [{ isAdmin: true }, { isAdmin: false }];
     
     return (
       <div className="p-3 mt-3">
-        <h2>Users</h2>
+        <h2>Our users</h2>
 
         <table className="table table-hover mt-3">
           <thead>
@@ -46,11 +46,11 @@ class AdminUserList extends React.Component {
                     <td>{ user.name }</td>
                     <td>{ user.email }</td>
                     <td>
-                      <select value={ String(user.isAdmin) } name="user" className="form-control" onChange={ this.handleChange }>
+                      <select defaultValue={ String(user.isAdmin) } name="user" className="form-control" onChange={ this.handleChange }>
                         {
                           optionVals.map(option => {
                             return (
-                              <option key={ option.value } value={ option.value }>{ String(option.value) }</option>
+                              <option key={ option.isAdmin }>{ String(option.isAdmin) }</option>
                             )
                           })
                         }          
@@ -58,7 +58,7 @@ class AdminUserList extends React.Component {
                     </td>
                     <td>
                       <button className="btn btn-sm btn-info" name="update"
-                        onClick={ (evt) => handleUpdate(user.id, this.state.isAdmin, evt) }>Update
+                        onClick={ () => handleUpdate(user.id, this.state) }>Update
                       </button>
                     </td>
                     <td>
@@ -89,8 +89,8 @@ const mapDispatchToProps = (dispatch) => {
       evt.preventDefault();
       dispatch(deleteUserOnServer(userId))
     },
-    handleUpdate: (userId, userUpdate, evt) => {
-      dispatch(updateUserOnServer(userId, evt.target.value)) 
+    handleUpdate: (userId, userUpdate) => {
+      dispatch(updateUserOnServer(userId, userUpdate)) 
     },
     getUsers: () => {
       dispatch(fetchUsers());

@@ -77,7 +77,6 @@ router.post('/:id/lineItems', (req, res, next) => {
 
 //Remove Product
 router.delete('/:id/lineItems/:productId', (req, res, next) => {
-
   Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
