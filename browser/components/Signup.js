@@ -53,7 +53,6 @@ class SignUp extends Component {
         const { handleChange, handleSubmit } = this;
         const { name, email, password, address, required } = this.state;
         const error = this.props.user.errors || [];
-        
         return (
             <div className='container'>
                 <h1>Sign up!</h1>
