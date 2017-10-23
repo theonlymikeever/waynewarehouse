@@ -9,8 +9,8 @@ const port = process.env.PORT || 3000;
 
 
 //Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // add session
 app.use(session({
@@ -43,6 +43,8 @@ app.use('/login', require('./routes/login'));
 app.use('/api/orders', require('./routes/orders'));
 
 app.use('/api/categories', require('./routes/categories'));
+
+app.use('/api/reviews', require('./routes/reviews'));
 
 //Sync & seed promise chain. On resolve we pop server
 sync()
