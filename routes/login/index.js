@@ -21,13 +21,20 @@ router.post('/', (req, res, next) => {
 		.then(user => {
 
 			if (!user) {
-				res.status(401).send('User not found')
-			} else if (!user.correctPassword(req.body.password)) {
-				res.status(401).send('Incorrect password')
-			} else {
-				req.session.userId = user.id;
-				res.status(200).send(user);
+				res.send({ err: 'User not found' })
 			}
+
+			user.correctPassword(req.body.password)
+				.then(auth => {
+					if (auth) {
+						req.session.userId = user.id;
+						res.status(200).send(user);
+					}
+					else {
+						res.send({ err: 'Incorrect password' })
+					}
+				}).catch(next);
+
 		})
 		.catch(next);
 });

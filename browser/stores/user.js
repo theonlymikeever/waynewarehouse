@@ -53,7 +53,6 @@ export const updateUser = (user) => {
         axios.put(`/api/users/${user.id}`, user)
             .then(res => res.data)
             .then(user => {
-                console.log('user', user);
                 dispatch(fetchUser(user));
             })
     }
@@ -66,6 +65,12 @@ export const loginActionCreator = (credentials, history) => {
                 return results.data;
             })
             .then(user => {
+                console.log(user);
+                if (user.err) {
+                    console.log('error', user);
+                    return;
+                }
+
                 dispatch(fetchUser(user));
                 history.push('/');
             });

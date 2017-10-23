@@ -39,7 +39,6 @@ const User = db.define('user', {
 User.prototype.correctPassword = function(password) {
 	return bcrypt.compare(password, this.password)
 	.then(function(res) {
-		console.log(res)
 		return res;
 	});
 }
