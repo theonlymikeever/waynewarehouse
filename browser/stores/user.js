@@ -44,6 +44,24 @@ export const postUser = (user, history) => {
     }
 }
 
+
+const transferLineItems = (user, cart, history, dispatch) => {
+    console.log("user, cart, history, :", user, cart, history)
+    dispatch(setCurrentUser(user));
+    //pull lineItems from "guestCart"
+    const lineItems = cart.lineItems;
+    dispatch(resetCart());
+    dispatch(fetchCart(user.id*1))
+    .then(( cart ) => {
+        if (lineItems.length > 0){
+            lineItems.forEach((lineItem, index ) => {
+                return dispatch(addItem(user.id, lineItem.productId))
+            });
+        }
+        history.push('/products');
+    });
+};
+
 export const loginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
         axios.post('/login', credentials)
@@ -51,22 +69,12 @@ export const loginActionCreator = (credentials, history, cart) => {
                 return results.data;
             })
             .then(user => {
-                dispatch(setCurrentUser(user));
-                //pull lineItems from "guestCart"
-                const lineItems = cart.lineItems;
-                dispatch(resetCart());
-                dispatch(fetchCart(user.id*1))
-                .then(( cart ) => {
-                    if (lineItems.length > 0){
-                        lineItems.forEach((lineItem, index ) => {
-                            return dispatch(addItem(user.id, lineItem.productId))
-                        });
-                    }
-                    history.push('/products');
-                })
+                transferLineItems(user, cart, history, dispatch);
             });
     };
 };
+
+
 
 export const googleLoginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
@@ -74,14 +82,8 @@ export const googleLoginActionCreator = (credentials, history, cart) => {
         axios.post('/login/google', credentials )
             .then(results => results.data)
             .then(user => {
-                dispatch(setCurrentUser(user));
-                const lineItems = cart.lineItems;
-                console.log('users store, cart:', cart)
-                if (lineItems.length > 0){
-                    lineItems.forEach(lineItem => dispatch(addItem(user.id, lineItem.productId)));
-                }
-                history.push('/');
-            })
+                transferLineItems(user, cart, history, dispatch);
+            });
     };
 };
 

@@ -75,13 +75,14 @@ export const fetchCart = (userId) => {
 };
 
 // cart param is optional.  Only used by guestCart.
-export const addItem = (userId, productId, cart) => {
+export const addItem = (userId, productId, cart, history) => {
     return (dispatch) => {
         if (userId !== 0){
             return axios.post(`/api/orders/${userId}/lineItems`, { productId })
                 .then(() => {
-                      return dispatch(fetchCart(userId*1));  
-                });
+                    history.push('/products');
+                    return dispatch(fetchCart(userId*1));
+                })
         } else {
             // for non-logged in user (guestCart)
             axios.get(`/api/products/${productId}`)
@@ -97,6 +98,7 @@ export const addItem = (userId, productId, cart) => {
                     quantity: 1
                 }
                 dispatch(addToGuestCart(guestLineItem));
+                history.push('/products');
             })
         }
 

@@ -27,14 +27,14 @@ class Login extends React.Component {
   }
 
   renderButton() {
-    const { history, googleLogin } = this.props;
+    const { history, googleLogin, cart } = this.props;
     function onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       const googleId = profile.getId();
       const name = profile.getName();
       const email = profile.getEmail();
       const credentials = { email, googleId, name }
-      googleLogin(credentials, history)
+      googleLogin(credentials, history, cart)
     }
     function onFailure(error) {
       console.log(error);
