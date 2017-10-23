@@ -19,5 +19,22 @@ router.post('/signup', (req, res, next) => {
         });
 });
 
+router.delete('/:userId', (req, res, next) => {
+  User.destroy({ where: { id: +req.params.userId }})
+    .then(() => {
+      res.sendStatus(204)
+    })
+    .catch(next);
+})
+
+router.put('/:userId', (req, res, next) => {
+  User.findById(+req.params.userId)
+    .then(user => {
+      return user.update(req.body)
+    })
+    .then(() => res.sendStatus(200))
+    .catch(next);  
+})
+
 
 module.exports = router;

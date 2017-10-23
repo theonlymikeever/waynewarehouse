@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 
-class OrderList extends Component {
+class AdminOrderList extends React.Component {
 
   // this is hard coded for now
-  // if admin, show 'update' button
 
   render() {
    
     return (
-      <div className="container">
-        <h1>Orders</h1>
+      <div className="p-3 mt-3">
+        <h2>Orders</h2>
+        <div className="alert alert-warning mt-3">This page is currently under construction</div>
 
-        <table className="table table-striped">
+        <table className="table table-hover mt-3">
           <thead className="thead-inverse">
             <tr>
               <th>ID</th>
@@ -38,7 +37,7 @@ class OrderList extends Component {
               </td>
               <td>100.00</td>
               <td>
-                <button className="btn btn-sm btn-warning">Update</button>
+                <button className="btn btn-sm btn-info">Update</button>
               </td>
               <td>
                 <button className="btn btn-sm btn-danger">Delete</button>
@@ -72,6 +71,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const orderContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderList))
-export default orderContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(AdminOrderList)
+
 

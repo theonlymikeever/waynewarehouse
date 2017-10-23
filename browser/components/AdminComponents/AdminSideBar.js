@@ -16,6 +16,12 @@ export default function AdminSideBar(props){
           <Link className="list-group-item" to="/admin/category_form">
             Add Category
           </Link>
+          <Link className="list-group-item" to="/admin/users">
+            Users
+          </Link>
+          <Link className="list-group-item" to="/admin/orders">
+            Orders
+          </Link>
           <Link className="list-group-item" to="/admin/analytics">
             Analytics
           </Link>

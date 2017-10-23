@@ -24,6 +24,26 @@ export const fetchUsers = () => {
     }
 }
 
+export const deleteUserOnServer = (userId) => {
+  return (dispatch) => {
+    axios.delete(`/api/users/${userId}`)
+      .then(() => {
+        dispatch(fetchUsers())
+      })
+      .catch(console.log)
+  }
+}
+
+export const updateUserOnServer = (userId, userUpdate) => {
+  return (dispatch) => {
+    axios.put(`/api/users/${userId}`, userUpdate)
+      .then(() => {
+        dispatch(fetchUsers())
+      })
+      .catch(console.log)
+  }
+}
+
 //reducer
 export default function (state = [], action) {
     switch (action.type) {

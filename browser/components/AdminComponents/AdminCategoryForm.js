@@ -7,9 +7,7 @@ class AdminCategoryForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      name: "", 
-      alert: "", 
-      alertStyle: ""
+      name: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,7 +20,7 @@ class AdminCategoryForm extends React.Component{
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.handleAdd(this.state);    
+    this.props.handleAdd(this.state);  
   }
 
   handleClick(){
@@ -54,10 +52,7 @@ class AdminCategoryForm extends React.Component{
             </div>
           </form>
         </div>
-        { alert ? <div className={ alertStyle }>{ alert }</div> : "" }
-
-        <AdminCategoryList categories={ categories } />
-        
+        <AdminCategoryList categories={ categories } />       
       </div>   
     )
   }
