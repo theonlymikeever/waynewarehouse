@@ -61,22 +61,24 @@ export const resetCart = () => {
 
 //Thunks
 
-export const fetchCart = (userId) => {
-    
+export const fetchCart = (userId) => {    
     return (dispatch) => {
-            axios.get(`/api/orders/${userId}`)
-                .then(res => res.data)
-                .then(cart => {
-                    return dispatch(getCart(cart))
-                })
-    }
-}
+        return axios.get(`/api/orders/${userId}`)
+        .then(res => {
+          return res.data;  
+        } )
+        .then(cart => {
+            dispatch(getCart(cart));
+            return cart;
+        });
+    };
+};
+
 // cart param is optional.  Only used by guestCart.
 export const addItem = (userId, productId, cart) => {
     return (dispatch) => {
         if (userId !== 0){
-            console.log('addItem:', userId, productId)
-            axios.post(`/api/orders/${userId}/lineItems`, { productId })
+            return axios.post(`/api/orders/${userId}/lineItems`, { productId })
                 .then(() => {
                       return dispatch(fetchCart(userId*1));  
                 });
@@ -116,11 +118,12 @@ export const deleteLineItem = (userId, productId, index) => {
     }
 }
 
-export const checkoutCart = (cartId) => {
+export const checkoutCart = (userId) => {
     return (dispatch) => {
-        axios.put(`/api/orders/${cartId}`)
+        axios.put(`/api/orders/${userId}/emptyCart`)
             .then(() => {
                 dispatch(checkOut());
+                dispatch(resetCart());
             })
     }
 }

@@ -39,15 +39,12 @@ const getCart = function (cartId) {
 
 Order.fetchCart = function (userId) {
   let cart;
-  console.log("*********fetchCart userId:", userId) 
   return User.findById(userId*1)
   .then(user => {
     // console.log("fetchCart user:", user)
     if (!user.cartId) {
-        console.log('Create new cart')
         return Order.create({ userId: userId*1 })
         .then(_cart => {
-          console.log('New Cart created.  Yeah!!!!!!!!!!!!!!!')
           cart = _cart;
           return User.update({cartId: cart.id}, {where:{id: userId*1}})
           })
@@ -57,7 +54,6 @@ Order.fetchCart = function (userId) {
           })
         
     } else {
-      console.log('Cart exists!!!!!  Use it, slimey!')
       return getCart(user.cartId);
     }
   })  
@@ -67,12 +63,11 @@ Order.fetchCart = function (userId) {
 Order.addProduct = function (userId, productId) {
   return Order.fetchCart(userId)
   .then(cart => {
-    // console.log("****************cart:",cart)
     return LineItem.findOne({ where: { productId, orderId: cart.id } })
       .then(lineItem => {
         if (!lineItem) {
           //If lineItem doesn't exist create new one with that productId
-          return LineItem.create({ productId, cartId })
+          return LineItem.create({ productId, cartId: cart.id })
             .then(lineitem => cart.addLineItem(lineitem))
         }
         //Otherwise we increase the quantity

@@ -57,16 +57,12 @@ export const loginActionCreator = (credentials, history, cart) => {
                 dispatch(resetCart());
                 dispatch(fetchCart(user.id*1))
                 .then(( cart ) => {
-                    console.log('users store, ** Fetched cart:', cart)
-                    console.log("lineItem = ", lineItems)
                     if (lineItems.length > 0){
-                        console.log('lineItems.length > 0!!!!')
-                        return lineItems.forEach((lineItem, index ) => {
-                            // console.log("index, user.id, lineItem.productId: ",index, user.id, lineItem.productId)
-                          return dispatch(addItem(user.id, lineItem.productId));
+                        lineItems.forEach((lineItem, index ) => {
+                            return dispatch(addItem(user.id, lineItem.productId))
                         });
                     }
-                    history.push('/');
+                    history.push('/products');
                 })
             });
     };

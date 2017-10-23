@@ -20,44 +20,23 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-// router.get('/:orderId', (req, res, next) => {
-//   Order.findById(req.params.id)
-//   .then(res.send)
-// }
+
 
 //Get Cart for User
 router.get('/:userId', (req, res, next) => {
     Order.fetchCart(req.params.userId*1)
-    .then(data => {
-      res.send(data)
+    .then(cart => {
+      res.send(cart)
     })
     .catch(next);
 });
 
-//Get Cart based on the status
-//for future implementation where we have
-// 'SHIPPED', 'CART', 'PROCESSED'
-// router.get('/:userId/:filter', (req, res, next) => {
-//   if (!req.params.userId) return;
-//   Order.findOne({
-//     where: {
-//       userId: req.params.userId,
-//       isCart: req.params.filter
-//     }
-//   })
-//     .then(cart => {
-//       console.log(cart.userId);
-//       res.send(cart)}
-//     )
-//     .catch(next);
-// })
 
 //Add Product
 router.post('/:id/lineItems', (req, res, next) => {
     const userId = req.params.id;
     Order.addProduct(userId, req.body.productId) 
     .then((results) => {
-      console.log('orders route add product results:', results)
       res.sendStatus(200)
       }) 
     .catch(next);
@@ -71,9 +50,15 @@ router.delete('/:id/lineItems/:productId', (req, res, next) => {
     .catch(next);
 })
 
+// Upon checkout set user's cart back to null
+router.put('/:userId/emptyCart', (req, res, next) => {
+  User.update({cartId: null}, {where: {id: req.params.userId}})
+  .then(() => res.sendStatus(200))
+  .catch(next);
+})
+
 //Create & Finalize the Order
 router.put('/:cartId', (req, res, next) => {
-
   Order.findOne({
     where: {
       id: req.params.cartId,
