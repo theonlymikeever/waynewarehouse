@@ -135,7 +135,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(checkoutCart(cartId, address))
     },
     updateUser: (user) => {
-
+      dispatch(updateUser(user));
     }
   }
 }
