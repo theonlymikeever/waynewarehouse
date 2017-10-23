@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { addItem } from '../stores/cart';
 import ReviewsList from './ReviewsList';
+import ReviewForm from './ReviewForm';
 
 function ProductDetail(props) {
-  const { products, user, handleAdd } = props;
+  const { products, user, reviews, handleAdd } = props;
   const productId = props.match.params.productId * 1;
   const product = products.length > 0 ? products.filter(prod => prod.id === productId)[0] : {};
+  const reviewsList = reviews.length > 0 ? reviews.filter(rev => rev.productId === productId) : [];
 
     return (
      <div className='container' key={ product.id }>
@@ -28,19 +30,29 @@ function ProductDetail(props) {
                   <Link to={'/products'} className="card-link float-right">Back</Link>
             </div>
             <div className="container mt-3">
-              <hr />
-              <h3>Reviews</h3>
-              <ReviewsList reviews={product.reviews} />
+            <hr />
+            {
+              reviewsList ?
+              <div className="mb-3">
+                <h3>Reviews</h3>
+                <ReviewsList reviews={reviewsList} productId={productId}/>
+                <hr />
+              </div>
+              : ''
+            }
+            <h3>Write a Review</h3>
+            <ReviewForm productId={productId} />
             </div>
           </div>
       </div>
     )
 }
 
-const mapStateToProps = ({ products, user }) => {
+const mapStateToProps = ({ products, user, reviews }) => {
   return {
     products,
     user,
+    reviews
   }
 }
 

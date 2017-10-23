@@ -4,6 +4,7 @@ import history from '../history';
 //actions
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 //action creators
 
@@ -43,6 +44,18 @@ export const postUser = (user, history) => {
     }
 }
 
+export const updateUser = (user) => {
+    console.log('update', user);
+    return (dispatch) => {
+        axios.put(`/api/users/${user.id}`, user)
+            .then(res => res.data)
+            .then(user => {
+                console.log('user', user);
+                dispatch(fetchUser(user));
+            })
+    }
+}
+
 export const loginActionCreator = (credentials, history) => {
     return (dispatch) => {
         axios.post('/login', credentials)
@@ -50,7 +63,7 @@ export const loginActionCreator = (credentials, history) => {
                 return results.data;
             })
             .then(user => {
-                dispatch(setCurrentUser(user));
+                dispatch(fetchUser(user));
                 history.push('/');
             });
     };
@@ -59,7 +72,7 @@ export const loginActionCreator = (credentials, history) => {
 export const googleLoginActionCreator = (credentials, history) => {
     return (dispatch) => {
         console.log('googleLoginActionCreator thunk')
-        axios.post('/login/google', credentials )
+        axios.post('/login/google', credentials)
             .then(results => results.data)
             .then(user => {
                 dispatch(setCurrentUser(user));
