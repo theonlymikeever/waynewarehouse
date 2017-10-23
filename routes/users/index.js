@@ -7,7 +7,9 @@ router.get('/', (req, res, next) => {
     User.findAll({ include: [{ model: Address }] })
         .then(users => {
             res.send(users);
-        }).catch(next);
+        }).catch(err => {
+            console.log('hello');
+        });
 });
 
 router.post('/signup', (req, res, next) => {
@@ -16,13 +18,13 @@ router.post('/signup', (req, res, next) => {
             req.session.userId = user.id;
             res.send(user)
         }).catch(err => {
-            console.log(err.error);
+            res.send({ err });
         });
 });
 
 router.put('/:userId', (req, res, next) => {
     const detail = req.body;
-    
+
     User.findById(req.params.userId, { include: [{ all: true }] })
         .then(user => {
             if (detail.address) {
