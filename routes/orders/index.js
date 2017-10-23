@@ -94,6 +94,7 @@ router.put('/:cartId', (req, res, next) => {
   })
     .then(order => {
       order.address = req.body.address;
+      order.total = req.body.total;
       order.isCart = false;
       return order.save()
     })

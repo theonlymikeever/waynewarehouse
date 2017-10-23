@@ -18,7 +18,7 @@ const Order = db.define('order', {
     type: Sequelize.FLOAT
   },
   total: {
-    type: Sequelize.FLOAT
+    type: Sequelize.STRING
   },
   weight: {
     type: Sequelize.FLOAT

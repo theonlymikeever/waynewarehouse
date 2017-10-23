@@ -43,10 +43,11 @@ class OrderCofirmation extends Component {
                                         )
                                     })
                                 }
-                                <tr>
+                                <strong><tr>
+                                    <td>Total: {order[0] && order[0].total}</td>
                                     <td>Address: {order[0] && order[0].address}</td>
                                     <td>Expect shipping in 1 to 2 years</td>
-                                </tr>
+                                </tr></strong>
                             </tbody>
                         </table>
                     </div>
