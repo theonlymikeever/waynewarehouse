@@ -2,9 +2,10 @@ const router = require('express').Router();
 const Product = require('../../models/Product');
 // const Review = require('../../models/Review')
 // const User = require('../../models/User')
+const Category = require('../../models/Category');
 
 router.get('/', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({ include: [ Category ]})
     .then(products => res.send(products))
     .catch(next);
 });

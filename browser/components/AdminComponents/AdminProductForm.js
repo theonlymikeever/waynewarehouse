@@ -11,6 +11,7 @@ class AdminProductForm extends React.Component{
       price: "", 
       weight: "",
       image: "",
+      categoryId: "", 
       alert: "",
       alertStyle: ""
     }
@@ -24,7 +25,8 @@ class AdminProductForm extends React.Component{
     key === "name" ? this.setState({ name: val }) :
     key === "description" ? this.setState({ description: val }) :
     key === "price" ? this.setState({ price: val }) : 
-    key === "weight" ? this.setState({ weight: val }) :
+    key === "weight" ? this.setState({ weight: val }) : 
+    key === "category" ? this.setState({ categoryId: val }) : 
     this.setState({ image: val })
   }
  
@@ -57,6 +59,7 @@ class AdminProductForm extends React.Component{
 
   render(){
     const { name, description, price, weight, image, alert, alertStyle } = this.state;
+    const { categories } = this.props;
     const imageSize = { width: "100%", height: "auto" }
 
     return (
@@ -99,8 +102,19 @@ class AdminProductForm extends React.Component{
                     value={ image } onChange={ this.handleChange }
                     className="form-control" placeholder="Image URL"/>
                 </div>
+                <select name="category" className="form-control" onChange={ this.handleChange }>
+                  <option>Select Category</option>
+                  {
+                    categories && categories.map(category => {
+                      return (
+                        <option key={ category.id } value={ category.id }>{ category.name }</option>
+                      )         
+                    })
+                  }
+
+                </select>
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary" 
+                  <button type="submit" className="btn btn-primary mt-3" 
                     onClick={ this.handleClick }>Add new product
                   </button>
                 </div>
@@ -114,6 +128,12 @@ class AdminProductForm extends React.Component{
   }  
 }
 
+const mapStateToProps = ({ categories }) => {
+  return {
+    categories
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {  
   return {
     handleAdd: (product, event) => {
@@ -122,7 +142,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AdminProductForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminProductForm);
 
 
 

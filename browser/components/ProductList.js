@@ -78,11 +78,13 @@ class ProductList extends Component {
                     <div className="card-body">
                       <Link to={`/products/${product.id}`} ><img className="mb-2 rounded" src={product.image} width="150" /></Link>
                       <Link to={`/products/${product.id}`} ><h4 className="card-title">{product.name}</h4></Link>
+                      <span className="badge badge-info">{ product.category ? product.category.name : "" }</span>
                       <p className="card-text">{product.shortDescription}
 
-                        <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
+                      <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
                       <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
                       <p className="card-text">lb: {product.weight}</p>
+                      
                       <form className="form-inline btn mr-2 mb-0" onSubmit={ handleDelete }>
                         {(user.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
