@@ -10,7 +10,7 @@ const ADD_TO_GUEST_CART = 'ADD_TO_GUEST_CART';
 const REMOVE_FROM_GUEST_CART = 'REMOVE_FROM_GUEST_CART';
 const RESET_CART = 'RESET_CART';
 
-//Action Creators
+//Action Creators 
 
 const addToCart = () => {
     return {
@@ -120,9 +120,13 @@ export const deleteLineItem = (userId, productId, index) => {
     }
 }
 
-export const checkoutCart = (userId) => {
+export const checkoutCart = (userId, cartId, address) => {
+    console.log(address)
     return (dispatch) => {
-        axios.put(`/api/orders/${userId}/emptyCart`)
+        Promse.all([
+            axios.put(`/api/orders/${cartId}`, address),
+            axios.put(`/api/orders/${userId}/emptyCart`)
+        ])
             .then(() => {
                 dispatch(checkOut());
                 dispatch(resetCart());

@@ -4,11 +4,12 @@ const LineItem = require('./LineItem');
 const Order = require('./Order');
 const Product = require('./Product');
 const Review = require('./Review');
-const Session = require('./Session');
+const Address = require('./Address');
 const User = require('./User');
 
 //Associations:
 Product.belongsTo(Category);
+Category.hasMany(Product);
 
 LineItem.belongsTo(Product);
 LineItem.belongsTo(Order);
@@ -21,6 +22,9 @@ Order.belongsTo(User);
 
 User.hasMany(Review);
 Review.belongsTo(User);
+
+User.hasMany(Address);
+Address.belongsTo(User);
 
 Product.hasMany(Review);
 Review.belongsTo(Product);

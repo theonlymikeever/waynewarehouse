@@ -5,6 +5,7 @@ import {addItem, resetCart, fetchCart} from './cart';
 //actions
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 //action creators
 
@@ -44,7 +45,6 @@ export const postUser = (user, history) => {
     }
 }
 
-
 const transferLineItems = (user, cart, history, dispatch) => {
     console.log("user, cart, history, :", user, cart, history)
     dispatch(setCurrentUser(user));
@@ -63,13 +63,33 @@ const transferLineItems = (user, cart, history, dispatch) => {
 };
 
 export const loginActionCreator = (credentials, history, cart) => {
+// =======
+// export const updateUser = (user) => {
+//     console.log('update', user);
+//     return (dispatch) => {
+//         axios.put(`/api/users/${user.id}`, user)
+//             .then(res => res.data)
+//             .then(user => {
+//                 console.log('user', user);
+//                 dispatch(fetchUser(user));
+//             })
+//     }
+// }
+
+// export const loginActionCreator = (credentials, history) => {
+// >>>>>>> master
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
                 return results.data;
             })
             .then(user => {
+// <<<<<<< HEAD
                 transferLineItems(user, cart, history, dispatch);
+// =======
+//                 dispatch(fetchUser(user));
+//                 history.push('/');
+// >>>>>>> master
             });
     };
 };
@@ -78,8 +98,7 @@ export const loginActionCreator = (credentials, history, cart) => {
 
 export const googleLoginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
-        console.log('googleLoginActionCreator thunk')
-        axios.post('/login/google', credentials )
+        axios.post('/login/google', credentials)
             .then(results => results.data)
             .then(user => {
                 transferLineItems(user, cart, history, dispatch);
@@ -93,6 +112,11 @@ export const logoutActionCreator = (history) => {
             .then(() => {
                 dispatch(removeCurrentUser());
                 dispatch(resetCart());
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut()
+                .then(function () {
+                    console.log('User signed out.');
+                });
                 history.push('/');
             });
     });

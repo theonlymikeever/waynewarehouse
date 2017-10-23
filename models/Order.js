@@ -9,6 +9,9 @@ const Order = db.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  address: {
+    type: Sequelize.STRING
+  },
   shippingPrice: {
     type: Sequelize.FLOAT
   },
