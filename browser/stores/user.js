@@ -79,9 +79,14 @@ export const loginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
+                console.log(results.data.error);    
                 return results.data;
             })
             .then(user => {
+                if (user.error){
+                    dispatch(setCurrentUser(user));
+                    return;
+                }
                 transferLineItems(user, cart, history, dispatch);
             });
     };
