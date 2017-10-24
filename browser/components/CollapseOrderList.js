@@ -5,7 +5,7 @@ export default function CollapseOrderList(props) {
 
     const { userOrders } = props;
     let subtotal = 0;
-    console.log('sdfsafdas',userOrders);
+    console.log('sdfsafdas', userOrders);
     return (
         <div>
 
@@ -14,8 +14,9 @@ export default function CollapseOrderList(props) {
                     {
                         userOrders.map(order => {
                             return (
-                                order.isCart === true ? null :
-                                    <div key={order.id} id="accordion" role="tablist" aria-multiselectable="true">
+
+                                <div key={order.id} id="accordion" role="tablist" aria-multiselectable="true">
+                                    {order.id < userOrders.length ?
                                         <div className="card">
                                             <div className="card-header" role="tab" id={`heading${order.id}`}>
                                                 <h5 className="mb-0">
@@ -63,7 +64,8 @@ export default function CollapseOrderList(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        : null}
+                                </div>
 
                             )
                         })
