@@ -105,7 +105,7 @@ Order.hook('afterSave', (order) => {
     .then((lineItems) => {
       lineItems.forEach(item => {
         for (var i = 0; i < item.quantity; i++) {
-          prodList.push(Product.removeOneFromInventory(item.id))
+          prodList.push(Product.removeOneFromInventory(item.productId))
         }
       })
       return Promise.all(prodList)

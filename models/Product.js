@@ -52,7 +52,7 @@ Product.changeProducts = function (catArr) {
 Product.removeOneFromInventory = function(id) {
     return Product.findById(id)
         .then((product) => {
-           return product.decrement('inStock', {by: 1})
+            product.decrement('inStock', {by: 1})
         })
 }
 
