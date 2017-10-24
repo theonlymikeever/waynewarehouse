@@ -54,3 +54,5 @@ sync()
   .then( () => {
     app.listen(port, () => console.log(chalk.blue(`Listening intently on port ${port}`)));
   });
+
+module.exports = app;

@@ -73,7 +73,7 @@ User.signUp = (details) => {
 			})
 	} else {
 		return User.create(details)
-	
+
 	}
 }
 
