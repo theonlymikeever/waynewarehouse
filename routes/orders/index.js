@@ -100,4 +100,11 @@ router.put('/:cartId', (req, res, next) => {
     .catch(next);
 })
 
+// Delete order as admin
+router.delete('/:orderId', (req, res, next) => {
+  Order.destroy({ where: { id: +req.params.orderId }})
+    .then(() => res.sendStatus(200))
+    .catch(next);
+})
+
 module.exports = router;
