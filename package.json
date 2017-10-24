@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nodemon ./node_modules/mocha/bin/mocha",
     "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server.js"
   },
   "keywords": [],
@@ -38,5 +38,11 @@
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.13.5",
     "webpack": "^3.5.6"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0",
+    "supertest-as-promised": "^4.0.2"
   }
 }
