@@ -16,7 +16,11 @@ const Product = db.define('product', {
     image: {
         type: Sequelize.TEXT
     },
-    weight: Sequelize.FLOAT
+    weight: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    }
+
 },
     {
         getterMethods: {

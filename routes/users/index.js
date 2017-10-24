@@ -42,7 +42,15 @@ router.put('/:userId', (req, res, next) => {
                     res.send(user);
                 })
 
+
+
         })
+})
+
+router.delete('/:userId', (req, res, next) => {
+  User.destroy({ where: { id: +req.params.userId }})
+    .then(() => res.sendStatus(200))
+    .catch(next);
 })
 
 

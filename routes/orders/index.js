@@ -31,41 +31,24 @@ router.get('/:userId', (req, res, next) => {
     .catch(next);
 });
 
-// this was on master:
-// router.get('/:orderId', (req, res, next) => {
-//   console.log(req.params.orderId)
-//   Order.findById(req.params.orderId * 1, {
-//     include: [
-//       {
-//         model: LineItem, as: 'lineItems',
-//         include: [Product]
-//       }
-//     ]
-//   })
-//     .then(order => {
-//       res.send(order);
-//     }).catch(next)
-// });
+//Get Cart based on the status
+//for future implementation where we have
+// 'SHIPPED', 'CART', 'PROCESSED'
+router.get('/:userId/:filter', (req, res, next) => {
+  if (!req.params.userId) return;
+  Order.findOne({
+    where: {
+      userId: req.params.userId,
+      isCart: req.params.filter
+    }
+  })
+    .then(cart => {
+      res.send(cart)
+    }
+    )
+    .catch(next);
+})
 
-// //Get Cart based on the status
-// //for future implementation where we have
-// // 'SHIPPED', 'CART', 'PROCESSED'
-// router.get('/:userId/:filter', (req, res, next) => {
-//   if (!req.params.userId) return;
-//   Order.findOne({
-//     where: {
-//       userId: req.params.userId,
-//       isCart: req.params.filter
-//     }
-//   })
-//     .then(cart => {
-//       console.log(cart.userId);
-//       res.send(cart)
-//     }
-//     )
-//     .catch(next);
-// })
-//>>>>>>> master
 
 //Add Product
 router.post('/:id/lineItems', (req, res, next) => {
@@ -79,7 +62,6 @@ router.post('/:id/lineItems', (req, res, next) => {
 
 //Remove Product
 router.delete('/:id/lineItems/:productId', (req, res, next) => {
-
   Order.removeProduct(req.params.id, req.params.productId)
     .then(() => res.sendStatus(200))
     .catch(next);
@@ -94,7 +76,6 @@ router.put('/:userId/emptyCart', (req, res, next) => {
 
 //Create & Finalize the Order
 router.put('/:cartId', (req, res, next) => {
-  console.log(req.body);
   Order.findOne({
     where: {
       id: req.params.cartId,
@@ -106,6 +87,13 @@ router.put('/:cartId', (req, res, next) => {
       order.isCart = false;
       return order.save()
     })
+    .then(() => res.sendStatus(200))
+    .catch(next);
+})
+
+// Delete order as admin
+router.delete('/:orderId', (req, res, next) => {
+  Order.destroy({ where: { id: +req.params.orderId }})
     .then(() => res.sendStatus(200))
     .catch(next);
 })

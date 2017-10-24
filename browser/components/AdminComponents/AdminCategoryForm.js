@@ -7,9 +7,7 @@ class AdminCategoryForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      name: "", 
-      alert: "", 
-      alertStyle: ""
+      name: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,7 +20,7 @@ class AdminCategoryForm extends React.Component{
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.handleAdd(this.state);    
+    this.props.handleAdd(this.state);  
   }
 
   handleClick(){
@@ -41,7 +39,7 @@ class AdminCategoryForm extends React.Component{
       <div>
         <div className="card p-3 mt-3">
           <h2>Add a new category</h2>
-          <form onSubmit={ this.handleSubmit }>
+          <form onSubmit={ this.handleSubmit }> 
             <div className="form-group">
               <input name="name" type="text" ref="name" 
               value={ name } onChange={ this.handleChange }
@@ -54,10 +52,7 @@ class AdminCategoryForm extends React.Component{
             </div>
           </form>
         </div>
-        { alert ? <div className={ alertStyle }>{ alert }</div> : "" }
-
-        <AdminCategoryList categories={ categories } />
-        
+        <AdminCategoryList categories={ categories } />       
       </div>   
     )
   }

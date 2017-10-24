@@ -23,6 +23,9 @@ const Order = db.define('order', {
   },
   weight: {
     type: Sequelize.FLOAT
+  },
+  status: {
+    type: Sequelize.STRING
   }
 });
 
