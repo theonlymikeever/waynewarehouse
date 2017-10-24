@@ -53,6 +53,10 @@ module.exports = (Product, Category, User, Review) => {
   .then(() => console.log('DB is synced and seeded'));
   })
   .catch((err) => {
+<<<<<<< HEAD
     console.log('error! ', err)
+=======
+    console.log(err)
+>>>>>>> 8b82297c8cad88240e5577be9737633f518407f5
   })
 };
