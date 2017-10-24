@@ -15,7 +15,7 @@ class NavBar extends Component {
 
   render() {
     const { user, cart } = this.props;
-    let cartItems;
+    let cartItems = 0;
     if (cart && cart.lineItems) {
       cartItems = cart.lineItems.reduce((memo, item) => {
         return memo + item.quantity;

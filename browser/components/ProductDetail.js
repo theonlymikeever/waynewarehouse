@@ -25,9 +25,9 @@ function ProductDetail(props) {
               <p className="card-text">lb: { product.weight ? product.weight : 'NA' }</p>
               <h6 className="card-subtitle mt-2 text-muted">${ product.pricePretty }</h6>
               <br></br>
-                  <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                    onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
-                  <Link to={'/products'} className="card-link float-right">Back</Link>
+              <Link className="btn m-2 btn-success float-left" to={`/products`}
+                        onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
+              <Link to={'/products'} className="card-link float-right">Back</Link>
             </div>
             <div className="container mt-3">
             <hr />
