@@ -9,7 +9,7 @@ import { fetchCategories } from '../stores/categories'
 import { fetchReviews } from '../stores/reviews';
 
 import UserProfile from './UserProfile';
-import SignUp from './SignUp';
+import Signup from './Signup';
 import Home from './Home';
 import Login from './Login';
 import NavBar from './NavBar';
@@ -29,7 +29,7 @@ class Main extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.user.id){
+		if (nextProps.user.id) {
 			this.props.getCart(nextProps.user.id);
 		}
 
@@ -46,10 +46,10 @@ class Main extends Component {
 						<Route exact path='/products/:productId' component={ProductDetail} />
 						<Route path='/login' component={Login} />
 						<Route exact path='/profile' component={UserProfile} />
-						<Route exact path='/signup' component={SignUp} />
+						<Route exact path='/signup' component={Signup} />
 						<Route exact path='/orders/:userId/lineItems' component={CartList} />
 						<Route exact path='/orders/:orderId/confirmation' component={OrderConfirmation} />
-            <Route path='/admin' component={Admin} />            
+						<Route path='/admin' component={Admin} />
 						<Route component={Home} />
 					</Switch>
 				</main>
@@ -63,7 +63,7 @@ const mapProps = ({ user }) => {
 		user
 	}
 };
- 
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchInitialData: () => {

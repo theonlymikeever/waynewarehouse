@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { postUser } from '../stores/user';
 
 
-class SignUp extends Component {
+class Signup extends Component {
     constructor() {
         super();
         this.state = {
@@ -91,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
