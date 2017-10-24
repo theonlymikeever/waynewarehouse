@@ -15,7 +15,6 @@ import Login from './Login';
 import NavBar from './NavBar';
 import ProductList from './ProductList';
 import ProductDetail from './ProductDetail';
-import OrderList from './OrderList';
 import CartList from './CartList';
 import OrderConfirmation from './OrderConfirmation';
 import Admin from './Admin';

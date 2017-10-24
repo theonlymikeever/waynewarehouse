@@ -42,6 +42,10 @@ class AdminProductForm extends React.Component{
       alert: "Please enter product price", 
       alertStyle: "alert alert-danger mt-3" 
     }) : 
+    !this.state.weight ? this.setState({ 
+      alert: "Please enter product weight", 
+      alertStyle: "alert alert-danger mt-3" 
+    }) : 
     this.setState({ 
       alert: "New product has been added!", 
       alertStyle: "alert alert-success mt-3" 
@@ -95,7 +99,7 @@ class AdminProductForm extends React.Component{
                 <div className="form-group">
                   <input name="weight" type="text" ref="weight"
                     value={ weight } onChange={ this.handleChange }
-                    className="form-control" placeholder="Weight"/>
+                    className="form-control" placeholder="Weight (float value x.xx)"/>
                 </div>
                 <div className="form-group">
                   <input name="image" type="text" ref="image"
@@ -111,7 +115,6 @@ class AdminProductForm extends React.Component{
                       )         
                     })
                   }
-
                 </select>
                 <div className="form-group">
                   <button type="submit" className="btn btn-primary mt-3" 
