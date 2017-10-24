@@ -13,9 +13,10 @@ function ProductDetail(props) {
 
     return (
      <div className='container' key={ product.id }>
+       <Link to={'/products'} className="card-link float-left mt-2">Back</Link>
         <div className="row" >
           <div className='col-sm-6'>
-            <img className="mb-2 rounded vertical-center fill" src={ product.image } />
+            <img className="mb-2 rounded vertical-center fill mx-auto" src={ product.image } />
           </div>
             <div className="card-body col-sm-6">
               <h4 className="card-title">{ product.name }</h4>
@@ -23,11 +24,11 @@ function ProductDetail(props) {
                 <p className="card-text">{ product.description }</p>
               </div>
               <p className="card-text">lb: { product.weight ? product.weight : 'NA' }</p>
-              <h6 className="card-subtitle mt-2 text-muted">${ product.pricePretty }</h6>
-              <br></br>
-              <Link className="btn m-2 btn-success float-left" to={`/products`}
+                <h6 className="card-subtitle mt-2 text-muted float-left">In Stock: { product.inStock }</h6>
+                <h6 className="card-subtitle mt-2 text-muted float-right">${ product.pricePretty }</h6>
+              <div className="clearfix"></div>
+              <Link className="btn mt-3 btn-success float-right" to={`/products`}
                         onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
-              <Link to={'/products'} className="card-link float-right">Back</Link>
             </div>
             <div className="container mt-3">
             <hr />
@@ -52,7 +53,7 @@ const mapStateToProps = ({ products, user, cart, history, reviews }) => {
   return {
     products,
     user,
-    cart, 
+    cart,
     reviews
   }
 }

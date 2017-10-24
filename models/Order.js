@@ -100,13 +100,17 @@ Order.removeProduct = function (userId, productId) {
 }
 
 Order.hook('afterSave', (order) => {
-  console.log('lineitems: ')
   let prodList = []
-  order.lineItems.forEach(item => {
-    console.log('looking at product ', item.name, item.id)
-    prods.push(Product.removeOneFromInventory(item.id))
-  })
-  return Promise.all(prodList)
+  order.getLineItems()
+    .then((lineItems) => {
+      console.log('lineItems! ', lineItems)
+      lineItems.forEach(item => {
+        console.log('looking at product ', item.name, item.id)
+        prodList.push(Product.removeOneFromInventory(item.id))
+      })
+      return Promise.all(prodList)
+
+    })
 })
 
 module.exports = Order;
