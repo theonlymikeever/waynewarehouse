@@ -15,7 +15,8 @@ export default function Admin(props) {
         <div className="col-md-3">
           <AdminSideBar render={ <AdminSideBar /> }/> 
         </div>
-        <div className="col-md-9">          
+        <div className="col-md-9">   
+          <Route exact path='/admin' component={ AdminProductForm } />       
           <Route exact path='/admin/product_form' component={ AdminProductForm } />
           <Route exact path='/admin/category_form' component={ AdminCategoryForm } />
           <Route exact path='/admin/users' component={ AdminUserList } />

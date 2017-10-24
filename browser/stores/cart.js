@@ -123,7 +123,7 @@ export const deleteLineItem = (userId, productId, index) => {
 export const checkoutCart = (userId, cartId, address) => {
     console.log(address)
     return (dispatch) => {
-        Promse.all([
+        Promise.all([
             axios.put(`/api/orders/${cartId}`, address),
             axios.put(`/api/orders/${userId}/emptyCart`)
         ])
