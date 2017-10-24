@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 export default function CollapseOrderList(props) {
 
     const { userOrders } = props;
+    let subtotal = 0;
+    console.log(userOrders);
     return (
         <div>
 
@@ -13,7 +15,7 @@ export default function CollapseOrderList(props) {
                         userOrders.map(order => {
                             return (
                                 order.isCart === true ? null :
-                                    <div key = {order.id} id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div key={order.id} id="accordion" role="tablist" aria-multiselectable="true">
                                         <div className="card">
                                             <div className="card-header" role="tab" id={`heading${order.id}`}>
                                                 <h5 className="mb-0">
@@ -47,7 +49,7 @@ export default function CollapseOrderList(props) {
                                                                 })
                                                             }
                                                             <tr>
-                                                                <td>Address: {order[0] && order[0].address}</td>
+                                                                <td>Address: {order.address}</td>
                                                                 <td>Expect shipping in 1 to 2 years</td>
                                                             </tr>
                                                             <tr>
