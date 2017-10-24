@@ -15,7 +15,7 @@ class ProductList extends Component {
     this.changeProducts = this.changeProducts.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-    
+
   handleChange(ev) {
     this.setState({ search: ev.target.value })
   }
@@ -53,7 +53,7 @@ class ProductList extends Component {
           </button>
           <div className="collapse navbar-collapse" id="category">
             <br />
-            <form>
+            <form className="mt-3 mr-3">
               <input name='search' value={this.state.search} onChange={handleChange} type='text' className='form-control' placeholder='Search products' />
             </form>
             <ul className="navbar-nav mr-auto">
@@ -83,12 +83,12 @@ class ProductList extends Component {
                       <Link to={`/products/${product.id}`} className="card-link">more</Link></p>
                       <h6 className="card-subtitle mt-2 text-muted">${product.price}</h6>
                       <p className="card-text">lb: {product.weight}</p>
-                      
+
                       <form className="form-inline btn mr-2 mb-0" onSubmit={ handleDelete }>
                         {(user.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
                       </form>
-          
+
                         <button className="btn m-2 btn-success float-left" onClick={() => handleAdd(user.id, product.id, cart, history)}> Add to Cart </button>
                     </div>
                   </div>
