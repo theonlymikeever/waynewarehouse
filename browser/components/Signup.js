@@ -33,6 +33,7 @@ class SignUp extends Component {
 
     handleFile(e) {
         const reader = new FileReader();
+        
         const file = e.target.files[0];
 
         reader.onload = (upload) => {
