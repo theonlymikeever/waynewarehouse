@@ -27,7 +27,7 @@ class CartList extends Component {
 
   addAddress(ev) {
     ev.preventDefault();
-    this.props.updateUser(this.props.user.id, this.state.addressValue)
+    this.props.updateUser({ id: this.props.user.id, address: this.state.addressValue })
   }
 
 
@@ -133,8 +133,8 @@ const mapDispatchToProps = (dispatch) => {
       if (userId !== 0)
         dispatch(checkoutCart(userId, cartId, address))
     },
-    updateUser: (userId, address) => {
-      dispatch(updateUser(userId, address));
+    updateUser: (user) => {
+      dispatch(updateUser(user))
     }
   }
 }
