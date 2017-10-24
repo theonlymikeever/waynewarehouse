@@ -1,6 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-import {addItem, resetCart, fetchCart} from './cart';
+import { addItem, resetCart, fetchCart } from './cart';
 
 //actions
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
@@ -39,6 +39,11 @@ export const postUser = (user, history) => {
         axios.post('/api/users/signup', user)
             .then(res => res.data)
             .then(user => {
+                if (user.error) {
+                    console.log(user);
+                    dispatch(setCurrentUser(user));
+                    return;
+                }
                 dispatch(setCurrentUser(user));
                 history.push(`/users/${user.id}`);
             }).catch(console.log)
@@ -51,21 +56,21 @@ const transferLineItems = (user, cart, history, dispatch) => {
     //pull lineItems from "guestCart"
     const lineItems = cart.lineItems;
     dispatch(resetCart());
-    dispatch(fetchCart(user.id*1))
-    .then(( cart ) => {
-        if (lineItems.length > 0){
-            lineItems.forEach((lineItem, index ) => {
-                return dispatch(addItem(user.id, lineItem.productId, null, history))
-            });
-        }
-        history.push('/products');
-    });
+    dispatch(fetchCart(user.id * 1))
+        .then((cart) => {
+            if (lineItems.length > 0) {
+                lineItems.forEach((lineItem, index) => {
+                    return dispatch(addItem(user.id, lineItem.productId, null, history))
+                });
+            }
+            history.push('/products');
+        });
 };
 
 export const updateUser = (userId, address) => {
     return (dispatch) => {
-        console.log('userId, address:',userId, address )
-        axios.put(`/api/users/${userId}`, {address: address})
+        console.log('userId, address:', userId, address)
+        axios.put(`/api/users/${userId}`, { address: address })
             .then(res => res.data)
             .then(user => {
                 dispatch(fetchUser(user));
@@ -79,11 +84,11 @@ export const loginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
-                console.log(results.data.error);    
+                console.log(results.data.error);
                 return results.data;
             })
             .then(user => {
-                if (user.error){
+                if (user.error) {
                     dispatch(setCurrentUser(user));
                     return;
                 }
@@ -112,9 +117,9 @@ export const logoutActionCreator = (history) => {
                 dispatch(resetCart());
                 var auth2 = gapi.auth2.getAuthInstance();
                 auth2.signOut()
-                .then(function () {
-                    console.log('User signed out.');
-                });
+                    .then(function () {
+                        console.log('User signed out.');
+                    });
                 history.push('/');
             });
     });
