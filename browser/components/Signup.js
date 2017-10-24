@@ -52,10 +52,12 @@ class SignUp extends Component {
     render() {
         const { handleChange, handleSubmit } = this;
         const { name, email, password, address, required } = this.state;
-        const error = this.props.user.errors || [];
+        const {user} = this.props;
+        
         return (
             <div className='container'>
                 <h1>Sign up!</h1>
+                {user.error ? <div className='alert alert-danger'>{user.error}</div> : null}
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     
                     <label className='text-danger' htmlFor='name'>Name</label>

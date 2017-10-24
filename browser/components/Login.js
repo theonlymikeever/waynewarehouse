@@ -40,23 +40,26 @@ class Login extends React.Component {
       console.log(error);
     }
     gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
+      'scope': 'profile email',
+      'width': 240,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': onSuccess,
+      'onfailure': onFailure
+    });
+  }
 
   render() {
     const message = 'Login';
+    const { user } = this.props;
     const { email, password } = this.state;
     const { handleChange } = this;
+    console.log('sadfsad',user);
     return (
       <div className="row mt-3 pl-2">
         <div className="col-sm-6">
+        {user.error ? <div className='alert alert-danger'>{user.error}</div> : null}
           <form onSubmit={this.onLoginSubmit}>
             <div className="form-group">
               <label>email</label>
@@ -109,7 +112,7 @@ class Login extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({cart}) => ({ cart });
+const mapState = ({ cart, user }) => ({ cart, user });
 const mapDispatch = (dispatch) => {
   return {
     login: (credentials, history, cart) => { dispatch(loginActionCreator(credentials, history, cart)) },

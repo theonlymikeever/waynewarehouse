@@ -16,7 +16,7 @@ router.post('/signup', (req, res, next) => {
             req.session.userId = user.id;
             res.send(user)
         }).catch(err => {
-            console.log(err.error);
+            res.send({error: 'Email already registered'})
         });
 });
 

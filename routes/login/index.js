@@ -21,9 +21,9 @@ router.post('/', (req, res, next) => {
 		.then(user => {
 
 			if (!user) {
-				res.status(401).send('User not found')
+				res.send({error: 'User not found'})
 			} else if (!user.correctPassword(req.body.password)) {
-				res.status(401).send('Incorrect password')
+				res.send({error:'Incorrect password'})
 			} else {
 				req.session.userId = user.id;
 				console.log('session: ', req.session)
