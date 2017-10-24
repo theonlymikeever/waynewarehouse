@@ -103,13 +103,12 @@ Order.hook('afterSave', (order) => {
   let prodList = []
   order.getLineItems()
     .then((lineItems) => {
-      console.log('lineItems! ', lineItems)
       lineItems.forEach(item => {
-        console.log('looking at product ', item.name, item.id)
-        prodList.push(Product.removeOneFromInventory(item.id))
+        for (var i = 0; i < item.quantity; i++) {
+          prodList.push(Product.removeOneFromInventory(item.id))
+        }
       })
       return Promise.all(prodList)
-
     })
 })
 
