@@ -1,8 +1,7 @@
 const db = require('./conn');
 const Sequelize = db.Sequelize;
 const Address = require('./Address');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const crypto = require('crypto');
 
 const User = db.define('user', {
 	name: {
@@ -13,6 +12,9 @@ const User = db.define('user', {
 		}
 	},
 	password: {
+		type: Sequelize.STRING
+	},
+	salt: {
 		type: Sequelize.STRING
 	},
 	isAdmin: {
@@ -37,25 +39,27 @@ const User = db.define('user', {
 	cartId: Sequelize.INTEGER
 });
 
-User.prototype.correctPassword = function(password) {
-	return bcrypt.compare(password, this.password)
-	.then(function(res) {
-		console.log(res)
-		return res;
-	});
+User.prototype.correctPassword = function (pwd) {
+	return User.encryptPassword(pwd, this.salt) === this.password
 }
 
-const encrypt = (user) => {
+
+User.generateSalt = function () {
+	return crypto.randomBytes(16).toString('base64');
+}
+
+User.encryptPassword = function (plainText, salt) {
+	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
+}
+
+const setSaltAndPassword = user => {
 	if (user.changed('password')) {
-		bcrypt.hash(user.password, saltRounds)
-			.then(function (hash) {
-				user.password = hash;
-				user.save();
-			})
+		user.salt = User.generateSalt()
+		user.password = User.encryptPassword(user.password, user.salt);
 	}
 }
 
-User.beforeCreate(encrypt);
+User.beforeCreate(setSaltAndPassword);
 
 User.signUp = (details) => {
 	const address = details.address;
