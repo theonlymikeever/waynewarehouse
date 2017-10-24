@@ -22,11 +22,6 @@ class AdminOrderList extends React.Component {
   render() {
     const { orders, handleUpdate, handleDelete } = this.props;
     const optionVals = [{ value: "Created" }, { value: "Processing" }, { value: "Shipped" }];
-    const totalPrice = orders.map(order => {
-      return order.lineItems.reduce((res, val) => {
-        return res + val.price
-      }, 0)
-    });
 
     return (
       <div className="p-3 mt-3">
@@ -52,7 +47,7 @@ class AdminOrderList extends React.Component {
                 <tr key={ order.id }>
                   <th scope="row">{ order.id }</th>
                   <td>{ String(new Date(order.createdAt)) }</td>
-                  <td>{ totalPrice }</td>
+                  <td>{ order.total }</td>
                   <td>{ order.address }</td>
                   <td>
                     <select defaultValue={ order.status ? order.status : "" } className="form-control" onChange={ this.handleChange }>
