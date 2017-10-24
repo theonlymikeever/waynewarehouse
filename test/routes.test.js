@@ -20,11 +20,19 @@ const Review = require('../models/Review');
 *
 */
 
-describe('GET /products', () => {
-  it('returns all products', () => {
+describe('GET /products', function() {
+
+  before(function() {
+    return db.sync({force: true})
+  })
+
+
+  //Main product get list
+  it('returns all products', function() {
     return agent
     .get('/api/products')
     .expect(200)
+    // .expect(res.body).to.be.an.instanceOf(Array);
   })
 });
 
