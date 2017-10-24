@@ -1,3 +1,5 @@
+//userprofile
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -5,13 +7,15 @@ import { fetchOrders } from '../stores/orders';
 import { updateUser } from '../stores/user';
 import CollapseOrderList from './CollapseOrderList';
 import UploadPic from './UploadPic';
+import EditUser from './EditUser';
 
 class UserProfile extends Component {
     constructor() {
         super();
         this.state = {
             data_uri: '',
-            photo: ''
+            photo: '',
+
         }
 
         this.handleFile = this.handleFile.bind(this);
@@ -27,10 +31,10 @@ class UserProfile extends Component {
             this.setState({ photo: this.state.data_uri })
             resolve(this.state);
         })
-        
-            promise.then(() => {
-                this.props.updateUser({ id: this.props.user.id, photo: this.state.photo });
-            })
+
+        promise.then(() => {
+            this.props.updateUser({ id: this.props.user.id, photo: this.state.photo });
+        })
 
     }
 
@@ -52,7 +56,7 @@ class UserProfile extends Component {
         if (orders.length) {
             userOrders = orders.filter(order => order.userId == user.id);
         }
-
+        console.log(this.state);
         return (
 
             <div>
@@ -69,9 +73,11 @@ class UserProfile extends Component {
                                 </div>
                                 <div className='col-9'>
                                     <ul className="list-group list-group-flush">
-                                        <li className="list-group-item">Email: {user.email}</li>
+
+                                        <li className="list-group-item"><strong>Email:</strong> {user.email}</li>
+
                                         <li className='list-group-item'>
-                                            Address:
+                                            <strong>Address:</strong>
                                             <select className='form-control'>
                                                 {
                                                     user.addresses && user.addresses.length && user.addresses.map(address => {
@@ -81,7 +87,11 @@ class UserProfile extends Component {
                                                     })
                                                 }
                                             </select>
+                                            <br />
                                         </li>
+                                        <div className='card-body'>
+                                            <EditUser user={user} updateUser={this.props.updateUser} />
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -117,4 +127,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+
+
 
