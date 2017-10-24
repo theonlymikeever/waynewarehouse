@@ -34,11 +34,7 @@ class NavBar extends Component {
             <li className="nav-item">
               <NavLink to="/products" className="nav-link" activeClassName="active">Products</NavLink>
             </li>
-            {(user.id) ? (
-              <li>
-                <NavLink className='nav-link' to="/orders">Orders</NavLink>
-              </li>
-            ) : ""}
+
             <li>
               {cartItems > 0 ?
                 <NavLink className='nav-link' to={`/orders/${user.id}/lineItems`}><span>Cart <small>{cartItems > 0 ? `(${cartItems})` : null}</small></span></NavLink>
