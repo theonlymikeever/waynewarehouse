@@ -61,7 +61,6 @@ router.get('/:userId/:filter', (req, res, next) => {
     }
   })
     .then(cart => {
-      console.log(cart.userId);
       res.send(cart)
     }
     )
@@ -84,7 +83,6 @@ router.delete('/:id/lineItems/:productId', (req, res, next) => {
 
 //Create & Finalize the Order
 router.put('/:cartId', (req, res, next) => {
-  console.log(req.body);
   Order.findOne({
     where: {
       id: req.params.cartId,
