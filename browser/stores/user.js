@@ -67,10 +67,10 @@ const transferLineItems = (user, cart, history, dispatch) => {
         });
 };
 
-export const updateUser = (userId, address) => {
+export const updateUser = (user) => {
     return (dispatch) => {
-        console.log('userId, address:', userId, address)
-        axios.put(`/api/users/${userId}`, { address: address })
+        
+        axios.put(`/api/users/${user.id}`, user)
             .then(res => res.data)
             .then(user => {
                 dispatch(fetchUser(user));
