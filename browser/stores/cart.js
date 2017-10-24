@@ -80,7 +80,6 @@ export const addItem = (userId, productId, cart, history) => {
         if (userId !== 0){
             return axios.post(`/api/orders/${userId}/lineItems`, { productId })
                 .then(() => {
-                    history.push('/products');
                     return dispatch(fetchCart(userId*1));
                 })
         } else {
@@ -121,16 +120,15 @@ export const deleteLineItem = (userId, productId, index) => {
 }
 
 export const checkoutCart = (userId, cartId, address) => {
-    console.log(address)
     return (dispatch) => {
-        Promse.all([
-            axios.put(`/api/orders/${cartId}`, address),
+        Promise.all([
+            axios.put(`/api/orders/${cartId*1}`, address),
             axios.put(`/api/orders/${userId}/emptyCart`)
         ])
             .then(() => {
-                dispatch(checkOut());
-                dispatch(resetCart());
+                return dispatch(checkOut());
             })
+            .then(() => dispatch(resetCart()));
     }
 }
 

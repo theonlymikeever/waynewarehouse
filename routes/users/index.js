@@ -21,8 +21,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.put('/:userId', (req, res, next) => {
-    const detail = req.body;
-    
+    const detail = req.body;    
     User.findById(req.params.userId, { include: [{ all: true }] })
         .then(user => {
             if (detail.address) {

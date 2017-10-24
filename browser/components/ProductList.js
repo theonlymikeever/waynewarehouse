@@ -88,8 +88,8 @@ class ProductList extends Component {
                         {(user.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
                       </form>
-                      <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                        onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
+          
+                        <button className="btn m-2 btn-success float-left" onClick={() => handleAdd(user.id, product.id, cart, history)}> Add to Cart </button>
                     </div>
                   </div>
                 </div>

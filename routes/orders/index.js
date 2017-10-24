@@ -79,12 +79,10 @@ router.put('/:cartId', (req, res, next) => {
   Order.findOne({
     where: {
       id: req.params.cartId,
-      isCart: true
     }
   })
     .then(order => {
       order.address = req.body.address;
-      order.isCart = false;
       return order.save()
     })
     .then(() => res.sendStatus(200))

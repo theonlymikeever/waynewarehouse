@@ -55,20 +55,19 @@ const transferLineItems = (user, cart, history, dispatch) => {
     .then(( cart ) => {
         if (lineItems.length > 0){
             lineItems.forEach((lineItem, index ) => {
-                return dispatch(addItem(user.id, lineItem.productId))
+                return dispatch(addItem(user.id, lineItem.productId, null, history))
             });
         }
         history.push('/products');
     });
 };
 
-export const updateUser = (user) => {
-    console.log('update', user);
+export const updateUser = (userId, address) => {
     return (dispatch) => {
-        axios.put(`/api/users/${user.id}`, user)
+        console.log('userId, address:',userId, address )
+        axios.put(`/api/users/${userId}`, {address: address})
             .then(res => res.data)
             .then(user => {
-                console.log('user', user);
                 dispatch(fetchUser(user));
             });
     };
@@ -77,23 +76,13 @@ export const updateUser = (user) => {
 
 
 export const loginActionCreator = (credentials, history, cart) => {
-// =======
-
-
-// export const loginActionCreator = (credentials, history) => {
-// >>>>>>> master
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
                 return results.data;
             })
             .then(user => {
-// <<<<<<< HEAD
                 transferLineItems(user, cart, history, dispatch);
-// =======
-//                 dispatch(fetchUser(user));
-//                 history.push('/');
-// >>>>>>> master
             });
     };
 };
