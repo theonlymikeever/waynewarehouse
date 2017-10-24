@@ -13,6 +13,7 @@ class AdminUserList extends React.Component {
   }
 
   handleChange(event){    
+    console.log('event.target', event.target.value)
     this.setState({ isAdmin: Boolean(event.target.value) })
   }
 
@@ -82,7 +83,6 @@ const mapStateToProps = ({ users }) => {
     users
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     handleDelete: (userId, evt) => {
@@ -90,6 +90,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(deleteUserOnServer(userId))
     },
     handleUpdate: (userId, userUpdate) => {
+      console.log('userUpdate:', userUpdate)
       dispatch(updateUserOnServer(userId, userUpdate)) 
     },
     getUsers: () => {
