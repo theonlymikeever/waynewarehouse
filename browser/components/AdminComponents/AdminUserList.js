@@ -12,8 +12,8 @@ class AdminUserList extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event){    
-    this.setState({ isAdmin: Boolean(event.target.value) })
+  handleChange(event){
+    this.setState({ isAdmin: event.target.value })
   }
 
   componentDidMount(){
@@ -23,7 +23,7 @@ class AdminUserList extends React.Component {
   render(){
     const { users, handleDelete, handleUpdate } = this.props;
     const optionVals = [{ isAdmin: true }, { isAdmin: false }];
-    
+
     return (
       <div className="p-3 mt-3">
         <h2>Our users</h2>
@@ -53,7 +53,7 @@ class AdminUserList extends React.Component {
                               <option key={ option.isAdmin }>{ String(option.isAdmin) }</option>
                             )
                           })
-                        }          
+                        }
                       </select>
                     </td>
                     <td>
@@ -74,7 +74,7 @@ class AdminUserList extends React.Component {
         </table>
       </div>
     )
-  }    
+  }
 }
 
 const mapStateToProps = ({ users }) => {
@@ -82,7 +82,6 @@ const mapStateToProps = ({ users }) => {
     users
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     handleDelete: (userId, evt) => {
@@ -90,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(deleteUserOnServer(userId))
     },
     handleUpdate: (userId, userUpdate) => {
-      dispatch(updateUserOnServer(userId, userUpdate)) 
+      dispatch(updateUserOnServer(userId, userUpdate))
     },
     getUsers: () => {
       dispatch(fetchUsers());
