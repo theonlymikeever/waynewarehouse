@@ -82,6 +82,8 @@ router.put('/:cartId', (req, res, next) => {
     }
   })
     .then(order => {
+      console.log('req', req.body)
+      order.total = req.body.total;
       order.address = req.body.address;
       return order.save()
     })

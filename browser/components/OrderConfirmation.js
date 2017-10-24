@@ -16,7 +16,10 @@ class OrderCofirmation extends Component {
         const orderId = this.props.match.params.orderId
         const order = orders.length > 0 ? orders.filter(order => order.id == orderId) : [];
         let lineItems = (order[0] && order[0].lineItems) ? order[0].lineItems : [];
-        console.log(order[0] && order[0].address);
+        const subtotal = lineItems.reduce((total, curr) => {
+            return total + curr.price
+        }, 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        console.log('sdafsad', order[0]);
         return (
             <div className="container">
                 <div className="row mt-3">
@@ -44,8 +47,9 @@ class OrderCofirmation extends Component {
                                     })
                                 }
                                 <tr>
-                                    <td>Address: {order[0] && order[0].address}</td>
-                                    <td>Expect shipping in 1 to 2 years</td>
+                                    <td><strong>Address: {order[0] && order[0].address}</strong></td>
+                                    <td><strong>Expect shipping in 1 to 2 years</strong></td>
+                                    <td><strong>Total: ${subtotal}</strong></td>
                                 </tr>
                             </tbody>
                         </table>
