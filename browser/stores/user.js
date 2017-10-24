@@ -38,6 +38,9 @@ export const postUser = (user, history) => {
         axios.post('/api/users/signup', user)
             .then(res => res.data)
             .then(user => {
+                if (user.err) {
+                    return dispatch(setCurrentUser(user.err));
+                }
                 dispatch(setCurrentUser(user));
                 history.push(`/users/${user.id}`);
             }).catch(console.log)
@@ -50,7 +53,6 @@ export const updateUser = (user) => {
         axios.put(`/api/users/${user.id}`, user)
             .then(res => res.data)
             .then(user => {
-                console.log('user', user);
                 dispatch(fetchUser(user));
             })
     }
@@ -63,6 +65,12 @@ export const loginActionCreator = (credentials, history) => {
                 return results.data;
             })
             .then(user => {
+                if (user.err) {
+                    console.log('error', user);
+                    dispatch(setCurrentUser(user));
+                    return;
+                }
+
                 dispatch(fetchUser(user));
                 history.push('/');
             });
@@ -88,9 +96,9 @@ export const logoutActionCreator = (history) => {
                 dispatch(removeCurrentUser());
                 var auth2 = gapi.auth2.getAuthInstance();
                 auth2.signOut()
-                .then(function () {
-                    console.log('User signed out.');
-                });
+                    .then(function () {
+                        console.log('User signed out.');
+                    });
                 history.push('/');
             });
     });

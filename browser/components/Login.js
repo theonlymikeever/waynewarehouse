@@ -41,23 +41,26 @@ class Login extends React.Component {
       console.log(error);
     }
     gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
+      'scope': 'profile email',
+      'width': 240,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': onSuccess,
+      'onfailure': onFailure
+    });
+  }
 
   render() {
     const message = 'Login';
     const { email, password } = this.state;
     const { handleChange } = this;
+    const err = this.props.user.err || [];
+
     return (
       <div className="row">
         <div className="col-sm-6">
+        {err.length ? <div className='alert alert-danger'>{err}</div> : null}
           <form onSubmit={this.onLoginSubmit}>
             <div className="form-group">
               <label>email</label>
@@ -111,11 +114,11 @@ class Login extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = () => ({ message: 'Log in' });
+const mapState = user => user;
 const mapDispatch = (dispatch) => {
   return {
     login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) },
-    googleLogin: (credentials, history) => {dispatch(googleLoginActionCreator(credentials, history))} 
+    googleLogin: (credentials, history) => { dispatch(googleLoginActionCreator(credentials, history)) }
   }
 };
 

@@ -17,19 +17,8 @@ class SignUp extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFile = this.handleFile.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
     }
-    // handleSubmit(e) {
-    //     e.preventDefault();
-    //     var promise = new Promise((resolve) => {
-    //         this.setState({ photo: this.state.data_uri })
-    //         resolve(this.state);
-    //     })
-    //     promise.then(() => {
-    //         this.props.updateUser({ id: this.props.user.id, photo: this.state.photo });
-    //     })
 
-    // }
 
     handleFile(e) {
         const reader = new FileReader();
@@ -63,31 +52,34 @@ class SignUp extends Component {
     render() {
         const { handleChange, handleSubmit } = this;
         const { name, email, password, address, required } = this.state;
+        const error = this.props.user.errors || [];
         return (
             <div className='container'>
                 <h1>Sign up!</h1>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    {error.length && error[0].path ? <div className='alert alert-danger'>Email already taken</div> : null}
                     <label className='text-danger' htmlFor='name'>Name</label>
                     <input className='form-control' type='text' name='name' onChange={handleChange} value={name} />
                     <label className='text-danger' htmlFor='email'>Email</label>
-                    <input className='form-control' type='text' name='email' onChange={handleChange} value={email} />
+                    <input className='form-control' type='email' name='email' onChange={handleChange} value={email} />
                     <label className='text-danger' htmlFor='password'>Password</label>
-                    <input className='form-control' type='text' name='password' onChange={handleChange} value={password} />
+                    <input className='form-control' type='password' name='password' onChange={handleChange} value={password} />
                     <label htmlFor='address'>Address</label>
                     <input className='form-control' type='upload' name='address' onChange={handleChange} value={address} />
                     Upload Photo
-                    <br/>
+                    <br />
                     <input name='photo' onChange={this.handleFile} type="file" />
                     <br />
                     <p className='text-danger'><small>Required entries in red</small></p>
                     <br />
-                    <button type='submit' className='btn btn-default' disabled={required ? false : true}>Sign Up</button>
+                    <button type='submit' className='btn btn-primary' disabled={required ? false : true}>Sign Up</button>
                 </form>
             </div>
         )
     }
 }
 
+const mapStateToProps = user => user;
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -97,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 }
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

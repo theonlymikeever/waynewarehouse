@@ -71,10 +71,10 @@ export const deleteLineItem = (userId, productId) => {
     }
 }
 
-export const checkoutCart = (cartId, address) => {
-    console.log(address)
+export const checkoutCart = (cartId, details) => {
+    
     return (dispatch) => {
-        axios.put(`/api/orders/${cartId}`, address)
+        axios.put(`/api/orders/${cartId}`, details)
             .then(() => {
                 dispatch(checkOut());
             })

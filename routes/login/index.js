@@ -19,17 +19,21 @@ router.post('/', (req, res, next) => {
 		}
 	}, { include: [{ all: true }] })
 		.then(user => {
+			user.correctPassword(req.body.password)
+				.then(auth => {
+					if (auth) {
+						req.session.userId = user.id;
+						res.status(200).send(user);
+					}
+					else {
+						res.send({ err: 'Incorrect password' })
+					}
+				})
 
-			if (!user) {
-				res.status(401).send('User not found')
-			} else if (!user.correctPassword(req.body.password)) {
-				res.status(401).send('Incorrect password')
-			} else {
-				req.session.userId = user.id;
-				res.status(200).send(user);
-			}
 		})
-		.catch(next);
+		.catch(err => {
+			res.send({ err: 'User not found' })
+		});
 });
 
 router.delete('/', (req, res, next) => {

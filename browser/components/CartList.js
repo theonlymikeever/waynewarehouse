@@ -90,6 +90,9 @@ class CartList extends Component {
                       </form>
                     }
                   </td>
+                  <td>
+                    <strong>Total: {subtotal}</strong>
+                  </td>
                 </tr>
               </tbody>
 
@@ -99,7 +102,7 @@ class CartList extends Component {
           <div className="card col-xs-12 col-md-4 p-3">
             <p><strong>Subtotal</strong><span className="float-right">$ {subtotal ? subtotal : 0.00}</span></p>
             {this.state.address.length ?
-              <Link onClick={() => handleCheckout(cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+              <Link onClick={() => handleCheckout(cart.id, { address: this.state.address, total: subtotal })} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
               :
               <h4 className='text-info'>Select address to continue</h4>
             }
