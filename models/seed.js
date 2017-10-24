@@ -12,9 +12,9 @@ const products = [
   {name: 'Bane\'s Mask',  price: 44995.00, image: '../Images/BaneMask.jpg', weight: 2.35, description: 'Bane is known for the usage of the chemical drug venom for physical enhancement and other adaptations. A type of anesthetic relieves him of any pain and is directly administered into Bane\'s airways through his mask. *Venom NOT included. ' }
 ];
 const categories = [
-  {name: "Magical Item"},
-  {name: "Crime Fighting Object"},
-  {name: 'Pirate paraphernalia'}
+  {name: "Impossible Artifacts"},
+  {name: "Marvelous Garbs"},
+  {name: 'Extrordinary Estates'}
 ];
 
 const reviews = [
@@ -27,7 +27,7 @@ const reviews = [
 module.exports = (Product, Category, User, Review) => {
   //We'll need to add the other models to the parameters
   //as we open this up
-  let magicalItem, crimeFighting;
+  let cat1, cat2, cat3;
     return Promise.all(
       users.map((user) => User.create(user))
     )
@@ -35,16 +35,20 @@ module.exports = (Product, Category, User, Review) => {
     return Promise.all(
       categories.map((category) => Category.create(category))
     )})
-  .then(([_magicalItem, _crimeFighting]) => {
-    magicalItem = _magicalItem;
-    crimeFighting = _crimeFighting;
+  .then(([_cat1, _cat2, _cat3]) => {
+    cat1 = _cat1;
+    cat2 = _cat2;
+    cat3 = _cat3;
     return Promise.all(
       products.map((product) => Product.create(product))
     )})
-  .then(([belt, cloak]) => {
+  .then(([belt, cloak, compass, bagEnd, bMask]) => {
     return Promise.all([
-      belt.setCategory(crimeFighting),
-      cloak.setCategory(magicalItem)
+      belt.setCategory(cat1),
+      cloak.setCategory(cat2),
+      compass.setCategory(cat1),
+      bagEnd.setCategory(cat3),
+      bMask.setCategory(cat2),
     ])
   .then(() => {
     return Promise.all(
