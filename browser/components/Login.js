@@ -55,7 +55,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const { handleChange } = this;
     return (
-      <div className="row">
+      <div className="row mt-3 pl-2">
         <div className="col-sm-6">
           <form onSubmit={this.onLoginSubmit}>
             <div className="form-group">
@@ -83,8 +83,8 @@ class Login extends React.Component {
             <button type="submit" className="btn btn-primary">{message}</button>
           </form>
         </div>
-        <div className="col-sm-1">
-          <div className="back-line">
+        <div className="col-sm-1 mt-3">
+          <div className="text-center">
             <span>OR</span>
           </div>
         </div>
@@ -113,7 +113,7 @@ const mapState = ({cart}) => ({ cart });
 const mapDispatch = (dispatch) => {
   return {
     login: (credentials, history, cart) => { dispatch(loginActionCreator(credentials, history, cart)) },
-    googleLogin: (credentials, history, cart) => {dispatch(googleLoginActionCreator(credentials, history, cart))} 
+    googleLogin: (credentials, history, cart) => {dispatch(googleLoginActionCreator(credentials, history, cart))}
   }
 };
 
