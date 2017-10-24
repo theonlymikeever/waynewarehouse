@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import {addItem, resetCart, fetchCart} from './cart';
 
 //actions
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
@@ -44,6 +45,23 @@ export const postUser = (user, history) => {
     }
 }
 
+const transferLineItems = (user, cart, history, dispatch) => {
+    console.log("user, cart, history, :", user, cart, history)
+    dispatch(setCurrentUser(user));
+    //pull lineItems from "guestCart"
+    const lineItems = cart.lineItems;
+    dispatch(resetCart());
+    dispatch(fetchCart(user.id*1))
+    .then(( cart ) => {
+        if (lineItems.length > 0){
+            lineItems.forEach((lineItem, index ) => {
+                return dispatch(addItem(user.id, lineItem.productId))
+            });
+        }
+        history.push('/products');
+    });
+};
+
 export const updateUser = (user) => {
     console.log('update', user);
     return (dispatch) => {
@@ -52,32 +70,43 @@ export const updateUser = (user) => {
             .then(user => {
                 console.log('user', user);
                 dispatch(fetchUser(user));
-            })
-    }
-}
+            });
+    };
+};
 
-export const loginActionCreator = (credentials, history) => {
+
+
+export const loginActionCreator = (credentials, history, cart) => {
+// =======
+
+
+// export const loginActionCreator = (credentials, history) => {
+// >>>>>>> master
     return (dispatch) => {
         axios.post('/login', credentials)
             .then(results => {
                 return results.data;
             })
             .then(user => {
-                dispatch(fetchUser(user));
-                history.push('/');
+// <<<<<<< HEAD
+                transferLineItems(user, cart, history, dispatch);
+// =======
+//                 dispatch(fetchUser(user));
+//                 history.push('/');
+// >>>>>>> master
             });
     };
 };
 
-export const googleLoginActionCreator = (credentials, history) => {
+
+
+export const googleLoginActionCreator = (credentials, history, cart) => {
     return (dispatch) => {
-        console.log('googleLoginActionCreator thunk')
         axios.post('/login/google', credentials)
             .then(results => results.data)
             .then(user => {
-                dispatch(setCurrentUser(user));
-                history.push('/');
-            })
+                transferLineItems(user, cart, history, dispatch);
+            });
     };
 };
 
@@ -86,6 +115,7 @@ export const logoutActionCreator = (history) => {
         axios.delete('/login')
             .then(() => {
                 dispatch(removeCurrentUser());
+                dispatch(resetCart());
                 var auth2 = gapi.auth2.getAuthInstance();
                 auth2.signOut()
                 .then(function () {

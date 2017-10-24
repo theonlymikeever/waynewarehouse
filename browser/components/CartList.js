@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteLineItem, checkoutCart } from '../stores/cart';
 import { updateUser } from '../stores/user';
@@ -55,14 +55,14 @@ class CartList extends Component {
               </thead>
               <tbody >
                 {
-                  lineItems.map(item => {
+                  lineItems.map((item, index) => {
                     return (
                       <tr key={item.id}>
                         <td><Link to={`/products/${item.product.id}`}>{item.product.name}</Link></td>
                         <td>{item.quantity}</td>
                         <td>{`$${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</td>
                         <td>
-                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id)}>Remove</button>
+                          <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id, item.product.id, index)}>Remove</button>
                         </td>
                       </tr>
                     )
@@ -94,9 +94,11 @@ class CartList extends Component {
               </tbody>
 
             </table>
+            <NavLink to="/products" className="nav-link" activeClassName="active">&lt; Back to Shopping</NavLink>
           </div>
 
           <div className="card col-xs-12 col-md-4 p-3">
+
             <p><strong>Subtotal</strong><span className="float-right">$ {subtotal ? subtotal : 0.00}</span></p>
             {this.state.address.length ?
               <Link onClick={() => handleCheckout(cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
@@ -124,10 +126,12 @@ const mapStateToProps = ({ products, user, cart }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleDelete: (userId, productId) => {
-      dispatch(deleteLineItem(userId, productId))
+    handleDelete: (userId, productId, index) => {
+      dispatch(deleteLineItem(userId, productId, index))
     },
-    handleCheckout: (cartId, address) => {
+
+    handleCheckout: (userId, cartId, address) => {
+      if(userId !== 0)
       dispatch(checkoutCart(cartId, address))
     },
     updateUser: (user) => {
