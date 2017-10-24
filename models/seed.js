@@ -51,5 +51,8 @@ module.exports = (Product, Category, User, Review) => {
      reviews.map(review => Review.create(review)))
   })
   .then(() => console.log('DB is synced and seeded'));
-  });
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 };
