@@ -19,6 +19,9 @@ const Product = db.define('product', {
     weight: {
       type: Sequelize.FLOAT,
       allowNull: false
+    },
+    inStock: {
+        type: Sequelize.INTEGER
     }
 
 },
@@ -45,4 +48,12 @@ Product.changeProducts = function (catArr) {
         return products.sort((a, b) => a.id - b.id)
     })
 }
+
+Product.removeOneFromInventory = function(id) {
+    return Product.findById(id)
+        .then((product) => {
+           return product.decrement('inStock', {by: 1})
+        })
+}
+
 module.exports = Product;

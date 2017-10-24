@@ -40,7 +40,7 @@ const getCart = function (cartId) {
           include: [Product]
         }
       ]
-    })  
+    })
 };
 
 Order.fetchCart = function (userId) {
@@ -58,11 +58,11 @@ Order.fetchCart = function (userId) {
             // console.log('new Cart#####:', cart)
             return getCart(cart.id);
           })
-        
+
     } else {
       return getCart(user.cartId);
     }
-  })  
+  })
 
 }
 
@@ -80,7 +80,7 @@ Order.addProduct = function (userId, productId) {
         lineItem.quantity++
         return lineItem.save()
       })
-  })      
+  })
 }
 
 Order.removeProduct = function (userId, productId) {
@@ -99,5 +99,14 @@ Order.removeProduct = function (userId, productId) {
     })
 }
 
+Order.hook('afterSave', (order) => {
+  console.log('lineitems: ')
+  let prodList = []
+  order.lineItems.forEach(item => {
+    console.log('looking at product ', item.name, item.id)
+    prods.push(Product.removeOneFromInventory(item.id))
+  })
+  return Promise.all(prodList)
+})
 
 module.exports = Order;
