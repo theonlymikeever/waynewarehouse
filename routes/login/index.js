@@ -26,6 +26,7 @@ router.post('/', (req, res, next) => {
 				res.status(401).send('Incorrect password')
 			} else {
 				req.session.userId = user.id;
+				console.log('session: ', req.session)
 				res.status(200).send(user);
 			}
 		})

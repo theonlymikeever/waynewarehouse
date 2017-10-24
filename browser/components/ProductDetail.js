@@ -6,7 +6,7 @@ import ReviewsList from './ReviewsList';
 import ReviewForm from './ReviewForm';
 
 function ProductDetail(props) {
-  const { products, user, reviews, handleAdd } = props;
+  const { products, user, cart, handleAdd, history, reviews } = props;
   const productId = props.match.params.productId * 1;
   const product = products.length > 0 ? products.filter(prod => prod.id === productId)[0] : {};
   const reviewsList = reviews.length > 0 ? reviews.filter(rev => rev.productId === productId) : [];
@@ -26,7 +26,7 @@ function ProductDetail(props) {
               <h6 className="card-subtitle mt-2 text-muted">${ product.pricePretty }</h6>
               <br></br>
                   <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
-                    onClick={() => handleAdd(user.id, product.id)}>Add to Cart</Link>
+                    onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
                   <Link to={'/products'} className="card-link float-right">Back</Link>
             </div>
             <div className="container mt-3">
@@ -48,18 +48,19 @@ function ProductDetail(props) {
     )
 }
 
-const mapStateToProps = ({ products, user, reviews }) => {
+const mapStateToProps = ({ products, user, cart, history, reviews }) => {
   return {
     products,
     user,
+    cart, 
     reviews
   }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
   return {
-    handleAdd: (userId, productId) => {
-      dispatch(addItem(userId, productId))
+    handleAdd: (userId, productId, cart, history) => {
+      dispatch(addItem(userId, productId, cart, history))
     }
   }
 }

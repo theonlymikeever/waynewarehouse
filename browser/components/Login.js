@@ -24,18 +24,17 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.renderButton();
-    // console.log('****************login User:', user)
   }
 
   renderButton() {
-    const { history, googleLogin } = this.props;
+    const { history, googleLogin, cart } = this.props;
     function onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       const googleId = profile.getId();
       const name = profile.getName();
       const email = profile.getEmail();
       const credentials = { email, googleId, name }
-      googleLogin(credentials, history)
+      googleLogin(credentials, history, cart)
     }
     function onFailure(error) {
       console.log(error);
@@ -101,21 +100,20 @@ class Login extends React.Component {
 
 
   onLoginSubmit(event) {
-    const { login, history } = this.props;
-    console.log(this.props.history);
+    const { login, history, cart } = this.props;
     event.preventDefault();
     //pass in the history object you get from router
-    login(this.state, history);
+    login(this.state, history, cart);
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = () => ({ message: 'Log in' });
+const mapState = ({cart}) => ({ cart });
 const mapDispatch = (dispatch) => {
   return {
-    login: (credentials, history) => { dispatch(loginActionCreator(credentials, history)) },
-    googleLogin: (credentials, history) => {dispatch(googleLoginActionCreator(credentials, history))} 
+    login: (credentials, history, cart) => { dispatch(loginActionCreator(credentials, history, cart)) },
+    googleLogin: (credentials, history, cart) => {dispatch(googleLoginActionCreator(credentials, history, cart))} 
   }
 };
 

@@ -64,7 +64,7 @@ const mapProps = ({ user }) => {
 		user
 	}
 };
-
+ 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchInitialData: () => {

@@ -2,6 +2,7 @@ const db = require('./conn');
 const Sequelize = db.Sequelize;
 const LineItem = require('./LineItem');
 const Product = require('./Product');
+const User = require('./User');
 
 const Order = db.define('order', {
   isCart: {
@@ -25,42 +26,58 @@ const Order = db.define('order', {
   }
 });
 
+const getCart = function (cartId) {
+   return Order.findOne({
+      where: {
+        id: cartId*1
+      },
+      include: [
+        {
+          model: LineItem, as: 'lineItems',
+          include: [Product]
+        }
+      ]
+    })  
+};
 
-Order.fetchCart = function (id) {
-  return Order.findOne({
-    where: {
-      isCart: true,
-      userId: id
-    },
-    include: [
-      {
-        model: LineItem, as: 'lineItems',
-        include: [Product]
-      }
-    ]
-  })
-    .then(cart => {
-      return cart
-        ? cart
-        : Order.create({ isCart: true, userId: id })
-    })
+Order.fetchCart = function (userId) {
+  let cart;
+  return User.findById(userId*1)
+  .then(user => {
+    // console.log("fetchCart user:", user)
+    if (!user.cartId) {
+        return Order.create({ userId: userId*1 })
+        .then(_cart => {
+          cart = _cart;
+          return User.update({cartId: cart.id}, {where:{id: userId*1}})
+          })
+          .then(() => {
+            // console.log('new Cart#####:', cart)
+            return getCart(cart.id);
+          })
+        
+    } else {
+      return getCart(user.cartId);
+    }
+  })  
+
 }
 
 Order.addProduct = function (userId, productId) {
   return Order.fetchCart(userId)
-    .then(cart => {
-      return LineItem.findOne({ where: { productId, orderId: cart.id } })
-        .then(lineItem => {
-          if (!lineItem) {
-            //If lineItem doesn't exist create new one with that productId
-            return LineItem.create({ productId })
-              .then(lineitem => cart.addLineItem(lineitem))
-          }
-          //Otherwise we increase the quantity
-          lineItem.quantity++
-          return lineItem.save()
-        })
-    })
+  .then(cart => {
+    return LineItem.findOne({ where: { productId, orderId: cart.id } })
+      .then(lineItem => {
+        if (!lineItem) {
+          //If lineItem doesn't exist create new one with that productId
+          return LineItem.create({ productId, cartId: cart.id })
+            .then(lineitem => cart.addLineItem(lineitem))
+        }
+        //Otherwise we increase the quantity
+        lineItem.quantity++
+        return lineItem.save()
+      })
+  })      
 }
 
 Order.removeProduct = function (userId, productId) {

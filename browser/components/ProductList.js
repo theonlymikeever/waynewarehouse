@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { deleteProductOnServer, updateProducts, fetchProducts } from '../stores/products';
 import { addItem } from '../stores/cart';
 
-
 class ProductList extends Component {
   constructor() {
     super()
@@ -16,7 +15,7 @@ class ProductList extends Component {
     this.changeProducts = this.changeProducts.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
+    
   handleChange(ev) {
     this.setState({ search: ev.target.value })
   }
@@ -42,7 +41,7 @@ class ProductList extends Component {
   }
 
   render() {
-    const { handleDelete, handleAdd, user, cart, categories } = this.props;
+    const { handleDelete, handleAdd, user, cart, categories, history } = this.props;
     const { changeProducts, handleChange } = this;
     const products = this.props.products.filter(product => product.name.toLowerCase().match(this.state.search));
 
@@ -89,9 +88,8 @@ class ProductList extends Component {
                         {(user.isAdmin) ?
                           <button value={product.id} name="delete" className="btn btn-danger">Delete</button> : ''}
                       </form>
-
-                      <button className="btn m-2 btn-success float-left"
-                        onClick={() => handleAdd(user.id, product.id)}>Add to Cart</button>
+                      <Link className="btn m-2 btn-success float-left" to={`/orders/${user.id}/lineItems`}
+                        onClick={() => handleAdd(user.id, product.id, cart, history)}>Add to Cart</Link>
                     </div>
                   </div>
                 </div>
@@ -108,6 +106,7 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = ({ products, user, cart, categories }) => {
+  if (!user.id) user.id = 0;
   return {
     products,
     user,
@@ -122,8 +121,9 @@ const mapDispatchToProps = (dispatch) => {
       evt.preventDefault();
       dispatch(deleteProductOnServer(evt.target.delete.value))
     },
-    handleAdd: (userId, productId) => {
-      dispatch(addItem(userId, productId))
+
+    handleAdd: (userId, productId, cart, history) => {
+      dispatch(addItem(userId, productId, cart, history))
     },
     updateProductList: (catArr) => {
       dispatch(updateProducts(catArr));
