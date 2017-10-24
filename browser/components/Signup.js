@@ -53,7 +53,7 @@ class SignUp extends Component {
                     <br />
                     <p className='text-danger'><small>Required entries in red</small></p>
                     <br />
-                    
+
                     <button type='submit' className='btn btn-default' disabled = {required ? false : true }>Sign Up</button>
                 </form>
             </div>

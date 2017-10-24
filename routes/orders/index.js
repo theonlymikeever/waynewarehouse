@@ -53,10 +53,10 @@ router.get('/:userId/:filter', (req, res, next) => {
 //Add Product
 router.post('/:id/lineItems', (req, res, next) => {
     const userId = req.params.id;
-    Order.addProduct(userId, req.body.productId) 
+    Order.addProduct(userId, req.body.productId)
     .then((results) => {
       res.sendStatus(200)
-      }) 
+      })
     .catch(next);
 })
 
