@@ -27,7 +27,7 @@ class CartList extends Component {
 
   addAddress(ev) {
     ev.preventDefault();
-    this.props.updateUser(this.props.user.id, this.state.addressValue )
+    this.props.updateUser(this.props.user.id, this.state.addressValue)
   }
 
 
@@ -100,7 +100,7 @@ class CartList extends Component {
 
             <p><strong>Subtotal</strong><span className="float-right">$ {subtotal ? subtotal : 0.00}</span></p>
             {this.state.address.length ?
-              <Link onClick={() => handleCheckout(user.id, cart.id, this.state)} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
+              <Link onClick={() => handleCheckout(user.id, cart.id, { address: this.state.address, total: subtotal })} className="btn btn-primary mt-2 btn-block" to={`/orders/${cart.id}/confirmation`}>Proceed to Checkout</Link>
               :
               <h4 className='text-info'>Select address to continue</h4>
             }
@@ -130,8 +130,8 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     handleCheckout: (userId, cartId, address) => {
-      if(userId !== 0)
-      dispatch(checkoutCart(userId, cartId, address))
+      if (userId !== 0)
+        dispatch(checkoutCart(userId, cartId, address))
     },
     updateUser: (userId, address) => {
       dispatch(updateUser(userId, address));

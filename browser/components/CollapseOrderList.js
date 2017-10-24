@@ -5,7 +5,7 @@ export default function CollapseOrderList(props) {
 
     const { userOrders } = props;
     let subtotal = 0;
-    console.log(userOrders);
+    console.log('sdfsafdas',userOrders);
     return (
         <div>
 
@@ -20,7 +20,7 @@ export default function CollapseOrderList(props) {
                                             <div className="card-header" role="tab" id={`heading${order.id}`}>
                                                 <h5 className="mb-0">
                                                     <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${order.id}`} aria-expanded="true" aria-controls={`#collapse${order.id}`}>
-                                                        Order #: {order.id}
+                                                        <p>Order #: {order.id}</p>
                                                     </a>
                                                 </h5>
                                             </div>
@@ -49,8 +49,9 @@ export default function CollapseOrderList(props) {
                                                                 })
                                                             }
                                                             <tr>
-                                                                <td>Address: {order.address}</td>
-                                                                <td>Expect shipping in 1 to 2 years</td>
+                                                                <td><strong>Address: {order.address}</strong></td>
+                                                                <td><strong>Expect shipping in 1 to 2 years</strong></td>
+                                                                <td><strong>Total: ${order.total}</strong></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
