@@ -26,7 +26,7 @@ class AdminOrderList extends React.Component {
     return (
       <div className="p-3 mt-3">
         <h2>Orders</h2>
-        <div className="alert alert-warning mt-3">This page is currently under construction.</div>
+        
 
         <table className="table table-hover mt-3">
           <thead className="thead-inverse">
