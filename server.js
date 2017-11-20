@@ -22,7 +22,7 @@ app.use(session({
 // app.use(function (req, res, next) {
 //   console.log('session', req.session);
 //   next();
-// });
+// }); 
 
 //Static Routes
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
